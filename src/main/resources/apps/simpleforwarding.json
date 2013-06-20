@@ -17,6 +17,7 @@
         "net.floodlightcontroller.debugevent.DebugEvent",
         "net.floodlightcontroller.perfmon.PktInProcessingTime",
         "net.floodlightcontroller.ui.web.StaticWebRoutable",
+        "net.floodlightcontroller.avior.AviorWebRoutable",
         "net.floodlightcontroller.loadbalancer.LoadBalancer",
         "org.sdnplatform.sync.internal.SyncManager"
     ],
