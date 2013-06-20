@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>OFP/FL Model Test</title>
+<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="js/underscore-min.js"></script>
+<script type="text/javascript" src="js/backbone-min.js"></script>
+<script type="text/javascript" src="js/ofp10.js"></script>
+<script type="text/javascript" src="js/floodlight-model.js"></script>
+
+<script type="text/javascript">
+var rawresp = JSON.parse('{"harole":"MASTER","actions":4095,"attributes":{"supportsOfppFlood":true,"supportsNxRole":true,"FastWildcards":4194303,"supportsOfppTable":true},"ports":[{"portNumber":1,"hardwareAddress":"9e:8f:b5:f9:09:b6","name":"s1-eth1","config":0,"state":0,"currentFeatures":192,"advertisedFeatures":0,"supportedFeatures":0,"peerFeatures":0},{"portNumber":2,"hardwareAddress":"ee:c0:e7:f5:97:cd","name":"s1-eth2","config":0,"state":0,"currentFeatures":192,"advertisedFeatures":0,"supportedFeatures":0,"peerFeatures":0},{"portNumber":65534,"hardwareAddress":"de:ec:38:b2:7b:40","name":"s1","config":1,"state":1,"currentFeatures":0,"advertisedFeatures":0,"supportedFeatures":0,"peerFeatures":0}],"buffers":256,"description":{"software":"1.4.3","hardware":"Open vSwitch","manufacturer":"Nicira Networks, Inc.","serialNum":"None","datapath":"None"},"capabilities":199,"inetAddress":"/192.168.56.101:34538","connectedSince":1371132755706,"dpid":"00:00:00:00:00:00:00:01"}');
+
+$(document).ready(function(){
+	var flsw = new FLSwitchResponse;
+	flsw.parse(rawresp);
+	$("#output").html(JSON.stringify(flsw));
+
+	var cntlr = new FLController;
+	cntlr.fetch();
+	$("#output2").html(JSON.stringify(cntlr));
+});
+
+var ObjectOne = function(){
+	this.property = 0;
+};
+obj1a = new ObjectOne();
+obj1b = new ObjectOne();
+if (obj1a.property === 0) {obj1a.property = 7}
+ObjectOne.prototype.property = 5;
+alert(obj1a.property + " /= " + obj1b.property);
+
+function ObjectTwo(){Object.seal(this);}
+ObjectTwo.prototype = {
+	property: 0,
+};
+obj2a = new ObjectTwo();
+obj2b = new ObjectTwo();
+if (obj2a.property === 0) {obj2a.property = 7}
+//ObjectTwo.prototype.property = 5;
+alert(obj2a.property + " /= " + obj2b.property);
+
+</script>
+
+</head>
+<body style="font-family:sans-serif;">
+
+	<p id="output"></p>
+	<p id="output2"></p>
+
+</body>
+</html>
+
