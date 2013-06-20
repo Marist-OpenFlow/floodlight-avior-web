@@ -3,22 +3,21 @@ var Memory = Backbone.Model.extend({
 }); 
 
 var MemoryCollection = Backbone.Collection.extend({
-	model: Memory,
-	url: '/wm/core/memory/json'  
+	model: Memory,  
 });
 
 var MemoryView = Backbone.View.extend({
-	el: $('body'), // attaches `this.el` to an existing element.
+	el: $('body'), 
     
     events: {
       'click button#mem': 'getMemory'
     },
     
 	initialize: function(){
-    	_.bindAll(this, 'render'); // fixes loss of context for 'this' within methods
+    	_.bindAll(this, 'render', 'getMemory', 'appendList'); 
 		this.collection = new MemoryCollection();
-		this.collection.bind('fetch', this.appendItem);  
-    	this.render(); // not all views are self-rendering. This one is.
+		this.collection.bind('add', this.appendList);  
+    	this.render(); 
 	},
     
 	render: function(){
@@ -28,12 +27,16 @@ var MemoryView = Backbone.View.extend({
 	
 	getMemory: function() {
 		var memory = new Memory();
-		//this.collection.add(memory.fetch().complete());
-    	var finalBlue;
+		var self = this;
+		var finalBlue;
+    	
     	var blue = memory.fetch().complete(function () {
-    		finalBlue = JSON.stringify(blue);
-    		alert(finalBlue);
+    		self.collection.add(blue);
     	});
+	},
+	
+	appendList: function(fin) {
+		$('ul', this.el).append("<li>"+ JSON.stringify(fin) +"</li>");
 	}
 });
   
