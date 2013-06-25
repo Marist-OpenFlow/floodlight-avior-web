@@ -1,33 +1,27 @@
 var Switches = Backbone.Model.extend({
-	urlRoot: '/wm/staticflowentrypusher/json',
 	defaults:{
-		switch:'',
+		inetAddress:'',
+		dpid:'',
+		connectedSince:'',
 		name:'',
-		cookie:'',
-		priority:'',
-		ingressport:'',
-		active:'',
-		actions:'',
-		wildcards:'',
-		srcmac:'',
-		dstmac:'',
-		vlanid:'',
-		vlanpriority:'',
-		protocol:'',
-		srcip:'',
-		dstip:'',
-		srcport:'',
-		dstport:''
+		portNumber:'',
+		manufacturer:'',
+		hardware:''
 	}
 });
 
 var SwitchesCollection = Backbone.Collection.extend({
   	model: Switches,
-  	url: '/wm/staticflowentrypusher/list/all/json'
+  	
+  	url: function(){
+  		return this.instanceUrl;
+  	},
+  	
+  	initialize: function(newUrl){
+  		this.instanceUrl = newUrl;
+  		this.fetch();
+  	}
 });
-
-//var todos = new SwitchesCollection();
-
 
 var SwitchesView = Backbone.View.extend({
 	initialize: function(){
@@ -45,7 +39,6 @@ var SwitchesView = Backbone.View.extend({
 	},
 	
 	getSwitches: function(event){
-		//var getSwitch = todos.fetch().complete(function () {
 		var getSwitch = this.todos.fetch().complete(function () {
     	  		$( '#container' ).html( JSON.stringify(getSwitch) );
     	 	});
@@ -56,7 +49,7 @@ var SwitchesView = Backbone.View.extend({
 	}
 });
 
-var theTodos = new SwitchesCollection();
+var theTodos = new SwitchesCollection('/wm/core/controller/switches/json');
 var switch_view = new SwitchesView({ el: $("#switch_container") });
 switch_view.todos = theTodos; 
  

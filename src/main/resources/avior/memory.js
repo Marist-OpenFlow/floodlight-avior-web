@@ -6,7 +6,7 @@ var MemoryCollection = Backbone.Collection.extend({
 	model: Memory,  
 });
 
-var MemoryView = Backbone.View.extend({
+var MemoryView = Backbone.View.extend({	
 	el: $('body'), 
     
     events: {
@@ -14,7 +14,7 @@ var MemoryView = Backbone.View.extend({
     },
     
 	initialize: function(){
-    	_.bindAll(this, 'render', 'getMemory', 'appendList'); 
+    	//_.bindAll(this, 'render', 'getMemory', 'appendList'); 
 		this.collection = new MemoryCollection();
 		this.collection.bind('add', this.appendList);  
     	this.render(); 

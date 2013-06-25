@@ -18,7 +18,7 @@ require.config({
 });
 
 require([
-	"avior",
+	"avior2",
 ], function(Avior){
 	Avior.initialize();
 });
