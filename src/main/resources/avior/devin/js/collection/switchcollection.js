@@ -6,7 +6,7 @@ define([
 	var SwitchCollection = Backbone.Collection.extend({
 		url: Util.missingCtlrErr,
 		model: Switch,
-		toJSON: function() { return this.models; }
+		//toJSON: function() { return this.models; }
 	});
 	return SwitchCollection;
 });

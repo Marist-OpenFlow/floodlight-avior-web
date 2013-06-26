@@ -14,7 +14,7 @@ define([
 				var switchesview = new SwitchesView({model: new Switch});
 				$(document.body).append(switchesview.render().el);
 				switchesview.delegateEvents(switchesview.events);
-				switchesview.refresh();
+				//switchesview.refresh();
 			});
 		}
 	};

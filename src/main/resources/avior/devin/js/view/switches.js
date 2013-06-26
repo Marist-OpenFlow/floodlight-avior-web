@@ -6,7 +6,7 @@ define([
 	"collection/switchcollection"
 ], function($, _, Backbone, SwitchView, SwitchCollection){
 	var SwitchesView = Backbone.View.extend({
-		tagName: "div",
+		tagName: "body",
 			
 		initialize: function(item){
 			var self = this;
@@ -16,9 +16,7 @@ define([
                     console.log(arguments);
                     self.render();
                 }
-            });
-			//this.render();
-			
+            });	
 			this.listenTo(this.collection, "change", this.render);
 			this.listenTo(this.collection, "destroy", this.remove);
 		},
@@ -35,7 +33,7 @@ define([
   				self.renderSwitch(item);
 			}, this);
 			
-			console.log("render complete..not really though");
+			console.log("render complete");
 			
 			return this;
 		},
