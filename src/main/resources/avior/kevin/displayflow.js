@@ -3,33 +3,40 @@ Flow = Backbone.Model.extend();
 Flowlist = Backbone.Collection.extend({
 	model: Flow,
 	value: null,
-	url: "/wm/core/switch/" + this.value + "/flow/json"
+	url: function(){ return "/wm/core/switch/" + this.value + "/flow/json"; }
 });
 
 Flowview = Backbone.View.extend({
 	el: $("body"),
 	initialize: function () {
-		_.bindAll(this, "render", 'getFlowList');
 		this.flow = new Flowlist( null, { view: this });
-		this.flow.bind("refresh", this.render);
+		this.listenTo(this.flow, 'change', this.render);
 		console.log('initialization successful');
 	},
 	events: {
 		"click #getFlows": "getFlowList",
+		"click #clear": "clearList",
 	},
 	getFlowList: function () {
-		console.log('poo');
-		this.value = $("#switchDPID").val();
+		console.log('getFlowList started');
+		$("#status").html(" ");
+		this.flow.value = $("#switchDPID").val();
 		console.log($("#switchDPID").val());
 		console.log(this.flow.value);
-		this.flow.fetch();
-		console.log('poop');
+		this.flow.fetch({ reset: true });
+		console.log('getFlowList ended');
+	},
+	clearList: function() {
+		$("#status").html(" ");
 	},
 	render: function () {
-		console.log('ahhhh');
+		console.log('rendered, ja');
 		var flowE1 = $("#status");
+		var info = "";
 		this.flow.each( function(model) {
-			flowE1.prepend("<div>" + model.get('flow') + "</div>");
+			console.log(JSON.stringify(model));
+			info = _.pluck(JSON.stringify(model), $("#switchDPID").val());
+			flowE1.prepend("<div>Switch " + $("#switchDPID").val() + ":<br>" + info + "</div>");
 		});
 	}
 });
