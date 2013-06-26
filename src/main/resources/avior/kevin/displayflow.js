@@ -10,7 +10,7 @@ Flowview = Backbone.View.extend({
 	el: $("body"),
 	initialize: function () {
 		this.flow = new Flowlist( null, { view: this });
-		this.listenTo(this.flow, 'change', this.render);
+		this.listenTo(this.flow, 'any', this.render);
 		console.log('initialization successful');
 	},
 	events: {
