@@ -7,7 +7,8 @@ define([
 	"text!template/switches.html"
 ], function($, _, Backbone, SwitchView, SwitchCollection, swtchsTpl){
 	var SwitchesView = Backbone.View.extend({
-		tagName: "body",
+		//tagName: "div",
+		el: $("#table"),
 			
 		template: _.template(swtchsTpl),
 			
