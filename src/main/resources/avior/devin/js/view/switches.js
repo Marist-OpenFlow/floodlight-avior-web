@@ -3,22 +3,19 @@ define([
 	"underscore",
 	"backbone",
 	"view/switch",
-	"collection/switchcollection"
-], function($, _, Backbone, SwitchView, SwitchCollection){
+	"collection/switchcollection",
+	"text!template/switches.html"
+], function($, _, Backbone, SwitchView, SwitchCollection, swtchsTpl){
 	var SwitchesView = Backbone.View.extend({
 		tagName: "body",
+			
+		template: _.template(swtchsTpl),
 			
 		initialize: function(item){
 			var self = this;
 			this.collection = new SwitchCollection();
-			this.collection.fetch({
-                success:function () {
-                    console.log(arguments);
-                    self.render();
-                }
-            });	
-			this.listenTo(this.collection, "change", this.render);
-			this.listenTo(this.collection, "destroy", this.remove);
+			this.collection.fetch();	
+			this.listenTo(this.collection, "sync", this.render);
 		},
 		
 		events: {
@@ -27,6 +24,9 @@ define([
 		
 		render: function() {
 			console.log("in render");
+			
+			this.$el.html(this.template(this.model.toJSON()));
+			
 			var self = this;
 
 			_.forEach(this.collection.models, function(item) {
