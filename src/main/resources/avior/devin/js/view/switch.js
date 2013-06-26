@@ -6,7 +6,6 @@ define([
 ], function($, _, Backbone, swtchTpl){
 	var SwitchView = Backbone.View.extend({
 		tagName: "tbody",
-		//el: $("#tbody"),
 		
 		template: _.template(swtchTpl),
 		

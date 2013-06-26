@@ -7,7 +7,6 @@ define([
 	"text!template/switches.html"
 ], function($, _, Backbone, SwitchView, SwitchCollection, swtchsTpl){
 	var SwitchesView = Backbone.View.extend({
-		//tagName: "div",
 		el: $("#table"),
 			
 		template: _.template(swtchsTpl),
@@ -23,9 +22,7 @@ define([
 			"click button": "refresh",
 		},
 		
-		render: function() {
-			console.log("in render");
-			
+		render: function() {			
 			this.$el.html(this.template(this.model.toJSON()));
 			
 			var self = this;
@@ -33,8 +30,7 @@ define([
 			_.forEach(this.collection.models, function(item) {
   				self.renderSwitch(item);
 			}, this);
-			
-			console.log("render complete");
+
 			
 			return this;
 		},
