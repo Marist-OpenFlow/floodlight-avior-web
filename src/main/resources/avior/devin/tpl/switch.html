@@ -1,0 +1,16 @@
+<dl>
+	<dt>IP Address</dt>
+	<dd><%= inetAddress %></dd>
+	<dt>Vendor</dt>
+	<dd><%= description.manufacturer %></dd>
+	<dt>Hardware Type</dt>
+	<dd><%= description.hardware %></dd>
+	<dt>Port Name</dt>
+	<dd><% _.each(ports, function(i) { %>  <dd><%= i.name %></dd> <% }); %></dd>
+	<dt>Port Number</dt>
+	<dd><% _.each(ports, function(i) { %>  <dd><%= i.portNumber %></dd> <% }); %></dd>
+	<dt>Connected Since</dt>
+	<dd><%= connectedSince %></dd>
+	<dt>DPID</dt>
+	<dd><%= dpid %></dd>
+</dl>
