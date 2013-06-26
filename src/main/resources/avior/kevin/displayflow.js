@@ -9,9 +9,10 @@ Flowlist = Backbone.Collection.extend({
 Flowview = Backbone.View.extend({
 	el: $("body"),
 	initialize: function () {
-		this.flow = new Flowlist( null, { view: this });
-		this.listenTo(this.flow, 'any', this.render);
-		console.log('initialization successful');
+		_.bindAll(this, "render", 'getFlowList');
+    	this.flow = new Flowlist( null, { view: this });
+    	this.flow.bind("refresh", this.render);
+    	console.log('initialization successful');
 	},
 	events: {
 		"click #getFlows": "getFlowList",
@@ -23,11 +24,14 @@ Flowview = Backbone.View.extend({
 		this.flow.value = $("#switchDPID").val();
 		console.log($("#switchDPID").val());
 		console.log(this.flow.value);
-		this.flow.fetch({ reset: true });
+		this.flow.fetch({success: function() {
+			console.log(this.flow);
+		}});
 		console.log('getFlowList ended');
 	},
 	clearList: function() {
 		$("#status").html(" ");
+		console.log("clearList went through");
 	},
 	render: function () {
 		console.log('rendered, ja');
