@@ -8,15 +8,12 @@ define([
 		tagName: "div",
 		
 		template: _.template(swtchTpl),
-
-		initialize: function() {
-			this.render();
-		},
 		
+		//may need the var tmpl to complete this
 		render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
 			return this;
-		}
+		}		
 	});
 	return SwitchView;
 });
