@@ -35,6 +35,11 @@ define([
   				self.renderSwitch(item);
 			}, this);
 
+
+			_.forEach(this.collection.models, function(item) {
+  				console.log(JSON.stringify(item));
+			}, this);
+			
 			
 			return this;
 		},

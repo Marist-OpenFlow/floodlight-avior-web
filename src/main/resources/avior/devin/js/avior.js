@@ -12,7 +12,7 @@ define([
 		initialize: function(){
 			$(document).ready(function(){
 				var switchesview = new SwitchesView({model: new Switch});
-				$(document.body).append(switchesview.render().el);
+				//$(document.body).append(switchesview.render().el);
 				switchesview.delegateEvents(switchesview.events);
 			});
 		}
