@@ -19,10 +19,13 @@ define([
 				memview.delegateEvents(memview.events);
 				memview.refresh();
 				
-				var swtchview = new SwitchView({model: new Switch});
-				$(document.body).append(swtchview.render().el);
-				swtchview.delegateEvents(swtchview.events);
-				swtchview.refresh();
+				var switchesview = new SwitchesView({model: new Switch});
+				$(document.body).append(switchesview.render().el);
+				switchesview.delegateEvents(switchesview.events);
+				
+				var flowview = new FlowView({model: new Flow});
+				$(document.body).append(flowview.render().el);
+				flowview.delegateEvents(flowview.events);
 			});
 		}
 	};
