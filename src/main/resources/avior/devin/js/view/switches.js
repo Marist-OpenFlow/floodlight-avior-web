@@ -3,13 +3,16 @@ define([
 	"underscore",
 	"backbone",
 	"view/switch",
+	"view/SwitchHeading",
 	"collection/switchcollection",
-	"text!template/switches.html"
-], function($, _, Backbone, SwitchView, SwitchCollection, swtchsTpl){
+	"text!template/switches.html",
+	"text!template/switchHeading.html",
+], function($, _, Backbone, SwitchView, SwitchHeading, SwitchCollection, swtchsTpl, header){
 	var SwitchesView = Backbone.View.extend({
 		el: $("#table"),
 			
 		template: _.template(swtchsTpl),
+		template2: _.template(header),
 			
 		initialize: function(item){
 			var self = this;
