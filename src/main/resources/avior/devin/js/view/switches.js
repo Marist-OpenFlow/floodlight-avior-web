@@ -9,9 +9,9 @@ define([
 	"text!template/switchHeading.html",
 ], function($, _, Backbone, SwitchView, SwitchHeading, SwitchCollection, swtchsTpl, header){
 	var SwitchesView = Backbone.View.extend({
-		el: $("#table"),
+		el: $('body'),
 			
-		template: _.template(swtchsTpl),
+		template1: _.template(swtchsTpl),
 		template2: _.template(header),
 			
 		initialize: function(item){
@@ -25,8 +25,9 @@ define([
 			"click button": "refresh",
 		},
 		
-		render: function() {			
-			this.$el.html(this.template(this.model.toJSON()));
+		render: function() {
+			this.$el.html(this.template2(this.model.toJSON()));
+			this.$el.append(this.template1);
 			
 			var self = this;
 
@@ -42,7 +43,7 @@ define([
 			var switchView = new SwitchView({
 				model: item
 			});
-			this.$el.append(switchView.render().el);
+			$('table').append(switchView.render().el);
 		},
 		
 		refresh: function(){this.collection.fetch();}
