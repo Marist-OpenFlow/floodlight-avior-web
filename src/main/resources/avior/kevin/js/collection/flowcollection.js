@@ -1,7 +1,7 @@
 define([
 	"backbone",
 	"util",
-	"model/flow"
+	"model/flowmodel"
 ], function(Backbone,Util,Flow){
 	var FlowCollection = Backbone.Collection.extend({
 		url: Util.missingCtlrErr,
