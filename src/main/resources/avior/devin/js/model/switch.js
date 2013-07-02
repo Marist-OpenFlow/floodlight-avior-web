@@ -6,15 +6,16 @@ define([
 	
 	/* Structure to hold switch information */
 	var Switch = Backbone.Model.extend({
-		defaults:{
-		inetAddress:'',
-		dpid:'',
-		connectedSince:'',
-		name:'',
-		portNumber:'',
-		manufacturer:'',
-		hardware:''
-		}
+		defaults: {inetAddress: '', dpid: ''},
+		parse: function (resp) {
+        		return {
+            		ports: resp.ports,
+            		description: resp.description,
+            		inetAddress: resp.inetAddress,
+            		connectedSince: resp.connectedSince,
+            		dpid: resp.dpid
+        		}
+    	}
 	});
 	return Switch;
 });
