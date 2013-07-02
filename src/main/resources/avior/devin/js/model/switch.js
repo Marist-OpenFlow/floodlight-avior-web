@@ -22,7 +22,12 @@ define([
         },
         
         getPortArray: function(resp) {
-        	alert(resp);
+        	_.forEach(resp, function(item) {
+        		this.set('model1', item.name);
+        		//this.set('portNumber', item.portNumber);
+        		this.set('ports', this.model1);
+        		alert(JSON.stringify(item));
+        	}, this);
     	}
 	});
 	return Switch;
