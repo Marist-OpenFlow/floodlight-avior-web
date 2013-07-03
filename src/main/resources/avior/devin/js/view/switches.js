@@ -53,7 +53,7 @@ define([
 			var switchView = new SwitchView({
 				model: item
 			});
-			$('table').append(switchView.render().el);
+			$('#switchTable').append(switchView.render().el);
 		},
 		
 		//updates this.collection with the latest switch info from server
