@@ -1,16 +1,12 @@
 define([
 	"backbone",
 	"util",
-	"openflow",
 	"model/portModel",
 	"model/descriptionModel"
 ], function(Backbone, Util, Port, Description){
 	
 	/* Structure to hold switch information */
 	var Switch = Backbone.Model.extend({
-		model1: Port,
-		model2: Description,
-		
 		parse: function (resp) {
         		return {
             		ports: this.getPortArray(resp.ports),
@@ -22,12 +18,14 @@ define([
         },
         
         getPortArray: function(resp) {
+        	var i = 0;
+        	var a = new Array();
         	_.forEach(resp, function(item) {
-        		this.set('model1', item.name);
-        		//this.set('portNumber', item.portNumber);
-        		this.set('ports', this.model1);
-        		alert(JSON.stringify(item));
+        		a[i] = new Port({portNumber: item.portNumber, name: item.name});
+        		i += 1;
         	}, this);
+        	this.ports = a;
+        	console.log(JSON.stringify(this.ports));
     	}
 	});
 	return Switch;

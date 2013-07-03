@@ -8,15 +8,8 @@ define([
 	var Port = Backbone.Model.extend({
 		defaults: {
 			portNumber: '',
-    		hardwareAddress: '',
-    		name: '',
-    		config: '',
-    		state: '',
-    		currentFeatures: '',
-    		advertisedFeatures: '',
-    		supportedFeatures: '',
-    		peerFeatures: ''
-		},
+    		name: ''
+		}
 	});
 	return Port;
 });
