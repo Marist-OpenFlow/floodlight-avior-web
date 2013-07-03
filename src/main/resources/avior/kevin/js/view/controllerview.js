@@ -2,11 +2,11 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"text!template/controller.html"
+	"text!tpl/controller.html"
 ], function($, _, Backbone, ctrlTpl){
-	var MemoryView = Backbone.View.extend({
+	var ControllerView = Backbone.View.extend({
 		//... is a div tag.
-	    tagName:  "div",
+	    tagName:  "body",
 	    // Cache the template function for a single item.
 		//template: _.template($('#controller-template').html()),
 		template: _.template(ctrlTpl),
@@ -24,6 +24,6 @@ define([
 	    },
 		refresh: function(){this.model.fetch();}
 	});
-	return MemoryView;
+	return ControllerView;
 });
 
