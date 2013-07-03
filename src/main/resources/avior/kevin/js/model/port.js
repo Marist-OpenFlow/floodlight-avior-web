@@ -3,15 +3,15 @@ define([
 	"util",
 	"openflow"
 ], function(Backbone,Util,OFP){
-	/* Structure to hold switch information */
-	var Switch = Backbone.Model.extend({
+	/* Structure to hold port information */
+	var Port = Backbone.Model.extend({
 		initialize: function(obj){
 			if (obj) { this.parse(obj); }
-			else this.set(new OFP.SwitchFeatures);
+			else this.set(new OFP.Port);
 		},
 		parse: Util.missingCtlrErr,
 		toJSON: Util.missingCtlrErr,
 	});
-	return Switch;
+	return Port;
 });
 
