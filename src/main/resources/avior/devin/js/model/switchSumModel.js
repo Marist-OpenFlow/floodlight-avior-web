@@ -7,7 +7,8 @@ define([
 	/* Structure to hold switch information */
 	var SwitchSumModel = Backbone.Model.extend({
 		defaults:{
-		dpid:''
+		dpid:'',
+		inetAddress:'',
 		}
 	});
 	return SwitchSumModel;

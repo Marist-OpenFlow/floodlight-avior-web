@@ -1,9 +1,8 @@
 define([
 	"backbone",
 	"util",
-	"model/portModel",
-	"model/descriptionModel"
-], function(Backbone, Util, Port, Description){
+	"model/portModel"
+], function(Backbone, Util, Port){
 	
 	/* Structure to hold switch information */
 	var Switch = Backbone.Model.extend({

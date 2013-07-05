@@ -24,6 +24,7 @@ define([
 		
 		events: {
 			"click button": "refresh",
+			"click a": "clickSwitch",
 		},
 		
 		// render the heading and table template, 
@@ -31,28 +32,27 @@ define([
 		render: function() {
 			this.$el.html(this.template2(this.model.toJSON()));
 			this.$el.append(this.template1);
-			
 			var self = this;
 
 			_.forEach(this.collection.models, function(item) {
+				item.set("id", item.get("dpid"));
   				self.renderSwitch(item);
 			}, this);
-
-			//logs what models are inside this.collection
-			_.forEach(this.collection.models, function(item) {
-  				console.log(JSON.stringify(item));
-			}, this);
-			
 			
 			return this;
 		},
 		
-		//renders a models view and appends it to the table element
 		renderSwitch: function(item){
 			var switchSumView = new SwitchSumView({
 				model: item
 			});
-			$('table').append(switchSumView.render().el);
+			$('dt').append(switchSumView.render().el);
+		},
+		
+		clickSwitch: function(e) {
+			
+			var x = this.collection.get(e.currentTarget.id);
+			console.log(JSON.stringify(x));
 		},
 		
 		//updates this.collection with the latest switch info from server

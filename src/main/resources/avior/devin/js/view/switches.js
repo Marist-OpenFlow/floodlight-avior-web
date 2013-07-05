@@ -57,7 +57,7 @@ define([
 		},
 		
 		//updates this.collection with the latest switch info from server
-		refresh: function(){this.collection.fetch();}
+		refresh: function(evt){console.log(evt.currentTarget.id); this.collection.fetch();}
 	});
 	return SwitchesView;
 });

@@ -1,7 +1,6 @@
 define([
 	"backbone",
 	"util",
-	"openflow"
 ], function(Backbone,Util){
 	
 	/* Structure to hold switch information */
