@@ -4,9 +4,10 @@ define([
 	"backbone",
 	"view/switchSumView",
 	"collection/switchSumCollection",
+	"view/switches",
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
-], function($, _, Backbone, SwitchSumView, SwitchSumCollection, swtchsSumTpl, header){
+], function($, _, Backbone, SwitchSumView, SwitchSumCollection, SwitchesView, swtchsSumTpl, header){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -34,6 +35,8 @@ define([
 			this.$el.append(this.template1);
 			var self = this;
 
+			//sets the id attribute of each model to its dpid
+			//so that we can get models in the collection by dpid
 			_.forEach(this.collection.models, function(item) {
 				item.set("id", item.get("dpid"));
   				self.renderSwitch(item);
@@ -49,10 +52,14 @@ define([
 			$('dt').append(switchSumView.render().el);
 		},
 		
+		//call switchesView and then append it to the document
 		clickSwitch: function(e) {
-			
 			var x = this.collection.get(e.currentTarget.id);
 			console.log(JSON.stringify(x));
+			var switchesView = new SwitchesView({
+				model: x
+			});
+			this.$el.append(switchesView.render().el);
 		},
 		
 		//updates this.collection with the latest switch info from server

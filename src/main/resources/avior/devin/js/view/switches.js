@@ -16,12 +16,12 @@ define([
 			
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 
-		initialize: function(item){
+		/*initialize: function(item){
 			var self = this;
 			this.collection = new SwitchCollection();
 			this.collection.fetch();	
 			this.listenTo(this.collection, "sync", this.render);
-		},
+		},*/
 		
 		events: {
 			"click button": "refresh",
