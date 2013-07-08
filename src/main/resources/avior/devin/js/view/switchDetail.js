@@ -2,12 +2,12 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"view/switchSumView",
-	"collection/switchSumCollection",
+	"view/switchList",
+	"collection/switchCollection",
 	"view/switches",
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
-], function($, _, Backbone, SwitchSumView, SwitchSumCollection, SwitchesView, swtchsSumTpl, header){
+], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, swtchsSumTpl, header){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -18,7 +18,7 @@ define([
 		// and render this collection upon sync with server 	
 		initialize: function(item){
 			var self = this;
-			this.collection = new SwitchSumCollection();
+			this.collection = new SwitchCollection();
 			this.collection.fetch();	
 			this.listenTo(this.collection, "sync", this.render);
 		},
@@ -46,10 +46,10 @@ define([
 		},
 		
 		renderSwitch: function(item){
-			var switchSumView = new SwitchSumView({
+			var switchList = new SwitchList({
 				model: item
 			});
-			$('dt').append(switchSumView.render().el);
+			$('dt').append(switchList.render().el);
 		},
 		
 		//call switchesView and then append it to the document

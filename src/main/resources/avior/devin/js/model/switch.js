@@ -1,12 +1,16 @@
 define([
 	"backbone",
 	"util",
-	"model/portModel"
+	"model/port"
 ], function(Backbone, Util, Port){
 	
 	/* Structure to hold switch information */
 	var Switch = Backbone.Model.extend({
-		parse: function (resp) {
+		defaults:{
+		dpid:'',
+		inetAddress:'',
+		},
+		/*parse: function (resp) {
         		return {
             		ports: this.getPortArray(resp.ports),
             		description: resp.description,
@@ -25,7 +29,7 @@ define([
         	}, this);
         	this.ports = a;
         	console.log(JSON.stringify(this.ports));
-    	}
+    	}*/
 	});
 	return Switch;
 });
