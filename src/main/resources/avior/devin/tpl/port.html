@@ -1,4 +1,10 @@
 <tr>
-	<td> <% _.each(ports, function(i) { %>  <dd><%= i.name %></dd> <% }); %> </td>
-	<td> <% _.each(ports, function(i) { %>  <dd><%= i.portNumber %></dd> <% }); %> </td>
+	<td> <%= name  %> </td>
+	<td> <%= portNumber %> </td>
+	<td> <%= receivePackets %> </td>
+	<td> <%= transmitPackets %> </td>
+	<td> <%= receiveBytes %> </td>
+	<td> <%= transmitBytes %> </td>
+	<td> <% receiveDropped + transmitDropped %> </td>
+	<td> <% receiveErrors + transmitErrors + receiveFrameErrors + receiveOverrunErrors + receiveCRCErrors %> </td>
 </tr>
