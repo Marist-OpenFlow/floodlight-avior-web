@@ -6,10 +6,11 @@ define([
 	"collection/switchCollection",
 	"view/switches",
 	"model/description",
+	"collection/portCollection",
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
 	"text!template/description.html",
-], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, Description, swtchsSumTpl, header, descrip){
+], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, Description, PortCollection, swtchsSumTpl, header, descrip){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -60,9 +61,10 @@ define([
 			var oneSwitch = this.collection.get(e.currentTarget.id);
 			var desc = new Description(oneSwitch.get("description"));
 			desc.set("dpid", oneSwitch.get("dpid"));
-			desc.set("connectedSince", oneSwitch.get("connectedSince"));
-			console.log(JSON.stringify(desc));	
-			this.$el.html(this.template3(desc.toJSON()));	
+			desc.set("connectedSince", oneSwitch.get("connectedSince"));	
+			this.$el.append(this.template3(desc.toJSON()));	
+			
+			var Ports = new PortCollection({"dpid": oneSwitch.get("dpid")});
 		},
 		
 		//updates this.collection with the latest switch info from server
