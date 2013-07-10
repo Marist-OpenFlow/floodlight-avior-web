@@ -58,9 +58,9 @@ define([
 		//create description model for specific dpid and place in view
 		clickSwitch: function(e) {
 			var oneSwitch = this.collection.get(e.currentTarget.id);
-			var oneDPID = oneSwitch.get("dpid");
-			console.log(JSON.stringify(oneDPID));
 			var desc = new Description(oneSwitch.get("description"));
+			desc.set("dpid", oneSwitch.get("dpid"));
+			desc.set("connectedSince", oneSwitch.get("connectedSince"));
 			console.log(JSON.stringify(desc));	
 			this.$el.html(this.template3(desc.toJSON()));	
 		},
