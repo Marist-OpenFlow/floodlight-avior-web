@@ -5,6 +5,6 @@
 	<td> <%= transmitPackets %> </td>
 	<td> <%= receiveBytes %> </td>
 	<td> <%= transmitBytes %> </td>
-	<td> <% receiveDropped + transmitDropped %> </td>
-	<td> <% receiveErrors + transmitErrors + receiveFrameErrors + receiveOverrunErrors + receiveCRCErrors %> </td>
+	<td> <%= dropped %> </td>
+	<td> <%= errors %> </td>
 </tr>

@@ -1,10 +1,7 @@
  define([
 	"backbone",
 	"util",
-	"model/port"
-], function(Backbone,Util,Port){
-	var PortCollection = Backbone.Collection.extend({
-		model: Port,
-	});
+], function(Backbone,Util){
+	var PortCollection = Backbone.Collection.extend();
 	return PortCollection;
 });

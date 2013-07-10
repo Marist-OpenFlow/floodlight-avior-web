@@ -7,11 +7,13 @@ define([
 	"view/switches",
 	"model/description",
 	"collection/portCollection",
+	"floodlight/portFl",
+	"model/port",
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
 	"text!template/description.html",
 	"text!template/ports.html",
-], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, Description, PortCollection, swtchsSumTpl, header, descrip, portFrame){
+], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, Description, PortCollection, PortFL, Port, swtchsSumTpl, header, descrip, portFrame){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -66,7 +68,9 @@ define([
 			desc.set("connectedSince", oneSwitch.get("connectedSince"));	
 			this.$el.append(this.template3(desc.toJSON()));	
 			
-			var Ports = new PortCollection({"dpid": oneSwitch.get("dpid")});
+			
+			var ports = new PortCollection({model: new Port(oneSwitch.get("dpid"))});
+			
 			this.$el.append(this.template4());	
 		},
 		
