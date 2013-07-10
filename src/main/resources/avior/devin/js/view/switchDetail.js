@@ -5,14 +5,17 @@ define([
 	"view/switchList",
 	"collection/switchCollection",
 	"view/switches",
+	"model/description",
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
-], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, swtchsSumTpl, header){
+	"text!template/description.html",
+], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, Description, swtchsSumTpl, header, descrip){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
 		template1: _.template(swtchsSumTpl),
 		template2: _.template(header),
+		template3: _.template(descrip),
 			
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
@@ -52,14 +55,14 @@ define([
 			$('dt').append(switchList.render().el);
 		},
 		
-		//call switchesView and then append it to the document
+		//create description model for specific dpid and place in view
 		clickSwitch: function(e) {
-			var x = this.collection.get(e.currentTarget.id);
-			console.log(JSON.stringify(x));
-			var switchesView = new SwitchesView({
-				model: x
-			});
-			this.$el.append(switchesView.render().el);
+			var oneSwitch = this.collection.get(e.currentTarget.id);
+			var oneDPID = oneSwitch.get("dpid");
+			console.log(JSON.stringify(oneDPID));
+			var desc = new Description(oneSwitch.get("description"));
+			console.log(JSON.stringify(desc));	
+			this.$el.html(this.template3(desc.model.toJSON()));	
 		},
 		
 		//updates this.collection with the latest switch info from server
