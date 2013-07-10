@@ -10,13 +10,15 @@ define([
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
 	"text!template/description.html",
-], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, Description, PortCollection, swtchsSumTpl, header, descrip){
+	"text!template/ports.html",
+], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, Description, PortCollection, swtchsSumTpl, header, descrip, portFrame){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
 		template1: _.template(swtchsSumTpl),
 		template2: _.template(header),
 		template3: _.template(descrip),
+		template4: _.template(portFrame),
 			
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
@@ -65,6 +67,7 @@ define([
 			this.$el.append(this.template3(desc.toJSON()));	
 			
 			var Ports = new PortCollection({"dpid": oneSwitch.get("dpid")});
+			this.$el.append(this.template4());	
 		},
 		
 		//updates this.collection with the latest switch info from server
