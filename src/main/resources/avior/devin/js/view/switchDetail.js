@@ -62,7 +62,7 @@ define([
 			console.log(JSON.stringify(oneDPID));
 			var desc = new Description(oneSwitch.get("description"));
 			console.log(JSON.stringify(desc));	
-			this.$el.html(this.template3(desc.model.toJSON()));	
+			this.$el.html(this.template3(desc.toJSON()));	
 		},
 		
 		//updates this.collection with the latest switch info from server
