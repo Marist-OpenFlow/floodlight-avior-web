@@ -1,5 +1,10 @@
 <tr>
 	<td> <%= name  %> </td>
 	<td> <%= portNumber %> </td>
-	<td> <%= portStatistics %> </td>
+	<td> <%= portStatistics.receivePackets %> </td>
+	<td> <%= portStatistics.transmitPackets %> </td>
+	<td> <%= portStatistics.receiveBytes %> </td>
+	<td> <%= portStatistics.transmitBytes %> </td>
+	<td> <%= portStatistics.receiveDropped + portStatistics.transmitDropped %> </td>
+	<td> <%= portStatistics.receiveErrors + portStatistics.transmitErrors + portStatistics.receiveFrameErrors + portStatistics.receiveOverrunErrors + portStatistics.receiveCRCErrors %> </td>
 </tr>

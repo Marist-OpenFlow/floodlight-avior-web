@@ -65,6 +65,7 @@ define([
 		
 		//create description model for specific dpid and place in view
 		clickSwitch: function(e) {
+			$('#container').remove();
 			var oneSwitch = this.collection.get(e.currentTarget.id);
 			var dpid = oneSwitch.get("dpid");
 			var desc = new Description(oneSwitch.get("description"));
@@ -90,7 +91,7 @@ define([
 				console.log(JSON.stringify(ports));
     	 	});
     	 				 	
-			this.$el.append(this.template4());
+			$('#container').append(this.template4());
 				
 		},
 		
