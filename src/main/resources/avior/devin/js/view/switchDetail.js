@@ -15,7 +15,8 @@ define([
 	"text!template/description.html",
 	"text!template/ports.html",
 	"text!template/port.html",
-], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, Description, PortCollection, PortFL, Port, PortStatistics, swtchsSumTpl, header, descrip, portFrame, portRow){
+	"text!template/getFlows.html",
+], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, Description, PortCollection, PortFL, Port, PortStatistics, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -24,6 +25,7 @@ define([
 		template3: _.template(descrip),
 		template4: _.template(portFrame),
 		template5: _.template(portRow),
+		template6: _.template(flow),
 			
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
@@ -63,8 +65,11 @@ define([
 			$('dt').append(switchList.render().el);
 		},
 		
-		//create description model for specific dpid and place in view
+		//create description model and port model
+		//for specific dpid and place in view
 		clickSwitch: function(e) {
+			$('#container').remove();
+			
 			var oneSwitch = this.collection.get(e.currentTarget.id);
 			var dpid = oneSwitch.get("dpid");
 			var desc = new Description(oneSwitch.get("description"));
@@ -72,12 +77,13 @@ define([
 			desc.set("dpid", dpid);
 			desc.set("connectedSince", oneSwitch.get("connectedSince"));	
 			this.$el.append(this.template3(desc.toJSON()));	
-			
+			$('#container').append(this.template4());
 			
 			var ports = new PortCollection();
 			var portArray = oneSwitch.get("ports");
 			var portStatArray = new PortStatistics(dpid);
 			var self = this;
+			
 			portStatArray.fetch().complete(function () {
 				var numPorts = 0;
 				_.forEach(portArray, function(item) {
@@ -87,11 +93,9 @@ define([
         			numPorts += 1;
         			$('#portTable').append(self.template5(p.toJSON()));
         		}, this);
-				console.log(JSON.stringify(ports));
     	 	});
-    	 				 	
-			this.$el.append(this.template4());
-				
+    	 	
+    	 	$('#container').append(this.template6());
 		},
 		
 		//updates this.collection with the latest switch info from server
