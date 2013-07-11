@@ -58,28 +58,8 @@ define([
 						item.set("switchStatistics", switchStats);
 						item.set("id", item.get("dpid"));
   						self.renderSwitch(item);
-  						console.log(JSON.stringify(item));
+  						console.log(JSON.stringify(item.get("ports")));
 					}, this);
-			
-			
-			//call these items before rendering switch to complete model attributes first
-			//var features = new Features();
-			//var switchStats = new SwitchStats();
-			/*features.fetch().complete(function () {
-				
-				switchStats.fetch().complete(function () {
-					
-					//sets the id attribute of each model to its dpid
-					//so that we can get models in the collection by dpid
-					_.forEach(self.collection.models, function(item) {
-						item.set("features", features);
-						item.set("switchStatistics", switchStats);
-						item.set("id", item.get("dpid"));
-  						self.renderSwitch(item);
-  						//console.log(JSON.stringify(item));
-					}, this);
-				});
-			});*/
 			
 			return this;
 		},
@@ -129,6 +109,7 @@ define([
 					p.set("portStatistics", portStatArray.get(dpid)[numPorts]);
         			ports.add(p);
         			numPorts += 1;
+        			console.log(JSON.stringify(ports));
         			$('#portTable').append(self.template5(p.toJSON()));
         		}, this);
     	 	});
