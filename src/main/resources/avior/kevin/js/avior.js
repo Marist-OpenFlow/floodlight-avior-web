@@ -1,14 +1,25 @@
+	// "floodlight/flow",
+	// "view/flowview",
+	// "collection/flowcollection"
+// ], function($, _, Backbone, Flow, FlowView, FlowCollection){
+//		Flow: Flow,
+//		FlowView: FlowView,
+
+
+
 define([
 	"jquery",
 	"underscore",
 	"backbone",
-	// "floodlight/flow",
-	// "view/flowview",
-	"collection/flowcollection"
-], function($, _, Backbone, Flow, FlowView, FlowCollection){
+	"model/controller/memory",
+	"model/controller/modules",
+	"model/controller/status",
+	"model/controller/uptime",
+	"view/controllerview"
+], function($, _, Backbone, Controller, ControllerView){
 	return {
-		Flow: Flow,
-		FlowView: FlowView,
+		Controller: Controller,
+		ControllerView = ControllerView,
 		initialize: function(){
 			$(document).ready(function(){
 				var controllerview = new ControllerView({model: new ControllerModel});
