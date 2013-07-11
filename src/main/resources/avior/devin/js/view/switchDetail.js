@@ -14,7 +14,8 @@ define([
 	"text!template/switchSummary.html",
 	"text!template/description.html",
 	"text!template/ports.html",
-], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, Description, PortCollection, PortFL, Port, PortStatistics, swtchsSumTpl, header, descrip, portFrame){
+	"text!template/port.html",
+], function($, _, Backbone, SwitchList, SwitchCollection, SwitchesView, Description, PortCollection, PortFL, Port, PortStatistics, swtchsSumTpl, header, descrip, portFrame, portRow){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -22,6 +23,7 @@ define([
 		template2: _.template(header),
 		template3: _.template(descrip),
 		template4: _.template(portFrame),
+		template5: _.template(portRow),
 			
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
@@ -71,18 +73,23 @@ define([
 			desc.set("connectedSince", oneSwitch.get("connectedSince"));	
 			this.$el.append(this.template3(desc.toJSON()));	
 			
+			
 			var ports = new PortCollection();
 			var portArray = oneSwitch.get("ports");
-			console.log(JSON.stringify(portArray));
 			var portStatArray = new PortStatistics(dpid);
+			var self = this;
 			portStatArray.fetch().complete(function () {
-				console.log(JSON.stringify(portStatArray.get(dpid)[0]));
+				var numPorts = 0;
+				_.forEach(portArray, function(item) {
+					var p = new Port(item);
+					p.set("portStatistics", portStatArray.get(dpid)[numPorts]);
+        			ports.add(p);
+        			numPorts += 1;
+        			$('#portTable').append(self.template5(p.toJSON()));
+        		}, this);
+				console.log(JSON.stringify(ports));
     	 	});
-    	 	
-			//var ports = new PortCollection(oneSwitch.get("dpid"));
-			//var port = new Port(oneSwitch.get("dpid"))
-			//var ports = new PortCollection();
-			//var portStats = new PortStatistics(oneSwitch.get("dpid"));
+    	 				 	
 			this.$el.append(this.template4());
 				
 		},
