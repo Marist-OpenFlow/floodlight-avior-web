@@ -64,13 +64,23 @@ define([
 		//create description model for specific dpid and place in view
 		clickSwitch: function(e) {
 			var oneSwitch = this.collection.get(e.currentTarget.id);
+			var dpid = oneSwitch.get("dpid");
 			var desc = new Description(oneSwitch.get("description"));
-			desc.set("dpid", oneSwitch.get("dpid"));
+			
+			desc.set("dpid", dpid);
 			desc.set("connectedSince", oneSwitch.get("connectedSince"));	
 			this.$el.append(this.template3(desc.toJSON()));	
 			
+			var ports = new PortCollection();
+			var portArray = oneSwitch.get("ports");
+			console.log(JSON.stringify(portArray));
+			var portStatArray = new PortStatistics(dpid);
+			portStatArray.fetch().complete(function () {
+				console.log(JSON.stringify(portStatArray.get(dpid)[0]));
+    	 	});
+    	 	
 			//var ports = new PortCollection(oneSwitch.get("dpid"));
-			var port = new Port(oneSwitch.get("dpid"))
+			//var port = new Port(oneSwitch.get("dpid"))
 			//var ports = new PortCollection();
 			//var portStats = new PortStatistics(oneSwitch.get("dpid"));
 			this.$el.append(this.template4());
