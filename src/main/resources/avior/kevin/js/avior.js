@@ -11,10 +11,10 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"model/controller/memory",
-	"model/controller/modules",
-	"model/controller/status",
-	"model/controller/uptime",
+	"model/controller/memorymodel",
+	"model/controller/modulesmodel",
+	"model/controller/statusmodel",
+	"model/controller/uptimemodel",
 	"view/controllerview"
 ], function($, _, Backbone, Memory, Modules, Status, Uptime, ControllerView){
 	return {
@@ -22,12 +22,15 @@ define([
 		Modules: Modules,
 		Status: Status,
 		Uptime: Uptime,
-		ControllerView = ControllerView,
+		ControllerView: ControllerView,
 		initialize: function(){
 			$(document).ready(function(){
 				var controller = new Backbone.Model.extend();
 				controller.set({memory: new Memory, modules: new Modules, status: new Status, uptime: new Uptime});
 				var controllerview = new ControllerView({model: controller});
+				//$(document.body).append(controllerview.render().el);
+				//controllerview.delegateEvents(controllerview.events);
+				
 				
 				/*
 				var flowview = new FlowView({model: new Flow});
