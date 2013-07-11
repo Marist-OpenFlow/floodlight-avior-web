@@ -27,3 +27,7 @@ define([
 	return ControllerView;
 });
 
+
+var controller = new Backbone.Model.extend();
+				controller.set({memory: new Memory, modules: new Modules, status: new Status, uptime: new Uptime});
+				
