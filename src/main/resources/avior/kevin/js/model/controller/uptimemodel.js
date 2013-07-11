@@ -3,12 +3,12 @@ define([
 	"util"
 ], function(Backbone,Util){
 	/* Structure to hold controller metadata */
-	var Status = Backbone.Model.extend({
+	var UptimeModel = Backbone.Model.extend({
 		url: Util.missingCtlrErr,
 		defaults: {
-			healthy: 'unknown'
+			systemUptimeMsec: 'unknown'
 		},
 	});
-	return Status;
+	return UptimeModel;
 });
 
