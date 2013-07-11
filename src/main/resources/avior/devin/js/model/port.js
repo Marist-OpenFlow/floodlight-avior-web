@@ -24,7 +24,8 @@ define([
 		getStats: function(dpid) {
 			var stats = new PortStatistics(dpid);
 			stats.fetch().complete(function () {
-				console.log("in fetch");
+				//console.log(dpid);
+				console.log(JSON.stringify(stats.get(dpid)[0]));
     	  		/*this.set({portNumber: portNumber, 
     	  				  receivePackets: receivePackets, 
     	  				  transmitPackets: transmitPackets, 
