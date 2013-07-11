@@ -16,13 +16,18 @@ define([
 	"model/controller/status",
 	"model/controller/uptime",
 	"view/controllerview"
-], function($, _, Backbone, Controller, ControllerView){
+], function($, _, Backbone, Memory, Modules, Status, Uptime, ControllerView){
 	return {
-		Controller: Controller,
+		Memory: Memory,
+		Modules: Modules,
+		Status: Status,
+		Uptime: Uptime,
 		ControllerView = ControllerView,
 		initialize: function(){
 			$(document).ready(function(){
-				var controllerview = new ControllerView({model: new ControllerModel});
+				var controller = new Backbone.Model.extend();
+				controller.set({memory: new Memory, modules: new Modules, status: new Status, uptime: new Uptime});
+				var controllerview = new ControllerView({model: controller});
 				
 				/*
 				var flowview = new FlowView({model: new Flow});
