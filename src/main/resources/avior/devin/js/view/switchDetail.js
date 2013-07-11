@@ -33,8 +33,12 @@ define([
 		initialize: function(item){
 			var self = this;
 			this.collection = new SwitchCollection();
-			this.collection.fetch();	
-			this.listenTo(this.collection, "sync", this.render);
+			this.collection.fetch();
+			features = new Features();
+			features.fetch();
+			switchStats = new SwitchStats();
+			switchStats.fetch();	
+			this.listenTo(switchStats, "sync", this.render);
 		},
 		
 		events: {
@@ -49,10 +53,19 @@ define([
 			this.$el.append(this.template1);
 			var self = this;
 			
+			_.forEach(self.collection.models, function(item) {
+						item.set("features", features);
+						item.set("switchStatistics", switchStats);
+						item.set("id", item.get("dpid"));
+  						self.renderSwitch(item);
+  						console.log(JSON.stringify(item));
+					}, this);
+			
+			
 			//call these items before rendering switch to complete model attributes first
-			var features = new Features();
-			var switchStats = new SwitchStats();
-			features.fetch().complete(function () {
+			//var features = new Features();
+			//var switchStats = new SwitchStats();
+			/*features.fetch().complete(function () {
 				
 				switchStats.fetch().complete(function () {
 					
@@ -66,7 +79,7 @@ define([
   						//console.log(JSON.stringify(item));
 					}, this);
 				});
-			});
+			});*/
 			
 			return this;
 		},
