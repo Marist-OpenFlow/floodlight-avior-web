@@ -3,13 +3,12 @@ define([
 	"util"
 ], function(Backbone,Util){
 	/* Structure to hold controller metadata */
-	var Memory = Backbone.Model.extend({
+	var StatusModel = Backbone.Model.extend({
 		url: Util.missingCtlrErr,
 		defaults: {
-			total: 0,
-			free: 0
+			healthy: 'unknown'
 		},
 	});
-	return Memory;
+	return StatusModel;
 });
 
