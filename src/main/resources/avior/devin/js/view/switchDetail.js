@@ -140,7 +140,11 @@ define([
 		},
 		
 		//updates this.collection with the latest switch info from server
-		refresh: function(){this.collection.fetch();}
+		refresh: function(){
+			features.fetch();
+			this.collection.fetch();
+			switchStats.fetch();
+		}
 	});
 	return SwitchesSumView;
 });
