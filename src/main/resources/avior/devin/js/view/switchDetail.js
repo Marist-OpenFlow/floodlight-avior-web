@@ -11,14 +11,14 @@ define([
 	"floodlight/portFl",
 	"model/port",
 	"model/portStatistics",
+	"view/flowEditor",
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
 	"text!template/description.html",
 	"text!template/ports.html",
 	"text!template/port.html",
 	"text!template/getFlows.html",
-	"text!template/flowEd.html",
-], function($, _, Backbone, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, swtchsSumTpl, header, descrip, portFrame, portRow, flow, flowEd){
+], function($, _, Backbone, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowEditor, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -28,7 +28,7 @@ define([
 		template4: _.template(portFrame),
 		template5: _.template(portRow),
 		template6: _.template(flow),
-		template7: _.template(flowEd),
+		currentDPID: '',
 			
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
@@ -83,6 +83,7 @@ define([
 			
 			var oneSwitch = this.collection.get(e.currentTarget.id);
 			var dpid = oneSwitch.get("dpid");
+			this.currentDPID = dpid;
 			
 			this.displayDesc(dpid, oneSwitch);
 			
@@ -139,8 +140,7 @@ define([
 		
 		modFlows: function () {
 			$('#container').remove();
-			this.$el.append(this.template7());
-			console.log("Mod Flows!");
+			new FlowEditor(this.currentDPID);
 		}
 	});
 	return SwitchesSumView;

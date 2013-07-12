@@ -2,35 +2,32 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"collection/flowEdCollection",
+	"model/flowMod",
 	"text!template/flowEd.html",
-	"text!template/getFlowsPlaceholder.html"
-], function($, _, Backbone, FlowEdCollection, flowEdTpl, place){
+], function($, _, Backbone, FlowMod, flowEd){
 	var FlowEdView = Backbone.View.extend({
 		el: $('body'),
 			
-		template1: _.template(flowEdTpl),
-		template2: _.template(place),
+		currentDPID: '',
+		template1: _.template(flowEd),
 
-		initialize: function(item){
-			var self = this;
-			this.collection = new FlowEdCollection();
-			this.listenTo(this.collection, "sync", this.render);
+		initialize: function(dpid){
+			this.currentDPID = dpid;
+			console.log(this.currentDPID);
+			this.$el.append(this.template1);
 		},
 		
 		events: {
-			"click button": "setModel",
+			//"click button": "pushFlow",
+			"click input": "pushFlow",
 		},
 		
-		// render the heading and table template, 
-		// then render each model in this.collection
 		render: function() {
-			this.$el.html(this.template1(this.model.toJSON()));
-			return this;
 		},
 		
-		setModel: function(){
-			
+		pushFlow: function(e){
+			var val = $(e.currentTarget).val();
+			console.log(val);
 		}
 	});
 	return FlowEdView;
