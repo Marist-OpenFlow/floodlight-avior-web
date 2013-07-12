@@ -58,12 +58,13 @@ define([
 						item.set("switchStatistics", switchStats);
 						item.set("id", item.get("dpid"));
   						self.renderSwitch(item);
-  						console.log(JSON.stringify(item.get("ports")));
+  						//console.log(JSON.stringify(item.get("ports")));
 					}, this);
 			
 			return this;
 		},
 		
+		//display the dpid list
 		renderSwitch: function(item){
 			var switchList = new SwitchList({
 				model: item
@@ -71,7 +72,8 @@ define([
 			$('dt').append(switchList.render().el);
 		},
 		
-		//create description model and port model
+		//clear the container div, create 
+		//description model and port model
 		//for specific dpid and place in view
 		clickSwitch: function(e) {
 			$('#container').remove();
@@ -102,6 +104,8 @@ define([
 			var portStatArray = new PortStatistics(dpid);
 			var self = this;
 			
+			//get port statistics, append as a submodel to port model
+			//and append port model to port collection
 			portStatArray.fetch().complete(function () {
 				var numPorts = 0;
 				_.forEach(portArray, function(item) {
@@ -109,8 +113,10 @@ define([
 					p.set("portStatistics", portStatArray.get(dpid)[numPorts]);
         			ports.add(p);
         			numPorts += 1;
-        			console.log(JSON.stringify(ports));
-        			$('#portTable').append(self.template5(p.toJSON()));
+        		}, this);
+        		
+        		_.forEach(ports.models, function(item) {
+					$('#portTable').append(self.template5(item.toJSON()));
         		}, this);
     	 	});
 		},
@@ -120,7 +126,8 @@ define([
 			$('#container').append(this.template6());
 		},
 		
-		//updates this.collection with the latest switch info from server
+		//updates this.collection, features and switchStats
+		//with the latest switch info from server
 		refresh: function(){
 			features.fetch();
 			this.collection.fetch();
