@@ -11,13 +11,14 @@ define([
 	"floodlight/portFl",
 	"model/port",
 	"model/portStatistics",
+	"view/flowEditor",
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
 	"text!template/description.html",
 	"text!template/ports.html",
 	"text!template/port.html",
 	"text!template/getFlows.html",
-], function($, _, Backbone, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
+], function($, _, Backbone, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowEditor, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -27,6 +28,7 @@ define([
 		template4: _.template(portFrame),
 		template5: _.template(portRow),
 		template6: _.template(flow),
+		currentDPID: '',
 			
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
@@ -42,7 +44,8 @@ define([
 		},
 		
 		events: {
-			"click button": "refresh",
+			"click #loadswtch": "refresh",
+			"click #flowMod": "modFlows",
 			"click a": "clickSwitch",
 		},
 		
@@ -58,12 +61,13 @@ define([
 						item.set("switchStatistics", switchStats);
 						item.set("id", item.get("dpid"));
   						self.renderSwitch(item);
-  						console.log(JSON.stringify(item.get("ports")));
+  						//console.log(JSON.stringify(item.get("ports")));
 					}, this);
 			
 			return this;
 		},
 		
+		//display the dpid list
 		renderSwitch: function(item){
 			var switchList = new SwitchList({
 				model: item
@@ -71,13 +75,15 @@ define([
 			$('dt').append(switchList.render().el);
 		},
 		
-		//create description model and port model
+		//clear the container div, create 
+		//description model and port model
 		//for specific dpid and place in view
 		clickSwitch: function(e) {
 			$('#container').remove();
 			
 			var oneSwitch = this.collection.get(e.currentTarget.id);
 			var dpid = oneSwitch.get("dpid");
+			this.currentDPID = dpid;
 			
 			this.displayDesc(dpid, oneSwitch);
 			
@@ -102,6 +108,8 @@ define([
 			var portStatArray = new PortStatistics(dpid);
 			var self = this;
 			
+			//get port statistics, append as a submodel to port model
+			//and append port model to port collection
 			portStatArray.fetch().complete(function () {
 				var numPorts = 0;
 				_.forEach(portArray, function(item) {
@@ -109,8 +117,10 @@ define([
 					p.set("portStatistics", portStatArray.get(dpid)[numPorts]);
         			ports.add(p);
         			numPorts += 1;
-        			console.log(JSON.stringify(ports));
-        			$('#portTable').append(self.template5(p.toJSON()));
+        		}, this);
+        		
+        		_.forEach(ports.models, function(item) {
+					$('#portTable').append(self.template5(item.toJSON()));
         		}, this);
     	 	});
 		},
@@ -120,11 +130,17 @@ define([
 			$('#container').append(this.template6());
 		},
 		
-		//updates this.collection with the latest switch info from server
+		//updates this.collection, features and switchStats
+		//with the latest switch info from server
 		refresh: function(){
 			features.fetch();
 			this.collection.fetch();
 			switchStats.fetch();
+		},
+		
+		modFlows: function () {
+			$('#container').remove();
+			new FlowEditor(this.currentDPID);
 		}
 	});
 	return SwitchesSumView;

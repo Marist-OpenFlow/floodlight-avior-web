@@ -1,7 +1,7 @@
 define([
-	"collection/flowEdCollection"
-], function(FlowEdCollection){
-	//get list of switch features connected to controller
-	FlowEdCollection.prototype.url = "/wm/core/switch/all/flow/json"; 
-	return FlowEdCollection;
+	"model/flowMod"
+], function(FlowMod){
+	//push flows!
+	FlowMod.prototype.url = "/wm/staticflowentrypusher/json"; 
+	return FlowMod;
 });
