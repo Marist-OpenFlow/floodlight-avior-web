@@ -11,6 +11,7 @@ define([
 	"floodlight/portFl",
 	"model/port",
 	"model/portStatistics",
+	"floodlight/flowModFl",
 	"view/flowEditor",
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
@@ -18,7 +19,7 @@ define([
 	"text!template/ports.html",
 	"text!template/port.html",
 	"text!template/getFlows.html",
-], function($, _, Backbone, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowEditor, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
+], function($, _, Backbone, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -57,6 +58,7 @@ define([
 			var self = this;
 			
 			_.forEach(self.collection.models, function(item) {
+			
 						item.set("features", features);
 						item.set("switchStatistics", switchStats);
 						item.set("id", item.get("dpid"));

@@ -2,11 +2,12 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"model/flowMod",
+	"floodlight/flowModFl",
 	"text!template/flowEd.html",
 ], function($, _, Backbone, FlowMod, flowEd){
 	var FlowEdView = Backbone.View.extend({
 		el: $('body'),
+		model: FlowMod, 
 			
 		currentDPID: '',
 		template1: _.template(flowEd),
@@ -29,6 +30,14 @@ define([
 		validate: function(e){
 			var val = $(e.currentTarget).val();
 			console.log(val);
+		},
+		
+		pushFlow: function() {
+			this.model.save({
+				switch:'00:00:00:00:00:00:00:00',
+				name:'flowMod1',
+				actions:'output=3',
+			});
 		}
 	});
 	return FlowEdView;
