@@ -14,18 +14,19 @@ define([
 		initialize: function(dpid){
 			this.currentDPID = dpid;
 			console.log(this.currentDPID);
-			this.$el.append(this.template1);
+			this.render();
 		},
 		
 		events: {
-			//"click button": "pushFlow",
-			"click input": "pushFlow",
+			"click #getFlows": "pushFlow",
+			"change input": "validate",
 		},
 		
 		render: function() {
+			this.$el.append(this.template1);
 		},
 		
-		pushFlow: function(e){
+		validate: function(e){
 			var val = $(e.currentTarget).val();
 			console.log(val);
 		}
