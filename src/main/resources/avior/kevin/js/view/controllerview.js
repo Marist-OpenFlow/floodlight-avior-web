@@ -2,32 +2,37 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"text!tpl/controller.html"
-], function($, _, Backbone, ctrlTpl){
+	"model/controller/controllermodel",
+	"model/controller/memory",
+	"model/controller/modules",
+	"model/controller/status",
+	"model/controller/uptime",
+	"text!tpl/controller.html",
+], function($, _, Backbone, Controller, Memory, Modules, Status, Uptime, controllerTpl){
 	var ControllerView = Backbone.View.extend({
-		//... is a div tag.
-	    tagName:  "body",
-	    // Cache the template function for a single item.
-		//template: _.template($('#controller-template').html()),
-		template: _.template(ctrlTpl),
-		initialize: function(){
-			this.listenTo(this.model, "change", this.render);
-			this.listenTo(this.model, "destroy", this.remove);
-		},
+		el: $('body'),
+	    
+	    template1: _.template(controllerTpl),
+		
 		events: {
 			"click button": "refresh",
 		},
-		// Re-render the titles of the todo item.
+		
 	    render: function() {
-			this.$el.html(this.template(this.model.toJSON()));
+			this.$el.html(this.template1(this.model.toJSON()));
+			this.$el.append(this.template);
+			
+			var self = this;
+			
+			var controller = new Controller;
+			controller.set({memory: new Memory, modules: new Modules, status: new Status, uptime: new Uptime});
+			
+			
 			return this;
 	    },
-		refresh: function(){this.model.fetch();}
+	    
+	    
+		refresh: function(evt){console.log(evt.currentTarget.id); this.model.fetch();}
 	});
 	return ControllerView;
 });
-
-
-var controller = new Backbone.Model.extend();
-				controller.set({memory: new Memory, modules: new Modules, status: new Status, uptime: new Uptime});
-				
