@@ -3,11 +3,11 @@ define([
 	"underscore",
 	"backbone",
 	"model/controller/controllermodel",
-	"model/controller/memory",
-	"model/controller/modules",
-	"model/controller/status",
-	"model/controller/uptime",
-	"text!tpl/controller.html",
+	"model/controller/memorymodel",
+	"model/controller/modulesmodel",
+	"model/controller/statusmodel",
+	"model/controller/uptimemodel",
+	"text!/avior/kevin/tpl/controller.html",
 ], function($, _, Backbone, Controller, Memory, Modules, Status, Uptime, controllerTpl){
 	var ControllerView = Backbone.View.extend({
 		el: $('body'),
@@ -18,16 +18,24 @@ define([
 			"click button": "refresh",
 		},
 		
+		initialize: function() {
+			var newcontroller = new Controller;
+			newcontroller.set({memory: new Memory, modules: new Modules, status: new Status, uptime: new Uptime});
+			
+			this.listenTo(newcontroller, "sync", this.render());
+			
+			
+			_.forEach(newcontroller.models, function(item){
+				item.fetch();
+			}, this);
+			
+		},
+		
 	    render: function() {
 			this.$el.html(this.template1(this.model.toJSON()));
 			this.$el.append(this.template);
 			
 			var self = this;
-			
-			var controller = new Controller;
-			controller.set({memory: new Memory, modules: new Modules, status: new Status, uptime: new Uptime});
-			
-			
 			return this;
 	    },
 	    
