@@ -17,7 +17,8 @@ define([
 	"text!template/ports.html",
 	"text!template/port.html",
 	"text!template/getFlows.html",
-], function($, _, Backbone, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
+	"text!template/flowEd.html",
+], function($, _, Backbone, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, swtchsSumTpl, header, descrip, portFrame, portRow, flow, flowEd){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -27,6 +28,7 @@ define([
 		template4: _.template(portFrame),
 		template5: _.template(portRow),
 		template6: _.template(flow),
+		template7: _.template(flowEd),
 			
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
@@ -42,7 +44,8 @@ define([
 		},
 		
 		events: {
-			"click button": "refresh",
+			"click #loadswtch": "refresh",
+			"click #flowMod": "modFlows",
 			"click a": "clickSwitch",
 		},
 		
@@ -132,6 +135,12 @@ define([
 			features.fetch();
 			this.collection.fetch();
 			switchStats.fetch();
+		},
+		
+		modFlows: function () {
+			$('#container').remove();
+			this.$el.append(this.template7());
+			console.log("Mod Flows!");
 		}
 	});
 	return SwitchesSumView;
