@@ -1,6 +1,6 @@
 define([
 	"model/controller/statusmodel"
 ], function(Status){
-	Status.prototype.url = "/wm/core/health/json";
+	Status.prototype.urlRoot = "/wm/core/health/json";
 	return Status;
 });

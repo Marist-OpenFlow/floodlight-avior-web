@@ -3,11 +3,10 @@ define([
 	"underscore",
 	"backbone",
 	"view/switch",
-	"view/SwitchHeading",
-	"collection/switchcollection",
+	"collection/switchCollection",
 	"text!template/switches.html",
 	"text!template/switchHeading.html",
-], function($, _, Backbone, SwitchView, SwitchHeading, SwitchCollection, swtchsTpl, header){
+], function($, _, Backbone, SwitchView, SwitchCollection, swtchsTpl, header){
 	var SwitchesView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -16,12 +15,12 @@ define([
 			
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 
-		initialize: function(item){
+		/*initialize: function(item){
 			var self = this;
 			this.collection = new SwitchCollection();
 			this.collection.fetch();	
 			this.listenTo(this.collection, "sync", this.render);
-		},
+		},*/
 		
 		events: {
 			"click button": "refresh",
@@ -57,7 +56,7 @@ define([
 		},
 		
 		//updates this.collection with the latest switch info from server
-		refresh: function(){this.collection.fetch();}
+		refresh: function(evt){console.log(evt.currentTarget.id); this.collection.fetch();}
 	});
 	return SwitchesView;
 });

@@ -1,5 +1,17 @@
-DPID: <input id="switchDPID" />
-<p>Name: <input value="hello" id="name" /></p>
-<p>Ingress Port: <input id="ingressPort" /></p>
-<p>Actions: <input id="actions" /></p>
-<p><button id="getFlows">Push Flow</button></p> 
+<div id="container">
+<table id="flowEdTable">
+	<tr>
+		<td> Name: </td>
+		<td> <input type="text" value="hello" id="name" /> </td>
+	</tr>
+	<tr>
+		<td> Ingress Port: </td>
+		<td> <input type="text" id="ingressPort" /> </td>
+	</tr> 
+	<tr>
+		<td> Actions: </td> 
+		<td> <input type="text" id="actions" /> </td>
+	</tr>
+</table>
+<button id="getFlows">Push Flow</button>
+</div>
