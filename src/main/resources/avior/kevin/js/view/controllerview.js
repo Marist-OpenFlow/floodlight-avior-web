@@ -29,11 +29,12 @@ define([
 				item.fetch();
 			}, this);
 			
+			console.log('web initialization successful');
 		},
 		
 	    render: function() {
 			this.$el.html(this.template1(this.model.toJSON()));
-			this.$el.append(this.template);
+			this.$el.append(this.template1);
 			
 			var self = this;
 			return this;
