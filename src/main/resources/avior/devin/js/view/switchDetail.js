@@ -142,7 +142,7 @@ define([
 		
 		modFlows: function () {
 			$('#container').remove();
-			new FlowEditor(this.currentDPID);
+			new FlowEditor(this.collection);
 		}
 	});
 	return SwitchesSumView;

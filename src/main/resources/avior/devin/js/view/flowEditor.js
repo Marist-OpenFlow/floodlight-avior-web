@@ -16,8 +16,9 @@ define([
 		
 		template1: _.template(flowEd),
 
-		initialize: function(dpid){
-			this.currentDPID = dpid;
+		initialize: function(collec){
+			this.collection = collec;
+			console.log(JSON.stringify(this.collection));
 			this.render();
 		},
 		
@@ -28,7 +29,6 @@ define([
 		
 		render: function() {
 			this.$el.append(this.template1);
-			$('#dpid').val(this.currentDPID);
 		},
 		
 		validate: function(e){
