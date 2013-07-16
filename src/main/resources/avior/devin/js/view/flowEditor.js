@@ -9,11 +9,15 @@ define([
 		el: $('body'),
 			
 		currentDPID: '',
+		switch:'',
+		ingressport:'',
+		name:'',
+		actions:'',
+		
 		template1: _.template(flowEd),
 
 		initialize: function(dpid){
 			this.currentDPID = dpid;
-			console.log(this.currentDPID);
 			this.render();
 		},
 		
@@ -28,18 +32,31 @@ define([
 		},
 		
 		validate: function(e){
-			//var val = $(e.currentTarget).val();
-			var val = $(e.currentTarget);
-			console.log(val === $('input#name'));
+			var val = e.currentTarget.id;
+			
+			switch (e.currentTarget.id)
+			{
+				case "ingressPort": 
+					this.ingressport = $(e.currentTarget).val();
+					break;
+				case "name": 
+					this.name = $(e.currentTarget).val();
+					break;
+				case "actions": 
+					this.actions = $(e.currentTarget).val();
+					break;
+				default:
+					break;
+			}
 		},
 		
 		pushFlow: function() {
 			var addFlow = new FlowMod();
 			addFlow.save({
 				'switch':$('#dpid').val(),
-				'ingress-port':'1',
-				'name':'flowMod1',
-				'actions':'output=3',
+				'ingress-port':this.ingressport,
+				'name':this.name,
+				'actions':'output=' + this.actions,
 			});
 		}
 	});
