@@ -2,7 +2,7 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"floodlight/controllers",
+	"model/controller/controllermodel",
 	"floodlight/controller/memory",
 	"floodlight/controller/modules",
 	"floodlight/controller/status",
@@ -26,14 +26,18 @@ define([
 			
 			this.listenTo(newcontroller, "sync", this.render(newcontroller));
 			
-			var m = new Memory;
-			console.log(m.fetch());
+			newcontroller.memory.fetch();
+			newcontroller.modules.fetch();
+			newcontroller.status.fetch();
+			newcontroller.uptime.fetch();
 			
+			/*
 			_.forEach(newcontroller, function(item){
 				console.log(JSON.stringify(item));
 				item.fetch();
 				console.log("yo");
 			}, this);
+			*/
 			
 			console.log(newcontroller);
 			
