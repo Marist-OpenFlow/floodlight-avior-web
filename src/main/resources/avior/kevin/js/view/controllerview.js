@@ -2,11 +2,11 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"model/controller/controllermodel",
-	"model/controller/memorymodel",
-	"model/controller/modulesmodel",
-	"model/controller/statusmodel",
-	"model/controller/uptimemodel",
+	"floodlight/controllers",
+	"floodlight/controller/memory",
+	"floodlight/controller/modules",
+	"floodlight/controller/status",
+	"floodlight/controller/uptime",
 	"text!/avior/kevin/tpl/controller.html",
 ], function($, _, Backbone, Controller, Memory, Modules, Status, Uptime, controllerTpl){
 	var ControllerView = Backbone.View.extend({
@@ -21,20 +21,28 @@ define([
 		initialize: function() {
 			var newcontroller = new Controller;
 			newcontroller.set({memory: new Memory, modules: new Modules, status: new Status, uptime: new Uptime});
+			console.log(newcontroller);
+			console.log(JSON.stringify(newcontroller));
 			
-			this.listenTo(newcontroller, "sync", this.render());
+			this.listenTo(newcontroller, "sync", this.render(newcontroller));
 			
+			var m = new Memory;
+			console.log(m.fetch());
 			
-			_.forEach(newcontroller.models, function(item){
+			_.forEach(newcontroller, function(item){
+				console.log(JSON.stringify(item));
 				item.fetch();
+				console.log("yo");
 			}, this);
+			
+			console.log(newcontroller);
 			
 			console.log('web initialization successful');
 		},
 		
-	    render: function() {
-			this.$el.html(this.template1(this.model.toJSON()));
-			this.$el.append(this.template1);
+	    render: function(newcontroller) {
+			this.$el.html(this.template1(newcontroller.toJSON()));
+			
 			
 			var self = this;
 			return this;

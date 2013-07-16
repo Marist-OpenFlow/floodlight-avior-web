@@ -2,6 +2,12 @@
 <dl>
 	<dt>Healthy: </dt>
 	<dd><%= status.healthy %></dd>
+	<dt>Uptime: </dt>
+	<dd><%= uptime.systemUptimeMsec %></dd>
+	<dt>Modules loaded:</dt>
+	<dd><%= modules.moduleText %></dd>
+	<dt>JVM memory bloat:</dt>
+	<dd><%= memory.free %> free out of <%= memory.total %></dd>
 </dl>
 <button id="loadmem">Refresh</button>
 
