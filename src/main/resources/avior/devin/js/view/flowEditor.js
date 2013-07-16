@@ -18,7 +18,6 @@ define([
 
 		initialize: function(collec){
 			this.collection = collec;
-			console.log(JSON.stringify(this.collection));
 			this.render();
 		},
 		
@@ -28,7 +27,11 @@ define([
 		},
 		
 		render: function() {
-			this.$el.append(this.template1);
+			var i = 0;
+			_.forEach(this.collection.models, function(item) {
+						console.log(JSON.stringify(item));
+        		}, this);
+			this.$el.append(this.template1(this.collection.toJSON()));
 		},
 		
 		validate: function(e){

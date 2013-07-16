@@ -58,12 +58,11 @@ define([
 			var self = this;
 			
 			_.forEach(self.collection.models, function(item) {
-			
-						item.set("features", features);
-						item.set("switchStatistics", switchStats);
+						var dp = item.get("dpid");
+						item.set("features", features.get(dp));
+						item.set("switchStatistics", switchStats.get(dp));
 						item.set("id", item.get("dpid"));
   						self.renderSwitch(item);
-  						//console.log(JSON.stringify(item.get("ports")));
 					}, this);
 			
 			return this;

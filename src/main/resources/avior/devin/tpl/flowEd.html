@@ -4,34 +4,30 @@
 		<td> DPID: </td>
 		<td> <select id="dpid">
   				<option></option>
+  				<option> <%= dpid[0] %> </option>
+			 </select> 
+		</td>
+	</tr>
+	<tr>
+		<td> Ingress Port: </td>
+		<td> <select id="ingressPort">
+  				<option></option>
   				<option>Google Chrome</option>
- 	 			<option>Firefox</option>  
-  				<option>Internet Explorer</option>
-  				<option>Safari</option>
-  				<option>Opera</option>
-			</select> 
+			 </select> 
+		</td>
+	</tr> 
+	<tr>
+		<td> Actions: </td> 
+		<td> <select id="actions">
+  				<option></option>
+  				<option>Google Chrome</option>
+			 </select> 
 		</td>
 	</tr>
 	<tr>
 		<td> Name: </td>
 		<td> <input type="text" id="name" /> </td>
 	</tr>
-	<tr>
-		<td> Ingress Port: </td>
-		<td> <input type="text" id="ingressPort" /> </td>
-	</tr> 
-	<tr>
-		<td> Actions: </td> 
-		<td> <input type="text" id="actions" /> </td>
-	</tr>
 </table>
 <button id="getFlows">Push Flow</button>
-<select id="myList">
-  <option></option>
-  <option>Google Chrome</option>
-  <option>Firefox</option>  
-  <option>Internet Explorer</option>
-  <option>Safari</option>
-  <option>Opera</option>
-</select>
 </div>
