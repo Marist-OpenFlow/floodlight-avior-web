@@ -24,17 +24,19 @@ define([
 		
 		render: function() {
 			this.$el.append(this.template1);
+			$('#dpid').val(this.currentDPID);
 		},
 		
 		validate: function(e){
-			var val = $(e.currentTarget).val();
-			console.log(val);
+			//var val = $(e.currentTarget).val();
+			var val = $(e.currentTarget);
+			console.log(val === $('input#name'));
 		},
 		
 		pushFlow: function() {
 			var addFlow = new FlowMod();
 			addFlow.save({
-				'switch':this.currentDPID,
+				'switch':$('#dpid').val(),
 				'ingress-port':'1',
 				'name':'flowMod1',
 				'actions':'output=3',
