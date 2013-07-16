@@ -31,7 +31,7 @@ define([
 			_.forEach(this.collection.models, function(item) {
 						console.log(JSON.stringify(item));
         		}, this);
-			this.$el.append(this.template1(this.collection.toJSON()));
+			this.$el.append(this.template1({coll: this.collection.toJSON()}));
 		},
 		
 		validate: function(e){

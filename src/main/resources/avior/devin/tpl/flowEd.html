@@ -3,8 +3,8 @@
 	<tr>
 		<td> DPID: </td>
 		<td> <select id="dpid">
-  				<option></option>
-  				<option> <%= dpid[0] %> </option>
+				<option></option>
+  				<% _.each(coll, function(i) { %>  <option><%= i.dpid %></option> <% }); %>
 			 </select> 
 		</td>
 	</tr>
