@@ -1,8 +1,9 @@
+<tbody id="portBody">
 	<tr>
 		<td> Ingress Port: </td>
 		<td> <select id="ingressPort">
   				<option></option>
-  				<option>Google Chrome</option>
+  				<% _.each(ports, function(i) { %>  <option><%= i.portNumber %></option> <% }); %>
 			 </select> 
 		</td>
 	</tr> 
@@ -10,7 +11,7 @@
 		<td> Actions: </td> 
 		<td> <select id="actions">
   				<option></option>
-  				<option>Google Chrome</option>
+  				<% _.each(ports, function(i) { %>  <option><%= i.portNumber %></option> <% }); %>
 			 </select> 
 		</td>
 	</tr>
@@ -18,3 +19,4 @@
 		<td> Name: </td>
 		<td> <input type="text" id="name" /> </td>
 	</tr>
+</tbody>
