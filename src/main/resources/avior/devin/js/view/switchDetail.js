@@ -47,7 +47,7 @@ define([
 		events: {
 			"click #loadswtch": "refresh",
 			"click #flowMod": "modFlows",
-			"click a": "clickSwitch",
+			"click a.dpidLink": "clickSwitch",
 		},
 		
 		// render the heading and table template, 
@@ -122,7 +122,10 @@ define([
         		
         		_.forEach(ports.models, function(item) {
 					$('#portTable').append(self.template5(item.toJSON()));
+					//console.log(JSON.stringify(item));
         		}, this);
+        		oneSwitch.set("portModel", ports);
+        
     	 	});
 		},
 		
