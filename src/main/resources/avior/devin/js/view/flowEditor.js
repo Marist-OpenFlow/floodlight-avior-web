@@ -4,7 +4,8 @@ define([
 	"backbone",
 	"model/flowMod",
 	"text!template/flowEd.html",
-], function($, _, Backbone, FlowMod, flowEd){
+	"text!template/flowEd2.html",
+], function($, _, Backbone, FlowMod, flowEd, flowEd2){
 	var FlowEdView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -15,6 +16,7 @@ define([
 		actions:'',
 		
 		template1: _.template(flowEd),
+		template2: _.template(flowEd2),
 
 		initialize: function(collec){
 			this.collection = collec;
@@ -24,14 +26,17 @@ define([
 		events: {
 			"click #getFlows": "pushFlow",
 			"change input": "validate",
+			"change select": "validate",
+			"change #dpid": "showPorts",
 		},
 		
 		render: function() {
 			var i = 0;
 			_.forEach(this.collection.models, function(item) {
-						console.log(JSON.stringify(item));
+						//console.log(JSON.stringify(item));
         		}, this);
 			this.$el.append(this.template1({coll: this.collection.toJSON()}));
+			//$('#flowEdTable').append(this.template2);
 		},
 		
 		validate: function(e){
@@ -61,6 +66,15 @@ define([
 				'name':this.name,
 				'actions':'output=' + this.actions,
 			});
+		},
+		
+		showPorts: function (e) {
+			var v = $(e.currentTarget).val();
+			var c = this.collection.get(v);
+			var d = c.get("ports");
+			console.log(JSON.stringify(c));
+			$('#portBody').remove();
+			$('#flowEdTable').append(this.template2(c.toJSON()));
 		}
 	});
 	return FlowEdView;
