@@ -1,9 +1,7 @@
-<h2>Controller Memory</h2>
+<h2>Controller Status</h2>
 <dl>
-	<dt>Total</dt>
-	<dd><%= (total/(1024*1024)).toFixed(2) %> MB</dd>
-	<dt>Free</dt>
-	<dd><%= (free/(1024*1024)).toFixed(2) %> MB</dd>
+	<dt>Healthy:</dt>
+	<dd><%= healthy %></dd>
 </dl>
-<button id="loadmem">Refresh</button>
+<button id="loadstat">Refresh</button>
 
