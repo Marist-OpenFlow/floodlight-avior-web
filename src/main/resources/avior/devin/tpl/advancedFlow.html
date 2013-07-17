@@ -21,8 +21,56 @@
 		<td> <input type="text" id="vlan-priority" /> </td>
 	</tr>
 	<tr>
-		<td> Data Layer Destination: </td>
-		<td> <input type="text" id="srcmac" /> </td>
+		<td> Network Destination: </td>
+		<td> <input type="text" id="dst-ip" /> </td>
+	</tr>
+	<tr>
+		<td> Network Source: </td>
+		<td> <input type="text" id="src-ip" /> </td>
+	</tr>
+	<tr>
+		<td> Network Protocol: </td>
+		<td> <input type="text" id="protocol" /> </td>
+	</tr>
+	<tr>
+		<td> Network Type of Service: </td>
+		<td> <input type="text" id="tos-bits" /> </td>
+	</tr>
+	<tr>
+		<td> Transport Destination: </td>
+		<td> <input type="text" id="dst-port" /> </td>
+	</tr>
+	<tr>
+		<td> Transport Source: </td>
+		<td> <input type="text" id="dst-src" /> </td>
+	</tr>
+	<tr>
+		<td> Wildcards: </td>
+		<td> <input type="text" id="wildcards" /> </td>
+	</tr>
+	<tr>
+		<td> Priority: </td>
+		<td> <input type="text" id="priority" /> </td>
+	</tr>
+	<tr>
+		<td> Actions: </td> 
+		<td> <select id="actions">
+  				<option></option>
+  				<option>Advanced Output</option>
+  				<option>Enqueue</option>
+  				<option>Strip Virtual Lan</option>
+  				<option>Set Virtual Lan</option>
+  				<option>Set Virtual Lan Priority</option>
+  				<option>Set Data Layer Source</option>
+  				<option>Set Data Layer Destination</option>
+  				<option>Set Netowrk Type of Service</option>
+  				<option>Set Network Source</option>
+  				<option>Set Network Destination</option>
+  				<option>Set Transport Source</option>
+  				<option>Set Transport Destination</option>
+			 </select> 
+		</td>
+		<td><input type="text" id="actionsText" /></td>
 	</tr>
 </table>
 </div>
