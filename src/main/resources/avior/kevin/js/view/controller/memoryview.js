@@ -2,15 +2,15 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"text!template/controller.html"
-], function($, _, Backbone, ctrlTpl){
+	"text!template/controller/memorytpl.html"
+], function($, _, Backbone, memTpl){
 	var MemoryView = Backbone.View.extend({
-		//... is a div tag.
-	    tagName:  "poop",
-	    // Cache the template function for a single item.
-		//template: _.template($('#controller-template').html()),
-		template: _.template(ctrlTpl),
+	    tagName: "mem",
+	    
+		template: _.template(memTpl),
+		
 		initialize: function(){
+			this.model.fetch()
 			this.listenTo(this.model, "change", this.render);
 			this.listenTo(this.model, "destroy", this.remove);
 		},
