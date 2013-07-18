@@ -48,7 +48,7 @@ define([
 					this.name = $(e.currentTarget).val();
 					break;
 				case "egressport": 
-					this.actions = 'output=' + $(e.currentTarget).val();
+					this.egressport = 'output=' + $(e.currentTarget).val();
 					break;
 					
 				case "src-mac": 
@@ -91,7 +91,42 @@ define([
 					this.priority = $(e.currentTarget).val();
 					break;
 				case "moreOutput": 
-					this.actions = $(e.currentTarget).val();
+					this.actions = 'output=' + $(e.currentTarget).val();
+					console.log(this.actions);
+					break;
+				case "enqueue": 
+					this.actions = 'enqueue=' + $(e.currentTarget).val();
+					break;
+				case "strip-vlan": 
+					this.actions = 'strip-vlan=' + $(e.currentTarget).val();
+					break;
+				case "set-vlan": 
+					this.actions = 'set-vlan=' + $(e.currentTarget).val();
+					break;
+				case "set-vlan-priority": 
+					this.actions = 'set-vlan-priority=' + $(e.currentTarget).val();
+					break;
+				case "set-src-mac": 
+					this.actions = 'set-src-mac=' + $(e.currentTarget).val();
+					console.log(this.actions);
+					break;
+				case "set-dst-mac": 
+					this.actions = 'set-dst-mac=' + $(e.currentTarget).val();
+					break;
+				case "set-tos-bits": 
+					this.actions = 'set-tos-bits=' + $(e.currentTarget).val();
+					break;
+				case "set-src-ip": 
+					this.actions = 'set-src-ip=' + $(e.currentTarget).val();
+					break;
+				case "set-dst-ip": 
+					this.actions = 'set-dst-ip=' + $(e.currentTarget).val();
+					break;
+				case "set-src-port": 
+					this.actions = 'set-src-port=' + $(e.currentTarget).val();
+					break;
+				case "set-dst-port": 
+					this.actions = 'set-dst-port=' + $(e.currentTarget).val();
 					break;
 				default:
 					break;
@@ -114,6 +149,18 @@ define([
 				'src-ip':this.srcip,
 				'dst-ip':this.dstip,
 				'protocol':this.protocol,
+				
+				/*'enqueue':this.enqueue,
+				'strip-vlan':this.stripvlan,
+				'set-vlan':this.setvlan,
+				'set-vlan-priority':this.setvlanpriority,
+				'set-src-mac':this.setsrcmac,
+				'set-dst-mac':this.setdstmac,
+				'set-tos-bits':this.settosbits,
+				'set-src-ip':this.setsrcip,
+				'set-dst-ip':this.setdstip,
+				'set-src-port':this.setsrcport,
+				'set-dst-port':this.setdstport,*/
 			});
 		},
 		
