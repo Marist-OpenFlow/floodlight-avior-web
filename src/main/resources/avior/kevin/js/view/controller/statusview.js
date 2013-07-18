@@ -8,6 +8,7 @@ define([
 	    tagName: "status",
 	    el: $('body'),
 	    
+	    console.log("hello");
 		template: _.template(statTpl),
 		
 		initialize: function(){
