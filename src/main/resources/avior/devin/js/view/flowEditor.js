@@ -9,12 +9,6 @@ define([
 ], function($, _, Backbone, FlowMod, flowEd, flowEd2, advanced){
 	var FlowEdView = Backbone.View.extend({
 		el: $('body'),
-			
-		currentDPID: '',
-		switch:'',
-		ingressport:'',
-		name:'',
-		actions:'',
 		
 		template1: _.template(flowEd),
 		template2: _.template(flowEd2),
@@ -43,7 +37,7 @@ define([
 		},
 		
 		validate: function(e){
-			var val = e.currentTarget.id;
+			//var val = e.currentTarget.id;
 			
 			switch (e.currentTarget.id)
 			{
@@ -55,6 +49,46 @@ define([
 					break;
 				case "actions": 
 					this.actions = $(e.currentTarget).val();
+					break;
+					
+				case "src-mac": 
+					this.srcmac = $(e.currentTarget).val();
+					break;
+				case "dst-mac": 
+					this.dstmac = $(e.currentTarget).val();
+					break;
+				case "ether-type": 
+					this.ethertype = $(e.currentTarget).val();
+					break;
+				case "vlan-id": 
+					this.vlanid = $(e.currentTarget).val();
+					break;
+				case "vlan-priority": 
+					this.vlanpriority = $(e.currentTarget).val();
+					break;
+				case "dst-ip": 
+					this.dstip = $(e.currentTarget).val();
+					break;
+				case "src-ip": 
+					this.srcip = $(e.currentTarget).val();
+					break;
+				case "protocol": 
+					this.protocol = $(e.currentTarget).val();
+					break;
+				case "tos-bits": 
+					this.tosbits = $(e.currentTarget).val();
+					break;
+				case "dst-port": 
+					this.dstport = $(e.currentTarget).val();
+					break;
+				case "dst-src": 
+					this.dstsrc = $(e.currentTarget).val();
+					break;
+				case "wildcards": 
+					this.wildcards = $(e.currentTarget).val();
+					break;
+				case "priority": 
+					this.priority = $(e.currentTarget).val();
 					break;
 				default:
 					break;
@@ -69,14 +103,14 @@ define([
 				'name':this.name,
 				'actions':'output=' + this.actions,
 				
-				'src-port':'',
-				'dst-port':'',
-				'ether-type':'',
-				'dst-mac':'',
-				'src-mac':'',
-				'src-ip':'',
-				'dst-ip':'',
-				'protocol':'',
+				'src-port':this.srcport,
+				'dst-port':this.dstport,
+				'ether-type':this.ethertype,
+				'dst-mac':this.dstmac,
+				'src-mac':this.srcmac,
+				'src-ip':this.srcip,
+				'dst-ip':this.dstip,
+				'protocol':this.protocol,
 			});
 		},
 		
