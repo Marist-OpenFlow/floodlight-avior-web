@@ -34,11 +34,11 @@ define([
 			$(document).ready(function(){
 				var statusview = new StatusView({model: new Status});
 				// var uptimeview = new UptimeView({model: new Uptime});
-				// var memoryview = new MemoryView({model: new Memory});
+				var memoryview = new MemoryView({model: new Memory});
 				// var modulesview = new ModulesView({model: new Modules});
 				
-				// statusview.delegateEvents(statusview.events);
-				// memoryview.delegateEvents(memoryview.events);
+				statusview.delegateEvents(statusview.events);
+				memoryview.delegateEvents(memoryview.events);
 				
 				
 				/*

@@ -1,7 +1,11 @@
 <h2>Controller Status</h2>
-<dl>
-	<dt>Healthy:</dt>
-	<dd><%= healthy %></dd>
-</dl>
+<p>
+	Status:
+	<% function( healthy ) {
+		 if(healthy ) { %>
+		 	 Healthy <%
+		 } else { %>
+		 	 A problem exists <% }};%>
+</p>
 <button id="loadstat">Refresh</button>
 
