@@ -39,7 +39,7 @@ define([
 						//console.log(JSON.stringify(item));
         		}, this);
 			this.$el.append(this.template1({coll: this.collection.toJSON()}));
-			//$('#flowEdTable').append(this.template2);
+			this.$el.append(this.template3);
 		},
 		
 		validate: function(e){
@@ -69,14 +69,14 @@ define([
 				'name':this.name,
 				'actions':'output=' + this.actions,
 				
-				'src-port':'50010',
-				'dst-port':'50011',
-				'ether-type':'0x0800',
-				'dst-mac':'12:34:56:78:90:ab',
-				'src-mac':'12:34:56:78:90:ab',
-				'src-ip':'192.168.2.17',
-				'dst-ip':'192.168.2.33',
-				"protocol":"0x06",
+				'src-port':'',
+				'dst-port':'',
+				'ether-type':'',
+				'dst-mac':'',
+				'src-mac':'',
+				'src-ip':'',
+				'dst-ip':'',
+				'protocol':'',
 			});
 		},
 		
@@ -88,11 +88,6 @@ define([
 			$('#portBody').remove();
 			$('#flowEdTable').append(this.template2(c.toJSON()));
 		},
-		
-		advanced: function() {
-			console.log("advanced");
-			this.$el.append(this.template3);
-		}
 	});
 	return FlowEdView;
 });
