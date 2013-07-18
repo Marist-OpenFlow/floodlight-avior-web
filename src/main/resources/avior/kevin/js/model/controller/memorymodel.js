@@ -4,7 +4,7 @@ define([
 ], function(Backbone,Util){
 	/* Structure to hold controller metadata */
 	var MemoryModel = Backbone.Model.extend({
-		urlRoot: "/wm/core/memory/json",
+		urlRoot: Util.missingCtlrErr,
 		defaults: {
 			total: 0,
 			free: 0

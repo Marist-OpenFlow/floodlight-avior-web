@@ -30,4 +30,3 @@ define([
 	});
 	return StatusView;
 });
-

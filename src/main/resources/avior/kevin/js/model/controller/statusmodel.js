@@ -8,6 +8,10 @@ define([
 		defaults: {
 			healthy: 'unknown'
 		},
+		initialization: function() {
+			console.log(this.healthy);
+			console.log("poop");
+		}
 	});
 	
 	return StatusModel;
