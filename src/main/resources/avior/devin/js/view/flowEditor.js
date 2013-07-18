@@ -33,7 +33,7 @@ define([
 						//console.log(JSON.stringify(item));
         		}, this);
 			this.$el.append(this.template1({coll: this.collection.toJSON()}));
-			this.$el.append(this.template3);
+			$('#container').append(this.template3);
 		},
 		
 		validate: function(e){
@@ -149,7 +149,6 @@ define([
 				'src-ip':this.srcip,
 				'dst-ip':this.dstip,
 				'protocol':this.protocol,
-				
 			});
 		},
 		
