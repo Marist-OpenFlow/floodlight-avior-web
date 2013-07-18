@@ -5,7 +5,7 @@ define([
 	"text!template/controller/memorytpl.html"
 ], function($, _, Backbone, memTpl){
 	var MemoryView = Backbone.View.extend({
-	    tagName: "memory",
+	    tagName: "mem",
 	    el: $('body'),
 	    
 		template: _.template(memTpl),
