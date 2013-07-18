@@ -47,8 +47,8 @@ define([
 				case "name": 
 					this.name = $(e.currentTarget).val();
 					break;
-				case "actions": 
-					this.actions = $(e.currentTarget).val();
+				case "egressport": 
+					this.actions = 'output=' + $(e.currentTarget).val();
 					break;
 					
 				case "src-mac": 
@@ -90,6 +90,9 @@ define([
 				case "priority": 
 					this.priority = $(e.currentTarget).val();
 					break;
+				case "moreOutput": 
+					this.actions = $(e.currentTarget).val();
+					break;
 				default:
 					break;
 			}
@@ -101,7 +104,7 @@ define([
 				'switch':$('#dpid').val(),
 				'ingress-port':this.ingressport,
 				'name':this.name,
-				'actions':'output=' + this.actions,
+				'actions':this.actions,
 				
 				'src-port':this.srcport,
 				'dst-port':this.dstport,

@@ -2,6 +2,9 @@
 <h2> Advanced Flow Editor</h2>
 <table id="advancedTable">
 	<tr>
+		<td><h4> Match: </h4></td>
+	</tr>
+	<tr>
 		<td> Data Layer Destination: </td>
 		<td> <input type="text" id="src-mac" /> </td>
 	</tr>
@@ -54,24 +57,64 @@
 		<td> <input type="text" id="priority" /> </td>
 	</tr>
 	<tr>
-		<td> Actions: </td> 
-		<td> <select id="moreActions">
+		<td><h4> Actions: </h4></td>
+	</tr>
+	<tr> 
+  		<td> Advanced Output</td>
+  		<td> <select id="moreOutput">
   				<option></option>
-  				<option>Advanced Output</option>
-  				<option>Enqueue</option>
-  				<option>Strip Virtual Lan</option>
-  				<option>Set Virtual Lan</option>
-  				<option>Set Virtual Lan Priority</option>
-  				<option>Set Data Layer Source</option>
-  				<option>Set Data Layer Destination</option>
-  				<option>Set Netowrk Type of Service</option>
-  				<option>Set Network Source</option>
-  				<option>Set Network Destination</option>
-  				<option>Set Transport Source</option>
-  				<option>Set Transport Destination</option>
+  				<option> All </option>
+  				<option> Controller </option>
+  				<option> Local </option>
+  				<option> Ingress-Port </option>
+  				<option> Normal </option>
+  				<option> Flood </option>
 			 </select> 
 		</td>
-		<td><input type="text" id="actionsText" /></td>
-	</tr>
+  	</tr>
+  	<tr> 
+  		<td> Enqueue</td>
+  		<td> <input type="text" id="enqueue" /> </td>
+  	</tr>
+ 	<tr> 
+  		<td> Strip Virtual Lan </td>
+  		<td> <input type="text" id="strip-vlan" /> </td>
+  	</tr>
+	<tr> 
+  		<td> Set Virtual Lan</td>
+  		<td> <input type="text" id="set-vlan" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Virtual Lan Priority</td>
+  		<td> <input type="text" id="set-vlan-priority" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Data Layer Source</td>
+  		<td> <input type="text" id="set-src-mac" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Data Layer Destination</td>
+  		<td> <input type="text" id="set-dst-mac" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Network Type of Service</td>
+  		<td> <input type="text" id="set-tos-bits" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Network Source</td>
+  		<td> <input type="text" id="set-src-ip" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Network Destination</td>
+  		<td> <input type="text" id="set-dst-ip" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Transport Source</td>
+  		<td> <input type="text" id="set-src-port" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Transport Destination</td>
+  		<td> <input type="text" id="set-dst-port" /> </td>
+  	</tr>
 </table>
 </div>
