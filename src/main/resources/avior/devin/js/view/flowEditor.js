@@ -150,17 +150,6 @@ define([
 				'dst-ip':this.dstip,
 				'protocol':this.protocol,
 				
-				/*'enqueue':this.enqueue,
-				'strip-vlan':this.stripvlan,
-				'set-vlan':this.setvlan,
-				'set-vlan-priority':this.setvlanpriority,
-				'set-src-mac':this.setsrcmac,
-				'set-dst-mac':this.setdstmac,
-				'set-tos-bits':this.settosbits,
-				'set-src-ip':this.setsrcip,
-				'set-dst-ip':this.setdstip,
-				'set-src-port':this.setsrcport,
-				'set-dst-port':this.setdstport,*/
 			});
 		},
 		
