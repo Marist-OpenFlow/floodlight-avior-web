@@ -9,12 +9,6 @@ define([
 ], function($, _, Backbone, FlowMod, flowEd, flowEd2, advanced){
 	var FlowEdView = Backbone.View.extend({
 		el: $('body'),
-			
-		currentDPID: '',
-		switch:'',
-		ingressport:'',
-		name:'',
-		actions:'',
 		
 		template1: _.template(flowEd),
 		template2: _.template(flowEd2),
@@ -39,11 +33,11 @@ define([
 						//console.log(JSON.stringify(item));
         		}, this);
 			this.$el.append(this.template1({coll: this.collection.toJSON()}));
-			//$('#flowEdTable').append(this.template2);
+			this.$el.append(this.template3);
 		},
 		
 		validate: function(e){
-			var val = e.currentTarget.id;
+			//var val = e.currentTarget.id;
 			
 			switch (e.currentTarget.id)
 			{
@@ -53,8 +47,86 @@ define([
 				case "name": 
 					this.name = $(e.currentTarget).val();
 					break;
-				case "actions": 
-					this.actions = $(e.currentTarget).val();
+				case "egressport": 
+					this.egressport = 'output=' + $(e.currentTarget).val();
+					break;
+					
+				case "src-mac": 
+					this.srcmac = $(e.currentTarget).val();
+					break;
+				case "dst-mac": 
+					this.dstmac = $(e.currentTarget).val();
+					break;
+				case "ether-type": 
+					this.ethertype = $(e.currentTarget).val();
+					break;
+				case "vlan-id": 
+					this.vlanid = $(e.currentTarget).val();
+					break;
+				case "vlan-priority": 
+					this.vlanpriority = $(e.currentTarget).val();
+					break;
+				case "dst-ip": 
+					this.dstip = $(e.currentTarget).val();
+					break;
+				case "src-ip": 
+					this.srcip = $(e.currentTarget).val();
+					break;
+				case "protocol": 
+					this.protocol = $(e.currentTarget).val();
+					break;
+				case "tos-bits": 
+					this.tosbits = $(e.currentTarget).val();
+					break;
+				case "dst-port": 
+					this.dstport = $(e.currentTarget).val();
+					break;
+				case "dst-src": 
+					this.dstsrc = $(e.currentTarget).val();
+					break;
+				case "wildcards": 
+					this.wildcards = $(e.currentTarget).val();
+					break;
+				case "priority": 
+					this.priority = $(e.currentTarget).val();
+					break;
+				case "moreOutput": 
+					this.actions = 'output=' + $(e.currentTarget).val();
+					console.log(this.actions);
+					break;
+				case "enqueue": 
+					this.actions = 'enqueue=' + $(e.currentTarget).val();
+					break;
+				case "strip-vlan": 
+					this.actions = 'strip-vlan=' + $(e.currentTarget).val();
+					break;
+				case "set-vlan": 
+					this.actions = 'set-vlan=' + $(e.currentTarget).val();
+					break;
+				case "set-vlan-priority": 
+					this.actions = 'set-vlan-priority=' + $(e.currentTarget).val();
+					break;
+				case "set-src-mac": 
+					this.actions = 'set-src-mac=' + $(e.currentTarget).val();
+					console.log(this.actions);
+					break;
+				case "set-dst-mac": 
+					this.actions = 'set-dst-mac=' + $(e.currentTarget).val();
+					break;
+				case "set-tos-bits": 
+					this.actions = 'set-tos-bits=' + $(e.currentTarget).val();
+					break;
+				case "set-src-ip": 
+					this.actions = 'set-src-ip=' + $(e.currentTarget).val();
+					break;
+				case "set-dst-ip": 
+					this.actions = 'set-dst-ip=' + $(e.currentTarget).val();
+					break;
+				case "set-src-port": 
+					this.actions = 'set-src-port=' + $(e.currentTarget).val();
+					break;
+				case "set-dst-port": 
+					this.actions = 'set-dst-port=' + $(e.currentTarget).val();
 					break;
 				default:
 					break;
@@ -67,16 +139,17 @@ define([
 				'switch':$('#dpid').val(),
 				'ingress-port':this.ingressport,
 				'name':this.name,
-				'actions':'output=' + this.actions,
+				'actions':this.actions,
 				
-				'src-port':'50010',
-				'dst-port':'50011',
-				'ether-type':'0x0800',
-				'dst-mac':'12:34:56:78:90:ab',
-				'src-mac':'12:34:56:78:90:ab',
-				'src-ip':'192.168.2.17',
-				'dst-ip':'192.168.2.33',
-				"protocol":"0x06",
+				'src-port':this.srcport,
+				'dst-port':this.dstport,
+				'ether-type':this.ethertype,
+				'dst-mac':this.dstmac,
+				'src-mac':this.srcmac,
+				'src-ip':this.srcip,
+				'dst-ip':this.dstip,
+				'protocol':this.protocol,
+				
 			});
 		},
 		
@@ -88,11 +161,6 @@ define([
 			$('#portBody').remove();
 			$('#flowEdTable').append(this.template2(c.toJSON()));
 		},
-		
-		advanced: function() {
-			console.log("advanced");
-			this.$el.append(this.template3);
-		}
 	});
 	return FlowEdView;
 });
