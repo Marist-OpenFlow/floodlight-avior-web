@@ -5,10 +5,8 @@ define([
 	"text!template/controller/statustpl.html"
 ], function($, _, Backbone, statTpl){
 	var StatusView = Backbone.View.extend({
-	    tagName: "status",
-	    el: $('body'),
+	    tagName: "div",
 	    
-	    console.log("hello");
 		template: _.template(statTpl),
 		
 		initialize: function(){
