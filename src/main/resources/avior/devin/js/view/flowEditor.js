@@ -21,6 +21,7 @@ define([
 		
 		events: {
 			"click #getFlows": "pushFlow",
+			"click #removeFlows": "deleteFlow",
 			"click #advanced": "advanced",
 			"change input": "validate",
 			"change select": "validate",
@@ -33,7 +34,7 @@ define([
 						//console.log(JSON.stringify(item));
         		}, this);
 			this.$el.append(this.template1({coll: this.collection.toJSON()}));
-			this.$el.append(this.template3);
+			$('#container').append(this.template3);
 		},
 		
 		validate: function(e){
@@ -48,7 +49,7 @@ define([
 					this.name = $(e.currentTarget).val();
 					break;
 				case "egressport": 
-					this.egressport = 'output=' + $(e.currentTarget).val();
+					this.actions = 'output=' + $(e.currentTarget).val();
 					break;
 					
 				case "src-mac": 
@@ -149,8 +150,11 @@ define([
 				'src-ip':this.srcip,
 				'dst-ip':this.dstip,
 				'protocol':this.protocol,
-				
 			});
+		},
+		
+		deleteFlow: function () {
+			console.log("delete a flow!");
 		},
 		
 		showPorts: function (e) {
