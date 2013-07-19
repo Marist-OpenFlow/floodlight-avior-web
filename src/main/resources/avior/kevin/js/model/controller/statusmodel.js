@@ -4,14 +4,10 @@ define([
 ], function(Backbone,Util){
 	/* Structure to hold controller metadata */
 	var StatusModel = Backbone.Model.extend({
-		url: "/wm/core/health/json",
+		urlRoot: Util.missingCtlrErr,
 		defaults: {
 			healthy: 'unknown'
 		},
-		initialization: function() {
-			console.log(this.healthy);
-			console.log("poop");
-		}
 	});
 	
 	return StatusModel;

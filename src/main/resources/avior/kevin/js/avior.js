@@ -11,9 +11,9 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"model/controller/memorymodel",
+	"floodlight/controller/memory",
 	"model/controller/modulesmodel",
-	"model/controller/statusmodel",
+	"floodlight/controller/status",
 	"model/controller/uptimemodel",
 	"view/controller/memoryview",
 	"view/controller/modulesview",
@@ -32,14 +32,17 @@ define([
 		
 		initialize: function(){
 			$(document).ready(function(){
-				// var statusview = new StatusView({model: new Status});
+				var statusview = new StatusView({model: new Status});
 				// var uptimeview = new UptimeView({model: new Uptime});
 				var memoryview = new MemoryView({model: new Memory});
 				// var modulesview = new ModulesView({model: new Modules});
 				
+				statusview.delegateEvents(statusview.events);
 				memoryview.delegateEvents(memoryview.events);
-				
-				
+
+				$(document.body).append(statusview.render().el);
+				$(document.body).append(memoryview.render().el);
+
 				/*
 				var flowview = new FlowView({model: new Flow});
 				$(document.body).append(flowview.render().el);

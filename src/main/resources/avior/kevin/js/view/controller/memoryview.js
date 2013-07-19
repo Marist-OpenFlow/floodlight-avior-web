@@ -5,7 +5,7 @@ define([
 	"text!template/controller/memorytpl.html"
 ], function($, _, Backbone, memTpl){
 	var MemoryView = Backbone.View.extend({
-	    tagName: "mem",
+	    tagName: "div",
 	    
 		template: _.template(memTpl),
 		
@@ -20,6 +20,8 @@ define([
 		// Re-render the titles of the todo item.
 	    render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
+			console.log("Memory model ----------------->");
+			console.log(JSON.stringify(this.model));
 			return this;
 	    },
 		refresh: function(){this.model.fetch();}
