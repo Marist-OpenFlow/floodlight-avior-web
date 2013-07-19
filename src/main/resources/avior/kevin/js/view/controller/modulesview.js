@@ -10,7 +10,13 @@ define([
 		template: _.template(modTpl),
 		
 		initialize: function(){
-			this.model.fetch()
+			var self = this;
+			this.model.fetch({
+				success: function(data){
+					self.model.set({modules: _.keys(data)});
+            		self.model.set({moduleText: _.reduce(_.keys(data), function(s, m) {return s+m.replace("net.floodlightcontroller", "n.f")+", "}, '')});
+				}
+			});
 			// this.listenTo(this.model, "change", this.render);
 			this.listenTo(this.model, "sync", this.render);
 		},
