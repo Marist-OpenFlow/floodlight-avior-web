@@ -165,6 +165,7 @@ define([
 			console.log(x.urlRoot());
 			console.log(this.name);
 			x.save({'name':this.name});
+			console.log(JSON.stringify(x));
 		},
 		
 		deleteFlows: function () {
