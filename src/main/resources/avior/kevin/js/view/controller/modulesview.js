@@ -13,6 +13,7 @@ define([
 			var self = this;
 			this.model.fetch({
 				success: function(data){
+					console.log(JSON.stringify(data));
 					self.model.set({modules: _.keys(data)});
             		self.model.set({moduleText: _.reduce(_.keys(data), function(s, m) {return s+m.replace("net.floodlightcontroller", "n.f")+", "}, '')});
 				}
