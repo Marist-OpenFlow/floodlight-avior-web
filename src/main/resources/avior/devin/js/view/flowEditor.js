@@ -154,24 +154,21 @@ define([
 				'dst-ip':this.dstip,
 				'protocol':this.protocol,
 			});
-			//this.flows[this.name] = this.name;
-			console.log(JSON.stringify(addFlow));
-			//console.log(this.flows[this.name]);
+			//addFlow.destroy({'name':this.name});
 		},
 		
 		deleteFlow: function () {
-			console.log("delete a flow!");
+			//console.log("delete a flow!");
 			var x = new FlowMod("null");
-			console.log(x.urlRoot());
-			console.log(this.name);
-			x.save({'name':this.name});
-			console.log(JSON.stringify(x));
+			//console.log(x.urlRoot());
+			//console.log(this.name);
+			x.destroy({data: { name: this.name }});
+			//x.destroy({ name: this.name });
+			//console.log(JSON.stringify(x));
 		},
 		
 		deleteFlows: function () {
-			console.log("delete multiple flows!");
 			var x = new FlowMod("all");
-			console.log(x.urlRoot());
 			x.fetch();
 		},
 		
@@ -183,6 +180,7 @@ define([
 			$('#portBody').remove();
 			$('#flowEdTable').append(this.template2(c.toJSON()));
 		},
+		
 	});
 	return FlowEdView;
 });
