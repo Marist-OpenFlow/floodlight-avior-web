@@ -13,7 +13,7 @@ define([
 	"backbone",
 	"floodlight/controller/memory",
 	"model/controller/modulesmodel",
-	"model/controller/statusmodel",
+	"floodlight/controller/status",
 	"model/controller/uptimemodel",
 	"view/controller/memoryview",
 	"view/controller/modulesview",

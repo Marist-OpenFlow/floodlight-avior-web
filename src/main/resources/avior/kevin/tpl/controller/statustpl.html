@@ -1,7 +1,7 @@
 <h2>Controller Status</h2>
 <dl>
 	<dt>Healthy:</dt>
-	<dd><%= healthy %> </dd>
+	<dd><% function(healthy) { healthy ? %>Healthy<% : %>Network experiencing issues<% } %> </dd>
 </dl>
 
 <button id="loadstat">Refresh</button>
