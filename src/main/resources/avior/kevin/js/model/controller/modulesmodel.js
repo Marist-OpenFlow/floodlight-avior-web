@@ -5,7 +5,7 @@ define([
 ], function(_,Backbone,Util){
 	/* Structure to hold controller metadata */
 	var ModulesModel = Backbone.Model.extend({
-		url: Util.missingCtlrErr,
+		urlRoot: Util.missingCtlrErr,
 		defaults: {
 			modules: [],
 			moduleText: ''
