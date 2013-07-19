@@ -1,7 +1,7 @@
 <h2>Controller Uptime</h2>
 <dl>
 	<dt>Total system uptime: </dt>
-	<dd><%= systemUptimeMsec %> seconds</dd>
+	<dd><%= (systemUptimeMsec/1000) %> seconds</dd>
 </dl>
 <button id="loadup">Refresh</button>
 
