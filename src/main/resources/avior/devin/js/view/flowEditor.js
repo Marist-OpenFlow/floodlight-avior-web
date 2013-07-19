@@ -168,7 +168,7 @@ define([
 			var x = new DeleteFlows();
 			//x.set("id", '');
 			console.log(x.urlRoot());
-			x.destroy({success: function(model, response) {
+			x.fetch({success: function(model, response) {
 				//console.log("done?");
 			}});
 		},
