@@ -3,10 +3,11 @@ define([
 	"underscore",
 	"backbone",
 	"model/flowMod",
+	"floodlight/deleteFlowsFl",
 	"text!template/flowEd.html",
 	"text!template/flowEd2.html",
 	"text!template/advancedFlow.html",
-], function($, _, Backbone, FlowMod, flowEd, flowEd2, advanced){
+], function($, _, Backbone, FlowMod, DeleteFlows, flowEd, flowEd2, advanced){
 	var FlowEdView = Backbone.View.extend({
 		el: $('body'),
 		
@@ -15,13 +16,15 @@ define([
 		template3: _.template(advanced),
 
 		initialize: function(collec){
+			this.flows = new Array;
 			this.collection = collec;
 			this.render();
 		},
 		
 		events: {
 			"click #getFlows": "pushFlow",
-			"click #removeFlows": "deleteFlow",
+			"click #removeFlow": "deleteFlow",
+			"click #removeFlows": "deleteFlows",
 			"click #advanced": "advanced",
 			"change input": "validate",
 			"change select": "validate",
@@ -151,10 +154,20 @@ define([
 				'dst-ip':this.dstip,
 				'protocol':this.protocol,
 			});
+			//this.flows[this.name] = this.name;
+			console.log(JSON.stringify(addFlow));
+			//console.log(this.flows[this.name]);
 		},
 		
 		deleteFlow: function () {
 			console.log("delete a flow!");
+		},
+		
+		deleteFlows: function () {
+			console.log("delete multiple flows!");
+			var x = new DeleteFlows();
+			console.log(x.urlRoot());
+			x.fetch();
 		},
 		
 		showPorts: function (e) {

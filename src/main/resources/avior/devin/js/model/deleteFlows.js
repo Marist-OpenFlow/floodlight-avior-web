@@ -3,6 +3,6 @@ define([
 	"util",
 	"openflow"
 ], function(Backbone,Util){
-	var FlowEdModel = Backbone.Model.extend();
-	return FlowEdModel;
+	var DeleteFlows = Backbone.Model.extend();
+	return DeleteFlows;
 });
