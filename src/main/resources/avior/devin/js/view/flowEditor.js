@@ -138,7 +138,7 @@ define([
 		},
 		
 		pushFlow: function() {
-			var addFlow = new FlowMod();
+			var addFlow = new FlowMod("null");
 			addFlow.save({
 				'switch':$('#dpid').val(),
 				'ingress-port':this.ingressport,
@@ -161,11 +161,15 @@ define([
 		
 		deleteFlow: function () {
 			console.log("delete a flow!");
+			var x = new FlowMod("null");
+			console.log(x.urlRoot());
+			console.log(this.name);
+			x.save({'name':this.name});
 		},
 		
 		deleteFlows: function () {
 			console.log("delete multiple flows!");
-			var x = new DeleteFlows();
+			var x = new FlowMod("all");
 			console.log(x.urlRoot());
 			x.fetch();
 		},
