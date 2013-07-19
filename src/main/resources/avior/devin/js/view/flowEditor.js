@@ -166,11 +166,8 @@ define([
 		deleteFlows: function () {
 			console.log("delete multiple flows!");
 			var x = new DeleteFlows();
-			//x.set("id", '');
 			console.log(x.urlRoot());
-			x.fetch({success: function(model, response) {
-				//console.log("done?");
-			}});
+			x.fetch();
 		},
 		
 		showPorts: function (e) {
