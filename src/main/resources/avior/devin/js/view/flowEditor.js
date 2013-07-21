@@ -25,6 +25,7 @@ define([
 			"click #getFlows": "pushFlow",
 			"click #removeFlow": "deleteFlow",
 			"click #removeFlows": "deleteFlows",
+			"click #removeSwFlows": "deleteSwFlows",
 			"click #advanced": "advanced",
 			"change input": "validate",
 			"change select": "validate",
@@ -172,11 +173,16 @@ define([
 			x.fetch();
 		},
 		
+		deleteSwFlows: function () {
+			var x = new FlowMod($('#dpid').val());
+			x.fetch();
+		},
+		
 		showPorts: function (e) {
 			var v = $(e.currentTarget).val();
 			var c = this.collection.get(v);
 			var d = c.get("ports");
-			console.log(JSON.stringify(c));
+			//console.log(JSON.stringify(c));
 			$('#portBody').remove();
 			$('#flowEdTable').append(this.template2(c.toJSON()));
 		},
