@@ -2,13 +2,12 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"text!template/controller.html"
+	"text!template/switch.html"
 ], function($, _, Backbone, ctrlTpl){
-	var MemoryView = Backbone.View.extend({
+	var SwitchView = Backbone.View.extend({
 		//... is a div tag.
 		tagName:  "div",
 		// Cache the template function for a single item.
-		//template: _.template($('#controller-template').html()),
 		template: _.template(ctrlTpl),
 		initialize: function(){
 			this.listenTo(this.model, "change", this.render);
@@ -24,6 +23,6 @@ define([
 		},
 		refresh: function(){this.model.fetch();}
 	});
-	return MemoryView;
+	return SwitchView;
 });
 

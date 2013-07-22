@@ -5,20 +5,20 @@ require.config({
 	paths: {
 		jquery: "lib/jquery",
 		underscore: "lib/lodash",
-		backbone: "lib/backbone",
+		backbone: "lib/backbone.collectionView",
 		template: "../tpl",
 		openflow: "openflow/ofp"
 	},
     shim: {
         "backbone" : {
-            deps: ["jquery","underscore"],
+            deps: ["jquery","underscore","lib/backbone"],
             exports: "Backbone"
         }
     }
 });
 
 require([
-	"avior2",
+	"avior",
 ], function(Avior){
 	Avior.initialize();
 });

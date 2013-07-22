@@ -2,30 +2,31 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"floodlight/memory",
 	"view/memory",
+	"view/switches",
+	"floodlight/memory",
 	"floodlight/switch",
-	"view/switch"
-], function($, _, Backbone, Memory, MemoryView, Switch, SwitchView){
+	"floodlight/switches",
+], function($, _, Backbone, MemoryView, SwitchesView, Memory, Switch, SwitchCollection){
 	return {
 		Memory: Memory,
 		MemoryView: MemoryView,
 		Switch: Switch,
-		SwitchView: SwitchView,
+		SwitchCollection: SwitchCollection,
+		SwitchesView: SwitchesView,
 		initialize: function(){
 			$(document).ready(function(){
 				var memview = new MemoryView({model: new Memory});
 				$(document.body).append(memview.render().el);
 				memview.delegateEvents(memview.events);
 				memview.refresh();
-				
-				var swtchview = new SwitchView({model: new Switch});
-				$(document.body).append(swtchview.render().el);
-				swtchview.delegateEvents(swtchview.events);
-				swtchview.refresh();
+
+				var swtchsview = new SwitchesView({collection:new SwitchCollection});
+				$(document.body).append(swtchsview.el);
+				swtchsview.render();
+				swtchsview.refresh();
+				//swtchsview.setSelectedModel(swtchsview.collection.first());
 			});
 		}
 	};
 });
-
-
