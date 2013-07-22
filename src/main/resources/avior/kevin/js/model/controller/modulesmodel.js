@@ -11,7 +11,7 @@ define([
 			modules: [],
 			moduleText: ''
 		},
-		
+		parse: Util.missingCtlrErr,
 	});
 	return ModulesModel;
 });
