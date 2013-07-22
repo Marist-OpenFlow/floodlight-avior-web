@@ -25,6 +25,7 @@ define([
 			"click #getFlows": "pushFlow",
 			"click #removeFlow": "deleteFlow",
 			"click #removeFlows": "deleteFlows",
+			"click #removeSwFlows": "deleteSwFlows",
 			"click #advanced": "advanced",
 			"change input": "validate",
 			"change select": "validate",
@@ -32,10 +33,6 @@ define([
 		},
 		
 		render: function() {
-			var i = 0;
-			_.forEach(this.collection.models, function(item) {
-						//console.log(JSON.stringify(item));
-        		}, this);
 			this.$el.append(this.template1({coll: this.collection.toJSON()}));
 			$('#container').append(this.template3);
 		},
@@ -154,23 +151,20 @@ define([
 				'dst-ip':this.dstip,
 				'protocol':this.protocol,
 			});
-			//this.flows[this.name] = this.name;
-			console.log(JSON.stringify(addFlow));
-			//console.log(this.flows[this.name]);
 		},
 		
 		deleteFlow: function () {
-			console.log("delete a flow!");
 			var x = new FlowMod("null");
-			console.log(x.urlRoot());
-			console.log(this.name);
-			x.save({'name':this.name});
+			x.destroy({data: { name: this.name }});
 		},
 		
 		deleteFlows: function () {
-			console.log("delete multiple flows!");
 			var x = new FlowMod("all");
-			console.log(x.urlRoot());
+			x.fetch();
+		},
+		
+		deleteSwFlows: function () {
+			var x = new FlowMod($('#dpid').val());
 			x.fetch();
 		},
 		
@@ -178,10 +172,10 @@ define([
 			var v = $(e.currentTarget).val();
 			var c = this.collection.get(v);
 			var d = c.get("ports");
-			console.log(JSON.stringify(c));
 			$('#portBody').remove();
 			$('#flowEdTable').append(this.template2(c.toJSON()));
 		},
+		
 	});
 	return FlowEdView;
 });

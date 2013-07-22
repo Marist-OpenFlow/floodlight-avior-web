@@ -4,7 +4,7 @@ define([
 ], function(Backbone,Util){
 	/* Structure to hold controller metadata */
 	var UptimeModel = Backbone.Model.extend({
-		url: Util.missingCtlrErr,
+		urlRoot: Util.missingCtlrErr,
 		defaults: {
 			systemUptimeMsec: 'unknown'
 		},

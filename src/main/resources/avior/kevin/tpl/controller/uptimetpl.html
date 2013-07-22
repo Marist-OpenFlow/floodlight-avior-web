@@ -1,9 +1,7 @@
 <h2>Controller Uptime</h2>
 <dl>
-	<dt>Total</dt>
-	<dd><%= (total/(1024*1024)).toFixed(2) %> MB</dd>
-	<dt>Free</dt>
-	<dd><%= (free/(1024*1024)).toFixed(2) %> MB</dd>
+	<dt>Total system uptime: </dt>
+	<dd><%= (systemUptimeMsec/1000) %> seconds</dd>
 </dl>
-<button id="loadmem">Refresh</button>
+<button id="loadup">Refresh</button>
 

@@ -11,11 +11,11 @@ define([
 		
 		initialize: function(){
 			this.model.fetch()
-			this.listenTo(this.model, "change", this.render);
-			this.listenTo(this.model, "destroy", this.remove);
+			// this.listenTo(this.model, "change", this.render);
+			this.listenTo(this.model, "sync", this.render);
 		},
 		events: {
-			"click button": "refresh",
+			"click #loadmem": "refresh",
 		},
 		// Re-render the titles of the todo item.
 	    render: function() {

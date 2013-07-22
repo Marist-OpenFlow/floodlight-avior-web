@@ -1,0 +1,10 @@
+<table id="subnetTable" border="3" cellspacing="1" cellpadding="5">
+	<caption> Subnet: <%= subnet %> & Switch Count: <%= switchCount %> </caption>
+		<tr>
+			<th> Switch # </th>
+			<th> DPID </th>
+			<th> IP Address </th>
+			<th> Up-Time </th>
+		</tr>
+		<% _.each(switch, function(i) { %>  <tr><td><a href="#" class="switchLink" id=<%= i.dpid %>><%= i.switchNum %></a></td><td><%= i.dpid %></td><td><%= i.inetAddress %></td><td><%= i.connnectedSince %></td></tr> <% }); %>
+</table>

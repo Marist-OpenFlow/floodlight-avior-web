@@ -63,6 +63,8 @@ define([
 						item.set("switchStatistics", switchStats.get(dp));
 						item.set("id", item.get("dpid"));
   						self.renderSwitch(item);
+  						// get ip address from inetAddress
+  						console.log(JSON.stringify(  (item.get("inetAddress")).split(":")[0].split("/")[1]  ));
 					}, this);
 			
 			return this;
