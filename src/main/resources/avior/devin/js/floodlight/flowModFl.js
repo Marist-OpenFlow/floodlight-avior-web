@@ -19,8 +19,6 @@ define([
     //and also to ignore whether or not the model
     //being deleted is new
     FlowMod.prototype.destroy =  function(options) {
-    	console.log(options.data);
-    	console.log("destroy");
     	
     	//properly formats data for back-end to parse
     	if ( options.data ) {

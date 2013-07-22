@@ -33,10 +33,6 @@ define([
 		},
 		
 		render: function() {
-			var i = 0;
-			_.forEach(this.collection.models, function(item) {
-						//console.log(JSON.stringify(item));
-        		}, this);
 			this.$el.append(this.template1({coll: this.collection.toJSON()}));
 			$('#container').append(this.template3);
 		},
@@ -155,17 +151,11 @@ define([
 				'dst-ip':this.dstip,
 				'protocol':this.protocol,
 			});
-			//addFlow.destroy({'name':this.name});
 		},
 		
 		deleteFlow: function () {
-			//console.log("delete a flow!");
 			var x = new FlowMod("null");
-			//console.log(x.urlRoot());
-			//console.log(this.name);
 			x.destroy({data: { name: this.name }});
-			//x.destroy({ name: this.name });
-			//console.log(JSON.stringify(x));
 		},
 		
 		deleteFlows: function () {
@@ -182,7 +172,6 @@ define([
 			var v = $(e.currentTarget).val();
 			var c = this.collection.get(v);
 			var d = c.get("ports");
-			//console.log(JSON.stringify(c));
 			$('#portBody').remove();
 			$('#flowEdTable').append(this.template2(c.toJSON()));
 		},
