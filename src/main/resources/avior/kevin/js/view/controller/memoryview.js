@@ -10,7 +10,7 @@ define([
 		template: _.template(memTpl),
 		
 		initialize: function(){
-			this.model.fetch()
+			this.model.fetch();
 			// this.listenTo(this.model, "change", this.render);
 			this.listenTo(this.model, "sync", this.render);
 		},

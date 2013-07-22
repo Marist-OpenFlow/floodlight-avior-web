@@ -8,7 +8,11 @@ define([
 		
 		for (x in resp) {
 			this.modules.push(x);
+			console.log(x);
+			console.log(this.modules);
+			console.log("---------------");
 		}
+		return this.modules;
 	};
 	
 	return Modules;

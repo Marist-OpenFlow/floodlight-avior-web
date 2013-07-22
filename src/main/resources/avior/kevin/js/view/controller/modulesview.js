@@ -11,11 +11,7 @@ define([
 		
 		initialize: function(){
 			var self = this;
-			this.model.fetch({
-				success: function(data){
-					console.log(JSON.stringify(data));
-				}
-			});
+			this.model.fetch();
 			// this.listenTo(this.model, "change", this.render);
 			this.listenTo(this.model, "sync", this.render);
 		},

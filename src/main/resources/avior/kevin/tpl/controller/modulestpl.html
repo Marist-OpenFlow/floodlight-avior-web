@@ -3,7 +3,9 @@
 	<dt>Modules Loaded: </dt>
 	<dd><%= modules %></dd>
 	<dt>Module Text: </dt>
-	<dd><%= moduleText %></dd>
+	<dd><% for(var module in modules) { %>
+			<%= modules[module] %>
+		<% } %></dd>
 </dl>
 <button id="loadmem">Refresh</button>
 
