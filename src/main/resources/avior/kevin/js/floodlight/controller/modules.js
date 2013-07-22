@@ -4,15 +4,15 @@ define([
 	Modules.prototype.urlRoot = "/wm/core/module/loaded/json";
 	
 	Modules.prototype.parse = function(resp){
-		this.modules = [];
+		//var modules = new Array;
+		var t = new Array;
 		
-		for (x in resp) {
-			this.modules.push(x);
-			console.log(x);
-			console.log(this.modules);
-			console.log("---------------");
-		}
-		return this.modules;
+		for (x in resp)
+			t.push(x);
+			
+		console.log(t);
+		this.set("mods", t);
+		//return modules;
 	};
 	
 	return Modules;
