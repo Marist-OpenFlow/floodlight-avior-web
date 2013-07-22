@@ -1,7 +1,7 @@
 define([
 	"model/flowMod"
 ], function(FlowMod){
-	//push flows! and delete flow(s)!
+	//push flows! and delete flows!
 	FlowMod.prototype.urlRoot = function () {
 		if (this.dpid === "null"){
 			this.unset(this.dpid);
@@ -17,7 +17,7 @@ define([
     //overriding the pre-existing destroy method
     //to send data along with the delete request
     //and also to ignore whether or not the model
-    //being deleted in new
+    //being deleted is new
     FlowMod.prototype.destroy =  function(options) {
     	console.log(options.data);
     	console.log("destroy");
