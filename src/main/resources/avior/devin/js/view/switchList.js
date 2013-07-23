@@ -2,10 +2,17 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"marionette",
 	"text!template/switchSumTemplate.html"
-], function($, _, Backbone, swtchSumTpl){
-	var SwitchSumView = Backbone.View.extend({
-		tagName: "tbody",
+], function($, _, Backbone, Marionette, swtchSumTpl){
+	var SwitchSumView = Backbone.Marionette.ItemView.extend({
+		//tagName: "dt",
+		template: _.template(swtchSumTpl)
+		
+		
+		
+		//pre-marionette stuff
+		/*tagName: "tbody",
 		
 		template: _.template(swtchSumTpl),
 		
@@ -13,7 +20,8 @@ define([
 		render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
 			return this;
-		}		
+		}*/
+				
 	});
 	return SwitchSumView;
 });
