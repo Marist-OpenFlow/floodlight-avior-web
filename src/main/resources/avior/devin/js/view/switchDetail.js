@@ -2,6 +2,7 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"marionette",
 	"floodlight/featuresFl",
 	"floodlight/switchStatisticsFl",
 	"view/switchList",
@@ -19,7 +20,7 @@ define([
 	"text!template/ports.html",
 	"text!template/port.html",
 	"text!template/getFlows.html",
-], function($, _, Backbone, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
+], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
