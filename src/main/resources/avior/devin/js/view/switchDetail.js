@@ -14,13 +14,16 @@ define([
 	"model/portStatistics",
 	"floodlight/flowModFl",
 	"view/flowEditor",
+	"floodlight/flowFL",
+	"collection/flowCollection",
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
 	"text!template/description.html",
 	"text!template/ports.html",
 	"text!template/port.html",
-	"text!template/getFlows.html",
-], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
+	"text!template/flowTable.html",
+	"text!template/flowEntry.html",
+], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, Flow, FlowCollection, swtchsSumTpl, header, descrip, portFrame, portRow, flowFrame, flowRow){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
 			
@@ -29,7 +32,8 @@ define([
 		template3: _.template(descrip),
 		template4: _.template(portFrame),
 		template5: _.template(portRow),
-		template6: _.template(flow),
+		template6: _.template(flowFrame),
+		template7: _.template(flowRow),
 		currentDPID: '',
 			
 		// construct a new collection with switch info from server
@@ -124,7 +128,7 @@ define([
 			
 			this.displayPorts(dpid, oneSwitch);
 			
-			this.displayFlows();
+			this.displayFlows(dpid, oneSwitch);
 		},
 		
 		//attach switch description info to page
@@ -164,8 +168,15 @@ define([
 		},
 		
 		//attach flow info to page
-		displayFlows: function(){
+		displayFlows: function(dpid, oneSwitch){
 			$('#container').append(this.template6());
+			var flows = new FlowCollection();
+			var flowArray = new Flow(dpid);
+			var self = this;
+			
+			// Construct table with flow information
+			
+			
 		},
 		
 		//updates this.collection, features and switchStats

@@ -4,6 +4,8 @@ define([
 ], function(Backbone, Util){
 	
 	/* Structure to hold flow information */
-	var Flow = Backbone.Model.extend();
+	var Flow = Backbone.Model.extend({
+		urlRoot: Util.missingCtlrErr,
+	});
 	return Flow;
 });
