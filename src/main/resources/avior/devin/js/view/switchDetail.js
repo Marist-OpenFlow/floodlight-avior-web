@@ -22,16 +22,37 @@ define([
 	"text!template/getFlows.html",
 ], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
 	var SwitchesSumView = Backbone.Marionette.CollectionView.extend({
-		el: "body",
+		el: $('body'),
 		itemView: SwitchList,
+		itemViewOptions: {
+			features: '',
+			stats: '',
+		},
 		
 		initialize: function() {
 			this.collection = new SwitchCollection();
+			features = new Features();
+			stats = new SwitchStats();
+			
+			var self = this;
+			features.fetch().complete(function () {self.itemViewOptions.features = features;});
+			stats.fetch().complete(function () {self.itemViewOptions.stats = stats;});
+
+			this.listenTo(stats, "sync", this.setCollection);
+			
+			this.on("before:item:added", function(viewInstance){			
+  				//set switchStat attribute in this.collection
+  				viewInstance.model.set("switchStatistics", stats.get(viewInstance.model.get("dpid")));
+  				
+  				viewInstance.model.set("features", features.get(viewInstance.model.get("dpid")));
+  				
+  				console.log(JSON.stringify(viewInstance.model))
+			});
+		},
+		
+		setCollection: function() {
 			this.collection.fetch();
-			this.listenTo(this.collection, "sync", this.render);
-		}
-		
-		
+		},
 		
 		//pre-marionette stuff
 		/*el: $('body'),

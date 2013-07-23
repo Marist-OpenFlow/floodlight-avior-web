@@ -3,11 +3,24 @@ define([
 	"underscore",
 	"backbone",
 	"marionette",
+	"floodlight/featuresFl",
+	"floodlight/switchStatisticsFl",
 	"text!template/switchSumTemplate.html"
-], function($, _, Backbone, Marionette, swtchSumTpl){
+], function($, _, Backbone, Marionette, Features, SwitchStats, swtchSumTpl){
 	var SwitchSumView = Backbone.Marionette.ItemView.extend({
-		//tagName: "dt",
-		template: _.template(swtchSumTpl)
+		tagName: "dt",
+		template: _.template(swtchSumTpl),
+		
+		initialize: function(options){
+    		//console.log(JSON.stringify(options.features));
+    		//console.log(JSON.stringify(options.stats)); 
+  		},
+		
+		onBeforeRender: function(){
+    		//console.log(JSON.stringify(this.model));
+    		var features = new Features();
+    		var switchStats = new SwitchStats();
+  		}
 		
 		
 		
