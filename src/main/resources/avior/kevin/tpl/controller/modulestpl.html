@@ -1,7 +1,7 @@
 <h2>Controller Modules</h2>
 <dl>
 	<dt>Modules Loaded: </dt>
-	<dd><%= mods %></dd>
+	<% _.each(mods, function(i) { %>  <dd><%= i %></dd> <% }); %>
 	<dt>Module Text: </dt>
 	<dd></dd>
 </dl>

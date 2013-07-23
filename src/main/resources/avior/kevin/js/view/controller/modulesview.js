@@ -20,9 +20,9 @@ define([
 		},
 		// Re-render the titles of the todo item.
 	    render: function() {
-			this.$el.html(this.template(this.model.toJSON()));
+			this.$el.html(this.template({mods: this.model.toJSON()}));
 			console.log("Modules model ----------------->");
-			console.log(JSON.stringify(this.model));
+			console.log((this.model.toJSON()));
 			return this;
 	    },
 		refresh: function(){this.model.fetch();}
