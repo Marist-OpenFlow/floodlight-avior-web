@@ -1,10 +1,9 @@
 <tr id="flowEntry">
 	<td> <%= priority  %> </td>
 	<td> <%= match.inputPort %> </td>
-	<td> <%= portStatistics.receivePackets %> </td>
-	<td> <%= portStatistics.transmitPackets %> </td>
-	<td> <%= portStatistics.receiveBytes %> </td>
-	<td> <%= portStatistics.transmitBytes %> </td>
-	<td> <%= portStatistics.receiveDropped + portStatistics.transmitDropped %> </td>
-	<td> <%= portStatistics.receiveErrors + portStatistics.transmitErrors + portStatistics.receiveFrameErrors + portStatistics.receiveOverrunErrors + portStatistics.receiveCRCErrors %> </td>
+	<td> <%= actions %> </td>
+	<td> <%= packetCount %> </td>
+	<td> <%= byteCount %> </td>
+	<td> <%= durationSeconds %> seconds </td>
+	<td> <%= idleTimeout %> </td>
 </tr>

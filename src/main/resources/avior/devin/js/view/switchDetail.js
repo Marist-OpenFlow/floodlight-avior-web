@@ -14,8 +14,8 @@ define([
 	"model/portStatistics",
 	"floodlight/flowModFl",
 	"view/flowEditor",
-	"floodlight/flowFL",
-	"collection/flowCollection",
+	"floodlight/flowFl",
+	"floodlight/flowCollectionFl",
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
 	"text!template/description.html",
@@ -128,7 +128,7 @@ define([
 			
 			this.displayPorts(dpid, oneSwitch);
 			
-			this.displayFlows(dpid, oneSwitch);
+			this.displayFlows(dpid);
 		},
 		
 		//attach switch description info to page
@@ -168,10 +168,14 @@ define([
 		},
 		
 		//attach flow info to page
-		displayFlows: function(dpid, oneSwitch){
+		displayFlows: function(dpid){
 			$('#container').append(this.template6());
-			var flows = new FlowCollection();
-			var flowArray = new Flow(dpid);
+			var flows = new FlowCollection(dpid);
+			flows.fetch().complete(function () {
+				_.forEach(flows.models, function(item) {
+					$('#flowTable').append(self.template7(item.toJSON()));
+				}, this);
+			});
 			var self = this;
 			
 			// Construct table with flow information

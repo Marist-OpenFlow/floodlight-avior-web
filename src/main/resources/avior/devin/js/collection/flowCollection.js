@@ -1,15 +1,11 @@
  define([
 	"backbone",
 	"util",
-], function(Backbone,Util){
+	"floodlight/flowFl",
+], function(Backbone,Util,Flow,dpid){
 	var FlowCollection = Backbone.Collection.extend({
-		parse: function(response){
-			var parsed = [];
-   			for(var key in response){
-      		parsed.push(response[key]);
-   			}
-   		return parsed;
-		}
+		model: Flow,
+		url: Util.missingCtlrErr,
 	});
 	return FlowCollection;
 });
