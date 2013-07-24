@@ -178,7 +178,7 @@ define([
 			var portArray = oneSwitch.get("ports");
 			var portStatArray = new PortStatistics(dpid);
 			var self = this;
-			
+			 
 			//get port statistics, append as a submodel to port model
 			//and append port model to port collection
 			portStatArray.fetch().complete(function () {
