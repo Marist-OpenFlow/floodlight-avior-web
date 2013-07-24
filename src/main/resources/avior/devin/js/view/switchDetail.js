@@ -33,12 +33,12 @@ define([
 			this.collection = new SwitchCollection();
 			features = new Features();
 			stats = new SwitchStats();
-			//portStats = new PortStatistics();
+			portStats = new PortStatistics();
 			
 			var self = this;
 			features.fetch().complete(function () {self.itemViewOptions.features = features;});
 			stats.fetch().complete(function () {self.itemViewOptions.stats = stats;});
-			//portStats.fetch();
+			portStats.fetch("all");
 			
 
 			this.listenTo(stats, "sync", this.setCollection);
@@ -49,7 +49,7 @@ define([
   				
   				viewInstance.model.set("features", features.get(viewInstance.model.get("dpid")));
   				
-  				console.log(JSON.stringify(viewInstance.model))
+  				//console.log(JSON.stringify(viewInstance.model))
 			});
 		},
 		
