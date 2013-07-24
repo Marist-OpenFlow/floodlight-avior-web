@@ -22,7 +22,7 @@ define([
 	"text!template/getFlows.html",
 ], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
 	var SwitchesSumView = Backbone.Marionette.CollectionView.extend({
-		el: $('body'),
+		/*el: $('body'),
 		itemView: SwitchList,
 		itemViewOptions: {
 			features: '',
@@ -52,10 +52,10 @@ define([
 		
 		setCollection: function() {
 			this.collection.fetch();
-		},
+		},*/
 		
 		//pre-marionette stuff
-		/*el: $('body'),
+		el: $('body'),
 			
 		template1: _.template(swtchsSumTpl),
 		template2: _.template(header),
@@ -103,7 +103,7 @@ define([
   						
   						
   						
-  						// get ip address from inetAddress
+  						/*// get ip address from inetAddress
   						var ip = (item.get("inetAddress")).split(":")[0].split("/")[1]
   						//console.log(JSON.stringify(ip));
   						
@@ -128,7 +128,7 @@ define([
 								this.subnets.push(newSub);
 							}
   							console.log(matched);
-  						}
+  						}*/
   						
 					}, this);
 			
@@ -212,7 +212,7 @@ define([
 		modFlows: function () {
 			$('#container').remove();
 			new FlowEditor(this.collection);
-		}*/
+		}
 		
 		
 	});
