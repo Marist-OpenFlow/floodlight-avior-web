@@ -43,7 +43,9 @@ define([
 
 			this.listenTo(stats, "sync", this.setCollection);
 			
-			this.on("before:item:added", function(viewInstance){			
+			this.on("before:item:added", function(viewInstance){
+				viewInstance.model.set("id", viewInstance.model.get("dpid"));
+							
   				//set switchStat attribute in this.collection
   				viewInstance.model.set("switchStatistics", stats.get(viewInstance.model.get("dpid")));
   				
@@ -59,7 +61,7 @@ define([
   				
   				//console.log(JSON.stringify(viewInstance.model.get("ports")));
   				
-  				//console.log(JSON.stringify(viewInstance.model))
+  				console.log(JSON.stringify(viewInstance.model));
 			});
 		},
 		
