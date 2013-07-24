@@ -8,7 +8,7 @@ define([
 	"text!template/switchSumTemplate.html"
 ], function($, _, Backbone, Marionette, Features, SwitchStats, swtchSumTpl){
 	var SwitchSumView = Backbone.Marionette.ItemView.extend({
-		/*tagName: "dt",
+		tagName: "dt",
 		template: _.template(swtchSumTpl),
 		
 		initialize: function(options){
@@ -20,12 +20,12 @@ define([
     		//console.log(JSON.stringify(this.model));
     		var features = new Features();
     		var switchStats = new SwitchStats();
-  		}*/
+  		}
 		
 		
 		
 		//pre-marionette stuff
-		tagName: "tbody",
+		/*tagName: "tbody",
 		
 		template: _.template(swtchSumTpl),
 		
@@ -33,7 +33,7 @@ define([
 		render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
 			return this;
-		}
+		}*/
 				
 	});
 	return SwitchSumView;

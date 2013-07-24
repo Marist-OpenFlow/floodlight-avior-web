@@ -4,7 +4,7 @@ define([
 	//get list of switch features connected to controller
 	Features.prototype.url = "/wm/core/switch/all/features/json"; 
 	
-	/*Features.prototype.parse = function(resp) {
+	Features.prototype.parse = function(resp) {
 		var newResp = new Object;
 		for (var key in resp){
 			//console.log(JSON.stringify(resp[key].xid));	
@@ -20,6 +20,6 @@ define([
 			//console.log(JSON.stringify(newResp));
 		}
 		return newResp;
-	};*/
+	};
 	return Features;
 });
