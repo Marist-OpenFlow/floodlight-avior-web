@@ -20,12 +20,18 @@ define([
 	"text!template/description.html",
 	"text!template/ports.html",
 	"text!template/port.html",
+
 	"text!template/flowTable.html",
 	"text!template/flowEntry.html",
 ], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, FlowCollection, swtchsSumTpl, header, descrip, portFrame, portRow, flowFrame, flowRow){
 	var SwitchesSumView = Backbone.View.extend({
 		el: $('body'),
+		
 		itemView: SwitchList,
+		itemViewOptions: {
+			features: '',
+			stats: '',
+		},
 		
 		el: $('body'),
 			
@@ -76,7 +82,7 @@ define([
   						
   						
   						
-  						// get ip address from inetAddress
+  						/*// get ip address from inetAddress
   						var ip = (item.get("inetAddress")).split(":")[0].split("/")[1]
   						//console.log(JSON.stringify(ip));
   						
@@ -101,7 +107,7 @@ define([
 								this.subnets.push(newSub);
 							}
   							console.log(matched);
-  						}
+  						}*/
   						
 					}, this);
 			
