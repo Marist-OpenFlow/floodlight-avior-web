@@ -28,10 +28,6 @@ define([
 		el: $('body'),
 		
 		itemView: SwitchList,
-		itemViewOptions: {
-			features: '',
-			stats: '',
-		},
 		
 		el: $('body'),
 			
@@ -82,7 +78,7 @@ define([
   						
   						
   						
-  						/*// get ip address from inetAddress
+  						// get ip address from inetAddress
   						var ip = (item.get("inetAddress")).split(":")[0].split("/")[1]
   						//console.log(JSON.stringify(ip));
   						
@@ -107,7 +103,7 @@ define([
 								this.subnets.push(newSub);
 							}
   							console.log(matched);
-  						}*/
+  						}
   						
 					}, this);
 			
@@ -180,8 +176,10 @@ define([
 			$('#container').append(this.template6());
 			console.log("here's DPID");
 			console.log(dpid);
+			var self = this;
 			var flows = new FlowCollection(dpid);
 			flows.fetch().complete(function () {
+				console.log("Attempted to fetch flows");
 				_.forEach(flows.models, function(item) {
 					console.log("Item stringified =======================");
 					console.log(JSON.stringify(item));
@@ -190,8 +188,8 @@ define([
 					$('#flowTable').append(self.template7(item.toJSON()));
 				}, this);
 			});
-			var self = this;
 			
+			console.log("done with displayFlows()");
 			// Construct table with flow information
 			
 			
