@@ -38,7 +38,7 @@ define([
 			var self = this;
 			features.fetch().complete(function () {self.itemViewOptions.features = features;});
 			stats.fetch().complete(function () {self.itemViewOptions.stats = stats;});
-			portStats.fetch("all");
+			portStats.fetch();
 			
 
 			this.listenTo(stats, "sync", this.setCollection);
