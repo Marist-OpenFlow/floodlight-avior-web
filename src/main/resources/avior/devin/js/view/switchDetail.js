@@ -47,7 +47,17 @@ define([
   				//set switchStat attribute in this.collection
   				viewInstance.model.set("switchStatistics", stats.get(viewInstance.model.get("dpid")));
   				
+  				//set features attribute in this.collection
   				viewInstance.model.set("features", features.get(viewInstance.model.get("dpid")));
+  				
+  				//sets a nested portStats object within each specific port 
+  				var existingPorts = viewInstance.model.get("ports");
+  				
+  				for (var x in existingPorts){
+  					existingPorts[x].portStats = portStats.get(viewInstance.model.get("dpid"))[x];
+  				}
+  				
+  				//console.log(JSON.stringify(viewInstance.model.get("ports")));
   				
   				//console.log(JSON.stringify(viewInstance.model))
 			});

@@ -12,7 +12,9 @@ define([
  				return a.portNumber-b.portNumber
 			});
 			resp[key] = sortResp;
-			console.log(JSON.stringify(resp[key]));
+			for (var x in resp[key]){
+				delete resp[key][x].portNumber;
+			}			
 		}
 		return resp;
 	};
