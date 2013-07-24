@@ -1,8 +1,8 @@
  define([
 	"backbone",
 	"util",
-	"floodlight/flowFl",
-], function(Backbone,Util,Flow,dpid){
+	"model/flow",
+], function(Backbone,Util,Flow){
 	var FlowCollection = Backbone.Collection.extend({
 		model: Flow,
 		url: Util.missingCtlrErr,

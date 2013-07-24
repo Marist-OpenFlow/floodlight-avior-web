@@ -14,7 +14,6 @@ define([
 	"model/portStatistics",
 	"floodlight/flowModFl",
 	"view/flowEditor",
-	"floodlight/flowFl",
 	"floodlight/flowCollectionFl",
 	"text!template/switchesSumTemplate.html",
 	"text!template/switchSummary.html",
@@ -23,8 +22,11 @@ define([
 	"text!template/port.html",
 	"text!template/flowTable.html",
 	"text!template/flowEntry.html",
-], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, Flow, FlowCollection, swtchsSumTpl, header, descrip, portFrame, portRow, flowFrame, flowRow){
+], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, FlowCollection, swtchsSumTpl, header, descrip, portFrame, portRow, flowFrame, flowRow){
 	var SwitchesSumView = Backbone.View.extend({
+		el: $('body'),
+		itemView: SwitchList,
+		
 		el: $('body'),
 			
 		template1: _.template(swtchsSumTpl),
@@ -74,7 +76,7 @@ define([
   						
   						
   						
-  						/*// get ip address from inetAddress
+  						// get ip address from inetAddress
   						var ip = (item.get("inetAddress")).split(":")[0].split("/")[1]
   						//console.log(JSON.stringify(ip));
   						
@@ -99,7 +101,7 @@ define([
 								this.subnets.push(newSub);
 							}
   							console.log(matched);
-  						}*/
+  						}
   						
 					}, this);
 			
@@ -170,9 +172,15 @@ define([
 		//attach flow info to page
 		displayFlows: function(dpid){
 			$('#container').append(this.template6());
+			console.log("here's DPID");
+			console.log(dpid);
 			var flows = new FlowCollection(dpid);
 			flows.fetch().complete(function () {
 				_.forEach(flows.models, function(item) {
+					console.log("Item stringified =======================");
+					console.log(JSON.stringify(item));
+					console.log("Item regular ===========================");
+					console.log(item);
 					$('#flowTable').append(self.template7(item.toJSON()));
 				}, this);
 			});
@@ -195,6 +203,8 @@ define([
 			$('#container').remove();
 			new FlowEditor(this.collection);
 		}
+		
+		
 	});
 	return SwitchesSumView;
 });
