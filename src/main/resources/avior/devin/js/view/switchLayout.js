@@ -5,8 +5,9 @@
 	"marionette",
 	"view/switchDetail",
 	"view/description",
+	"model/description",
 	"text!template/switchLayout.html",
-], function($, _, Backbone, Marionette, SwitchDetail, Description, layoutTpl){
+], function($, _, Backbone, Marionette, SwitchDetail, Description, DescriptionModel, layoutTpl){
 	var SwitchLayout = Backbone.Marionette.Layout.extend({
   		el: $('body'),
   		template: _.template(layoutTpl),
@@ -28,14 +29,17 @@
   		},
   		
   		clickSwitch: function(e) {
-  			//alert(JSON.stringify(e.currentTarget.id));
-  			//alert(JSON.stringify(this.swt.collection.models));
   			var currentID = e.currentTarget.id;
   			var desc = this.swt.collection.get(currentID).get("description");
-  			desc.dpid = currentID;
-  			//desc.connectedSince = 
-  			console.log(JSON.stringify(desc));
-  			this.switchDesc.show(new Description(desc));
+
+  			var descModel = new DescriptionModel(desc);
+  			descModel.set("dpid", currentID);
+  			descModel.set("connectedSince", this.swt.collection.get(currentID).get("connectedSince"));
+  			var descView = new Description({model: descModel});
+			
+  			this.switchDesc.show(descView);
+  			
+  			
   		},
 	});
 	return SwitchLayout;

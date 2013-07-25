@@ -6,10 +6,10 @@ define([
 	"model/description",
 	"text!template/description.html",
 ], function($, _, Backbone, Marionette, Description, description){
-	var SwitchSumView = Backbone.Marionette.ItemView.extend({
+	var DescriptionView = Backbone.Marionette.ItemView.extend({
 		tagName: "dt",
 		template: _.template(description),
-		model: Description,
+		//model: Description,
   	});
-	return SwitchSumView;
+	return DescriptionView;
 });
