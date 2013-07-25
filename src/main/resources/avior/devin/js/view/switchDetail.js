@@ -21,8 +21,9 @@ define([
 	"text!template/port.html",
 	"text!template/getFlows.html",
 ], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, swtchsSumTpl, header, descrip, portFrame, portRow, flow){
-	var SwitchesSumView = Backbone.Marionette.CollectionView.extend({
+	var SwitchesSumView = Backbone.Marionette.CompositeView.extend({
 		el: $('body'),
+		template: _.template(header),
 		itemView: SwitchList,
 		itemViewOptions: {
 			features: '',
@@ -39,7 +40,7 @@ define([
 			features.fetch().complete(function () {self.itemViewOptions.features = features;});
 			stats.fetch().complete(function () {self.itemViewOptions.stats = stats;});
 			portStats.fetch();
-			
+			this.render();
 
 			this.listenTo(stats, "sync", this.setCollection);
 			
