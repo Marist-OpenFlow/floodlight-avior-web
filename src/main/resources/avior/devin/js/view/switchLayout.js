@@ -46,7 +46,6 @@
   			var ports = this.swt.collection.get(currentID).get("ports");
   			var portCollection = new PortCollection;
   			for (var p in ports){
-  				//console.log(JSON.stringify(ports[p]));
   				var portModel = new Port(ports[p]);
   				portCollection.add(portModel);
   			}

@@ -58,10 +58,6 @@ define([
   				for (var x in existingPorts){
   					existingPorts[x].portStats = portStats.get(viewInstance.model.get("dpid"))[x];
   				}
-  				
-  				//console.log(JSON.stringify(viewInstance.model.get("ports")));
-  				
-  				//console.log(JSON.stringify(viewInstance.model));
 			});
 		},
 		
