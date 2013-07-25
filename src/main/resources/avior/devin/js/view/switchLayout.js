@@ -3,10 +3,14 @@
 	"underscore",
 	"backbone",
 	"marionette",
-	"text!template/switchSummary.html",
-], function($, _, Backbone, Marionette, layoutTpl){
+	"view/switchDetail",
+	"text!template/switchLayout.html",
+], function($, _, Backbone, Marionette, SwitchDetail, layoutTpl){
 	var SwitchLayout = Backbone.Marionette.Layout.extend({
-  		template: "#layout-template",
+  		el: $('body'),
+  		template: _.template(layoutTpl),
+
+		events: {"click a.dpidLink": "clickSwitch"},
 
   		regions: {
     		switchList: "#switchList",
@@ -14,7 +18,18 @@
     		portStats: "#portStats",
     		flowList: "#flowList",
     		flowMod: "#flowMod",
-  		}
+  		},
+  		
+  		initialize: function() {
+  			this.render();
+  			this.swt = new SwitchDetail();
+  			this.switchList.show(this.swt);
+  		},
+  		
+  		clickSwitch: function() {
+  			//alert("LLLL");
+  			//alert(JSON.stringify(this.swt.collection.models));
+  		},
 	});
 	return SwitchLayout;
 });

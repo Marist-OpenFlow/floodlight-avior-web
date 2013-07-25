@@ -18,10 +18,10 @@ define([
   		},
 		
 		onBeforeRender: function(){
-    		//console.log(JSON.stringify(this.model));
     		var features = new Features();
     		var switchStats = new SwitchStats();
-  		}
+  		},
+  		
 		
 		
 		

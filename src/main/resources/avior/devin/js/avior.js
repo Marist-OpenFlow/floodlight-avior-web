@@ -3,15 +3,17 @@ define([
 	"underscore",
 	"backbone",
 	"floodlight/switch",
-	"view/switchDetail"
-], function($, _, Backbone, Switch, SwitchDetail){
+	"view/switchLayout"
+], function($, _, Backbone, Switch, SwitchLayout){
 	return {
 		Switch: Switch,
-		SwitchDetail: SwitchDetail,
+		SwitchLayout: SwitchLayout,
 		initialize: function(){
 			$(document).ready(function(){
-				var switchDetail = new SwitchDetail({model: new Switch});
-				switchDetail.delegateEvents(switchDetail.events);
+				//var switchDetail = new SwitchDetail({model: new Switch});
+				//switchDetail.delegateEvents(switchDetail.events);
+				
+				var layout = new SwitchLayout();
 			});
 		}
 	};
