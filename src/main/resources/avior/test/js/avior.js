@@ -33,10 +33,10 @@ define([
 				memoryview.delegateEvents(memoryview.events);
 				modulesview.delegateEvents(modulesview.events);
 				
-				$(document.body).append(uptimeview.render().el);
-				$('#statustest').append(statusview.render().el);
-				$(document.body).append(memoryview.render().el);
-				$(document.body).append(modulesview.render().el);
+				$('#uptimeview').append(uptimeview.render().el);
+				$('#statusview').append(statusview.render().el);
+				$('#memoryview').append(memoryview.render().el);
+				$('#modulesview').append(modulesview.render().el);
 
 				/*
 				var flowview = new FlowView({model: new Flow});
