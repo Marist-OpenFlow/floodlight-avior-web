@@ -15,22 +15,7 @@ define([
 		onBeforeRender: function(){
     		//var features = new Features();
     		//var switchStats = new SwitchStats();
-  		},
-  		
-		
-		
-		
-		//pre-marionette stuff
-		/*tagName: "tbody",
-		
-		template: _.template(swtchSumTpl),
-		
-		//render the switch model using the template
-		render: function() {
-			this.$el.html(this.template(this.model.toJSON()));
-			return this;
-		}*/
-				
+  		},	
 	});
 	return SwitchSumView;
 });

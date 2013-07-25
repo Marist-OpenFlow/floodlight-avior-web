@@ -61,13 +61,43 @@ define([
   				
   				//console.log(JSON.stringify(viewInstance.model.get("ports")));
   				
-  				console.log(JSON.stringify(viewInstance.model));
+  				//console.log(JSON.stringify(viewInstance.model));
 			});
 		},
 		
 		setCollection: function() {
 			this.collection.fetch();
 		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		//pre-marionette stuff
 		/*el: $('body'),

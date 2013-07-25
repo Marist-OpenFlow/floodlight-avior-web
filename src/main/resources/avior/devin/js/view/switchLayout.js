@@ -15,7 +15,11 @@
   		el: $('body'),
   		template: _.template(layoutTpl),
 
-		events: {"click a.dpidLink": "clickSwitch"},
+		events: {
+			"click a.dpidLink": "clickSwitch",
+			"click #loadswtch": "refresh",
+			"click #flowMod": "modFlows",			
+		},
 
   		regions: {
     		switchList: "#switchList",
@@ -26,9 +30,7 @@
   		},
   		
   		initialize: function() {
-  			this.render();
-  			this.swt = new SwitchDetail();
-  			this.switchList.show(this.swt);
+  			this.refresh();
   		},
   		
   		clickSwitch: function(e) {
@@ -44,13 +46,18 @@
   			var ports = this.swt.collection.get(currentID).get("ports");
   			var portCollection = new PortCollection;
   			for (var p in ports){
-  				console.log(JSON.stringify(ports[p]));
+  				//console.log(JSON.stringify(ports[p]));
   				var portModel = new Port(ports[p]);
   				portCollection.add(portModel);
   			}
   			var portView = new PortDetail({collection: portCollection});
   			this.portStats.show(portView);
-  			//console.log(JSON.stringify(portCollection.models));
+  		},
+  		
+  		refresh: function() {
+  			this.render();
+  			this.swt = new SwitchDetail();
+  			this.switchList.show(this.swt);
   		},
 	});
 	return SwitchLayout;
