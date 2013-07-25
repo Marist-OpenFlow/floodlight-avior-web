@@ -14,7 +14,7 @@ define([
 		template: _.template(swtchSumTpl),
 		
 		initialize: function(options){
-			$('body').html(this.template1(this.model.toJSON()));
+			//$('body').html(this.template1(this.model.toJSON()));
   		},
 		
 		onBeforeRender: function(){
