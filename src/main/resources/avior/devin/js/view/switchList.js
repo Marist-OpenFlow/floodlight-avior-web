@@ -11,11 +11,6 @@ define([
 	var SwitchSumView = Backbone.Marionette.ItemView.extend({
 		tagName: "dt",
 		template: _.template(swtchSumTpl),
-		
-		onBeforeRender: function(){
-    		//var features = new Features();
-    		//var switchStats = new SwitchStats();
-  		},	
 	});
 	return SwitchSumView;
 });
