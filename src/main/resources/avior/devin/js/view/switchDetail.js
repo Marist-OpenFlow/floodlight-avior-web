@@ -15,7 +15,7 @@ define([
 	"floodlight/flowModFl",
 	"view/flowEditor",
 	"text!template/switchesSumTemplate.html",
-	"text!template/switchSummary.html",
+	"text!template/switchLayout.html",
 	"text!template/description.html",
 	"text!template/ports.html",
 	"text!template/port.html",

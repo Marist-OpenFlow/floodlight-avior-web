@@ -6,7 +6,7 @@ define([
 	"floodlight/featuresFl",
 	"floodlight/switchStatisticsFl",
 	"text!template/switchSumTemplate.html",
-	"text!template/switchSummary.html"
+	"text!template/switchLayout.html"
 ], function($, _, Backbone, Marionette, Features, SwitchStats, swtchSumTpl, header){
 	var SwitchSumView = Backbone.Marionette.ItemView.extend({
 		tagName: "dt",
