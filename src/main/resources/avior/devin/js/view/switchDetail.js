@@ -29,8 +29,6 @@ define([
 			stats: '',
 		},
 		
-		//events: {"click a.dpidLink": "clickSwitch"},
-		
 		initialize: function() {
 			this.collection = new SwitchCollection();
 			features = new Features();
@@ -70,11 +68,7 @@ define([
 		setCollection: function() {
 			this.collection.fetch();
 		},
-		
-		clickSwitch: function() {
-  			alert("LLLL");
-  		},
-		
+
 		//pre-marionette stuff
 		/*el: $('body'),
 			
