@@ -1,5 +1,5 @@
 define([
-	"model/controller/modulesmodel"
+	"model/modulesmodel"
 ], function(Modules){
 	Modules.prototype.urlRoot = "/wm/core/module/loaded/json";
 	

@@ -1,24 +1,15 @@
-	// "floodlight/flow",
-	// "view/flowview",
-	// "collection/flowcollection"
-// ], function($, _, Backbone, Flow, FlowView, FlowCollection){
-//		Flow: Flow,
-//		FlowView: FlowView,
-
-
-
 define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"floodlight/controller/memory",
-	"floodlight/controller/modules",
-	"floodlight/controller/status",
-	"floodlight/controller/uptime",
-	"view/controller/memoryview",
-	"view/controller/modulesview",
-	"view/controller/statusview",
-	"view/controller/uptimeview"
+	"floodlight/memory",
+	"floodlight/modules",
+	"floodlight/status",
+	"floodlight/uptime",
+	"view/memoryview",
+	"view/modulesview",
+	"view/statusview",
+	"view/uptimeview"
 ], function($, _, Backbone, Memory, Modules, Status, Uptime, MemoryView, ModulesView, StatusView, UptimeView){
 	return {
 		Memory: Memory,

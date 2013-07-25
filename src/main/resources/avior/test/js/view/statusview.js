@@ -2,7 +2,7 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"text!template/controller/statustpl.html"
+	"text!template/statustpl.html"
 ], function($, _, Backbone, statTpl){
 	var StatusView = Backbone.View.extend({
 	    tagName: "div",

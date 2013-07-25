@@ -2,7 +2,7 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"text!template/controller/uptimetpl.html"
+	"text!template/uptimetpl.html"
 ], function($, _, Backbone, uptimeTpl){
 	var UptimeView = Backbone.View.extend({
 	    tagName: "div",

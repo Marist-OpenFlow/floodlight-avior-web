@@ -2,7 +2,7 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"text!template/controller/modulestpl.html"
+	"text!template/modulestpl.html"
 ], function($, _, Backbone, modTpl){
 	var ModulesView = Backbone.View.extend({
 	    tagName: "div",

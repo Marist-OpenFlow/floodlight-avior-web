@@ -2,7 +2,7 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"text!template/controller/memorytpl.html"
+	"text!template/memorytpl.html"
 ], function($, _, Backbone, memTpl){
 	var MemoryView = Backbone.View.extend({
 	    tagName: "div",
