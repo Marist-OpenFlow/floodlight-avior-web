@@ -34,7 +34,7 @@ define([
 				modulesview.delegateEvents(modulesview.events);
 				
 				$(document.body).append(uptimeview.render().el);
-				$(document.body).append(statusview.render().el);
+				$('#statustest').append(statusview.render().el);
 				$(document.body).append(memoryview.render().el);
 				$(document.body).append(modulesview.render().el);
 
