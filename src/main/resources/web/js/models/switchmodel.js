@@ -222,6 +222,8 @@ window.Switch = Backbone.Model.extend({
 
                     // build human-readable action list
                     f.actionText = _.reduce(f.actions, function (memo, a) {
+                    	console.log("a.type:");
+                    	console.log(a.type);
                         switch (a.type) {
                             case "OUTPUT":
                                 return memo + "output " + a.port + ', ';

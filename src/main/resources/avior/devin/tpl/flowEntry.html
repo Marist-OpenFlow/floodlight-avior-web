@@ -1,7 +1,49 @@
 <tr id="flowEntry">
 	<td> <%= priority %> </td>
 	<td> <%= match.inputPort %> </td>
-	<td> <%= actions %> </td>
+	<td> <% _.each(actions, function(action) { 
+				 switch (action.type) {
+                            case "OUTPUT":
+                                %> Type= output, port= <%= action.port %> <% 
+                                return;
+                            case "OPAQUE_ENQUEUE":
+                                %> Type= enqueue, port= <%= a.port =>, queue id=  <%= a.queueId %> <% 
+                                return;
+                            case "STRIP_VLAN":
+                                %> Type=  strip VLAN <% 
+                                return;
+                            case "SET_VLAN_ID":
+                                %> Type=  set_VLAN_ID, VLAN= <%= a.virtualLanIdentifier %> <% 
+                                return;
+                            case "SET_VLAN_PCP":
+                                %> Type=  set_VLAN_PCP, prio= <%= a.virtualLanPriorityCodePoint %> <% 
+                                return;
+                            case "SET_DL_SRC":
+                                %> Type=  set_DL_SRC, src=  a.dataLayerAddress %> <% 
+                                return;
+                            case "SET_DL_DST":
+                                %> Type=  "dest=" + a.dataLayerAddress + ', <% 
+                                return;
+                            case "SET_NW_TOS":
+                                %> Type=  "TOS=" + a.networkTypeOfService + ', <% 
+                                return;
+                            case "SET_NW_SRC":
+                                %> Type=  "src=" + a.networkAddress + ', <% 
+                                return;
+                            case "SET_NW_DST":
+                                %> Type=  "dest=" + a.networkAddress + ', <% 
+                                return;
+                            case "SET_TP_SRC":
+                                %> Type=  "src port=" + a.transportPort + ', <% 
+                                return;
+                            case "SET_TP_DST":
+                                %> Type=  "dest port=" + a.transportPort + ', <% 
+                                return;
+                         }
+	
+	(actions[0].type).toString().toLowerCase() %>
+	
+	%> </td>
 	<td> <%= packetCount %> </td>
 	<td> <%= byteCount %> </td>
 	<td> <%= durationSeconds %> seconds </td>
