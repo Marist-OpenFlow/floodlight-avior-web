@@ -18,6 +18,7 @@ define([
 		},
 		events: {
 			"click #loadup": "refresh",
+			"click #controllerAccordian": "clickable",
 		},
 		// Re-render the titles of the todo item.
 	    render: function() {
@@ -45,6 +46,10 @@ define([
 											for (var x in buttonArray)
 												(document.getElementById(buttonArray[x])).onclick = function() {clearInterval(interval2);}; 										
 									   };
+		},
+		
+		clickable: function() {
+			console.log("hi");
 		},
 	});
 	return UptimeView;
