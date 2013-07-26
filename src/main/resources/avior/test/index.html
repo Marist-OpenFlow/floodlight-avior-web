@@ -55,8 +55,10 @@
 <div data-role="content">
 
 <div data-role="collapsible" data-theme="c" data-content-theme="d  data-collapsed="true">
-<h3>Controller Status</h3>
 
+<!-- Controller Information -->
+<h3>Live Controller Status</h3>
+<!-- All Controller information is being pulled from Backbone. Need to move titles into the html e.g "Total Controller Uptime"  -->
 <p><div id="uptimeview"></div></p>
 <p><div id="statusview"></div></p>
 <p><div id="memoryview"></div></p>
@@ -64,7 +66,7 @@
   <summary>Modules Loaded:</summary>
   <p><div id="modulesview"></div></p>
  </details>
-
+<!-- /Controller Information --> 
 
 
 </div>
@@ -122,13 +124,13 @@
 			
 		
 	
-<!-- Here are a bunch of panels at the end, just before the close page tag  -->
+<!-- Panels  -->
 
 		
 <!-- leftpanel3 -->
 <div data-role="panel" id="leftpanel3" data-position="left" data-display="overlay" data-dismissible="true" data-theme="a">
 
-<h3>Left Panel: Push</h3>
+<h3>Left Panel: Overlay</h3>
 
 <nav>
 <a href="index.html" data-role="button">Home</a>
@@ -153,20 +155,20 @@
 <!-- rightpanel3 -->
 <div data-role="panel" id="rightpanel3" data-position="right" data-display="overlay" data-dismissible="true" data-theme="b">
 
-<h3>Left Menu</h3>
+<h3>Right Panel: Overlay</h3>
 
 <div data-role="controlgroup">
-
-<a href="index.html" data-role="button">Home</a>
+<nav>
+<a href="/avior/test/index.html" data-role="button">Home</a>
 <p>Overview:</p>
-<a href="controllers.html" data-role="button">Controllers</a>
+<a href="/avior/test/controllers.html" data-role="button">Controllers</a>
 <a href="switches.html" data-role="button">Switches</a>
 <p>Tools:</p>
 <a href="staticflowmanager.html" data-role="button">Static Flow Manager</a>
 <a href="qos.html" data-role="button">QoS</a>
 <a href="vfilter.html" data-role="button">Virtual Network Filter</a>
 <a href="loadbalancer.html" data-role="button">Load Balancer</a>
-
+</nav>
 </div>
 
 <a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
