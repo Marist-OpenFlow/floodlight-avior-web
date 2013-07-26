@@ -10,7 +10,9 @@ define([
 		template: _.template(uptimeTpl),
 		
 		initialize: function(){
-			this.model.fetch()
+			var self = this;
+			setInterval(function(){self.model.fetch()}, 3000);
+			this.model.fetch();
 			// this.listenTo(this.model, "change", this.render);
 			this.listenTo(this.model, "sync", this.render);
 		},
