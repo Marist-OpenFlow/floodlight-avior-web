@@ -11,17 +11,13 @@ define([
 		
 		initialize: function(){
 			var self = this;
-			setInterval(function(){self.model.fetch()}, 3000);
 			this.model.fetch();
 			// this.listenTo(this.model, "change", this.render);
 			this.listenTo(this.model, "sync", this.render);
-			//document.write("Hello");
-			var blue = (document.getElementById("switchesButton"));
-			blue.onclick = function() {alert("clicked");};
+			this.setupInterval();
 		},
 		events: {
 			"click #loadup": "refresh",
-			"click #switchesButton": "clicked",
 		},
 		// Re-render the titles of the todo item.
 	    render: function() {
@@ -32,7 +28,24 @@ define([
 	    },
 		refresh: function(){this.model.fetch();},
 		
-		clicked: function() {console.log("HELLO");},
+		//not a viable solution (issues with multiple clicks of controller button)
+		setupInterval: function() {
+			var self = this;
+
+			var interval1 = setInterval(function(){self.model.fetch()}, 3000);
+			var buttonArray = ["switchesButton", "staticflowmanagerButton", "qosButton", "vfilterButton", "loadbalancerButton"];
+									   
+			for (var x in buttonArray)
+				(document.getElementById(buttonArray[x])).onclick = function() {clearInterval(interval1);};
+				
+			var controllerButton = (document.getElementById("controllerButton"));
+			controllerButton.onclick = function() {
+											var actualSelf = self;
+											var interval2 = setInterval(function(){actualSelf.model.fetch()}, 3000);
+											for (var x in buttonArray)
+												(document.getElementById(buttonArray[x])).onclick = function() {clearInterval(interval2);}; 										
+									   };
+		},
 	});
 	return UptimeView;
 });
