@@ -46,6 +46,7 @@
 
 
 <!-- Main Content -->
+<div data-role="page" id="page1">
 <div data-role="content">
 
 <!-- Controller Information -->
@@ -93,23 +94,34 @@
 
 	</div>
 	</div>
-	</div>
-<!-- /Main Content -->
-
-
 	
-
-
 <!-- Footer -->
 	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-theme="c" role="contentinfo" >
 	<p class="jqm-version"></p>
 	<p>&copy; 2013 Avior 2.0. Designed & Developed by Junaid Kapadia, Devin Young, & Kevin Pietrow</p>
 	</div>
+	</div>
 <!-- /Footer -->
-		
-			
-		
 	
+<!-- /Main Content -->
+	
+<!-- Start of second page -->
+<div data-role="page" id="page2">
+
+	<div data-role="header">
+		<h1>Bar</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+		<p>I'm the second in the source order so I'm hidden when the page loads. I'm just shown if a link that references my id is beeing clicked.</p>
+		<p><a href="#foo">Back to foo</a></p>
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
 <!-- Panels  -->
 
 		
@@ -121,7 +133,7 @@
 	<nav>
 	<a href="index.html" data-role="button">Home</a>
 	<p>Overview:</p>
-	<a href="controllers.html" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#page2" data-role="button" id="controllerButton">Controllers</a>
 	<a href="switches.html" data-role="button" id="switchesButton">Switches</a>
 	<p>Tools:</p>
 	<a href="staticflowmanager.html" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
@@ -146,9 +158,9 @@
 
 	<div data-role="controlgroup">
 	<nav>
-	<a href="/index.html" data-role="button">Home</a>
+	<a href="#page1" data-role="button">Home</a>
 	<p>Overview:</p>
-	<a href="/controllers.html" data-role="button">Controllers</a>
+	<a href="controllers.html" data-role="button">Controllers</a>
 	<a href="switches.html" data-role="button">Switches</a>
 	<p>Tools:</p>
 	<a href="staticflowmanager.html" data-role="button">Static Flow Manager</a>
@@ -162,9 +174,6 @@
 
 	</div>
 <!-- /rightpanel3-->
-
-
-
 		
 
 	
