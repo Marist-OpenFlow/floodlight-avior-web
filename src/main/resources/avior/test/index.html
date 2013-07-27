@@ -114,36 +114,7 @@
 	<p class="jqm-version"></p>
 	<p>&copy; 2013 Avior 2.0. Designed & Developed by Junaid Kapadia, Devin Young, & Kevin Pietrow</p>
 	</div>
-	</div>
-<!-- /Footer -->
-	
-<!-- /Main Content -->
-	
-<!-- Start of second page -->
-<div data-role="page" id="page2">
-
-
-
-<!-- Header -->
-	<header>
-	<div data-role="header" data-theme="f" data-position="fixed">
-	<h1>Avior 2.0</h1>
-	<a href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse">Menu-left</a>
-	<a href="#rightpanel3" data-icon="bars" data-iconpos="notext" data-rel="dialog" data-transition="fade">Menu-Right</a>
-	</div>
-	</header>
-<!-- /Header -->
-
-
-	<div data-role="content">
-		<p>I'm the second in the source order so I'm hidden when the page loads. I'm just shown if a link that references my id is beeing clicked.</p>
-		<p><a href="#foo">Back to foo</a></p>
-	</div><!-- /content -->
-
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div><!-- /footer -->
-</div><!-- /page -->
+<!-- /Footer -->	
 
 <!-- Panels  -->
 
@@ -197,6 +168,96 @@
 
 	</div>
 <!-- /rightpanel3-->
+	
+	
+	</div>
+
+	
+
+	
+<!-- Start of second page -->
+<div data-role="page" id="page2">
+
+
+
+<!-- Header -->
+	<header>
+	<div data-role="header" data-theme="f" data-position="fixed">
+	<h1>Avior 2.0</h1>
+	<a href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse">Menu-left</a>
+	<a href="#rightpanel3" data-icon="bars" data-iconpos="notext" data-rel="dialog" data-transition="fade">Menu-Right</a>
+	</div>
+	</header>
+<!-- /Header -->
+
+
+	<div data-role="content">
+		<p>I'm the second in the source order so I'm hidden when the page loads. I'm just shown if a link that references my id is beeing clicked.</p>
+		<p><a href="#foo">Back to foo</a></p>
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+	
+	
+	<!-- Panels  -->
+
+		
+<!-- leftpanel3 -->
+	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="b">
+
+	<h3>Left Panel: Overlay</h3>
+
+	<nav>
+	<a href="index.html" data-role="button">Home</a>
+	<p>Overview:</p>
+	<a href="#page2" data-role="button" id="controllerButton">Controllers</a>
+	<a href="switches.html" data-role="button" id="switchesButton">Switches</a>
+	<p>Tools:</p>
+	<a href="staticflowmanager.html" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="qos.html" data-role="button" id="qosButton">QoS</a>
+	<a href="vfilter.html" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="loadbalancer.html" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	</nav>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /leftpanel3-->
+
+
+		
+
+
+<!-- rightpanel3 -->
+	<div data-role="panel" id="rightpanel3" data-position="right" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="a">
+
+	<h3>Right Panel: Overlay</h3>
+
+	<div data-role="controlgroup">
+	<nav>
+	<a href="#page1" data-role="button">Home</a>
+	<p>Overview:</p>
+	<a href="controllers.html" data-role="button">Controllers</a>
+	<a href="switches.html" data-role="button">Switches</a>
+	<p>Tools:</p>
+	<a href="staticflowmanager.html" data-role="button">Static Flow Manager</a>
+	<a href="qos.html" data-role="button">QoS</a>
+	<a href="vfilter.html" data-role="button">Virtual Network Filter</a>
+	<a href="loadbalancer.html" data-role="button">Load Balancer</a>
+	</nav>
+	</div>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /rightpanel3-->
+	
+	
+</div><!-- /page -->
+
+
 		
 
 	
