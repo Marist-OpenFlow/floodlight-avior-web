@@ -11,11 +11,11 @@ define([
 		
 		initialize: function(){
 			this.collapsed = true;
-			var self = this;
 			this.model.fetch();
+			var self = this;
 			// this.listenTo(this.model, "change", this.render);
 			this.listenTo(this.model, "sync", this.render);
-			(document.getElementById("controllerHeading")).onclick = function() {self.clickable();};
+			$('.controllerHeading').click(function() {self.clickable();});
 		},
 		
 		events: {
@@ -32,7 +32,7 @@ define([
 	    
 		refresh: function(){this.model.fetch();},
 
-		//only call fetch when 
+		//only call fetch when the view is visible
 		clickable: function() {
 			if (this.collapsed){
 				this.collapsed = false;

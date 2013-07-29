@@ -11,10 +11,11 @@ define([
 		
 		initialize: function(){
 			var self = this;
-			setInterval(function(){self.model.fetch()}, 3000);
 			this.model.fetch();
+			this.collapsed = true;
 			// this.listenTo(this.model, "change", this.render);
 			this.listenTo(this.model, "sync", this.render);
+			$('#controllerHeading').click(function() {self.clickable();});
 		},
 		events: {
 			"click #loadmem": "refresh",
@@ -26,7 +27,20 @@ define([
 			console.log(JSON.stringify(this.model));
 			return this;
 	    },
-		refresh: function(){this.model.fetch();}
+		refresh: function(){this.model.fetch();},
+		
+		//only call fetch when the view is visible
+		clickable: function() {
+			if (this.collapsed){
+				this.collapsed = false;
+				var self = this;
+				this.interval = setInterval(function(){self.model.fetch()}, 2000);
+			}
+			else{
+				this.collapsed = true;
+				clearInterval(this.interval);
+			}
+		},
 	});
 	return MemoryView;
 });
