@@ -10,16 +10,18 @@ define([
 		template: _.template(uptimeTpl),
 		
 		initialize: function(){
+			this.collapsed = true;
 			var self = this;
 			this.model.fetch();
 			// this.listenTo(this.model, "change", this.render);
 			this.listenTo(this.model, "sync", this.render);
-			this.setupInterval();
+			(document.getElementById("controllerHeading")).onclick = function() {self.clickable();};
 		},
+		
 		events: {
 			"click #loadup": "refresh",
-			"click #controllerAccordian": "clickable",
 		},
+		
 		// Re-render the titles of the todo item.
 	    render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
@@ -27,29 +29,20 @@ define([
 			console.log(JSON.stringify(this.model));
 			return this;
 	    },
+	    
 		refresh: function(){this.model.fetch();},
-		
-		//not a viable solution (issues with multiple clicks of controller button)
-		setupInterval: function() {
-			var self = this;
 
-			var interval1 = setInterval(function(){self.model.fetch()}, 3000);
-			var buttonArray = ["switchesButton", "staticflowmanagerButton", "qosButton", "vfilterButton", "loadbalancerButton"];
-									   
-			for (var x in buttonArray)
-				(document.getElementById(buttonArray[x])).onclick = function() {clearInterval(interval1);};
-				
-			var controllerButton = (document.getElementById("controllerButton"));
-			controllerButton.onclick = function() {
-											var actualSelf = self;
-											var interval2 = setInterval(function(){actualSelf.model.fetch()}, 3000);
-											for (var x in buttonArray)
-												(document.getElementById(buttonArray[x])).onclick = function() {clearInterval(interval2);}; 										
-									   };
-		},
-		
+		//only call fetch when 
 		clickable: function() {
-			console.log("hi");
+			if (this.collapsed){
+				this.collapsed = false;
+				var self = this;
+				this.interval = setInterval(function(){self.model.fetch()}, 2000);
+			}
+			else{
+				this.collapsed = true;
+				clearInterval(this.interval);
+			}
 		},
 	});
 	return UptimeView;
