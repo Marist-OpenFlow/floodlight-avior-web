@@ -1,0 +1,22 @@
+<tbody id="portBody">
+	<tr>
+		<td> Ingress Port: </td>
+		<td> <select id="ingressPort">
+  				<option></option>
+  				<% _.each(ports, function(i) { %>  <option><%= i.portNumber %></option> <% }); %>
+			 </select> 
+		</td>
+	</tr> 
+	<tr>
+		<td> Egress Port: </td> 
+		<td> <select id="egressport">
+  				<option></option>
+  				<% _.each(ports, function(i) { %>  <option><%= i.portNumber %></option> <% }); %>
+			 </select> 
+		</td>
+	</tr>
+	<tr>
+		<td> Name: </td>
+		<td> <input type="text" id="name" /> </td>
+	</tr>
+</tbody>
