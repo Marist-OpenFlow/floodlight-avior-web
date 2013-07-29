@@ -1,0 +1,17 @@
+<div id="container">
+<table id="flowEdTable">
+	<tr>
+		<td> DPID: </td>
+		<td> <select id="dpid">
+				<option></option>
+  				<% _.each(coll, function(i) { %>  <option><%= i.dpid %></option> <% }); %>
+			 </select> 
+		</td>
+	</tr>
+</table>
+<a href="#" id="advanced"> advanced </a>
+<br><button id="getFlows">Push Flow</button>
+<button id="removeFlow">Delete Flow</button>
+<button id="removeSwFlows">Clear A Switches Flows</button>
+<button id="removeFlows">Delete All Flows</button>
+</div>

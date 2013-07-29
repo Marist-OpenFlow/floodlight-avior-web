@@ -1,0 +1,120 @@
+<div id="advancedFlows">
+<h2 id="advancedHeading"> Advanced Flow Editor</h2>
+<table id="advancedTable">
+	<tr>
+		<td><h4 id="matchHeading"> Match: </h4></td>
+	</tr>
+	<tr>
+		<td> Data Layer Destination: </td>
+		<td> <input type="text" id="src-mac" /> </td>
+	</tr>
+	<tr>
+		<td> Data Layer Source: </td>
+		<td> <input type="text" id="dst-mac" /> </td>
+	</tr>
+	<tr>
+		<td> Data Layer Type: </td>
+		<td> <input type="text" id="ether-type" /> </td>
+	</tr>
+	<tr>
+		<td> Data Layer Virtual Lan: </td>
+		<td> <input type="text" id="vlan-id" /> </td>
+	</tr>
+	<tr>
+		<td> Data Layer Virtual Lan Priority Code Point: </td>
+		<td> <input type="text" id="vlan-priority" /> </td>
+	</tr>
+	<tr>
+		<td> Network Destination: </td>
+		<td> <input type="text" id="dst-ip" /> </td>
+	</tr>
+	<tr>
+		<td> Network Source: </td>
+		<td> <input type="text" id="src-ip" /> </td>
+	</tr>
+	<tr>
+		<td> Network Protocol: </td>
+		<td> <input type="text" id="protocol" /> </td>
+	</tr>
+	<tr>
+		<td> Network Type of Service: </td>
+		<td> <input type="text" id="tos-bits" /> </td>
+	</tr>
+	<tr>
+		<td> Transport Destination: </td>
+		<td> <input type="text" id="dst-port" /> </td>
+	</tr>
+	<tr>
+		<td> Transport Source: </td>
+		<td> <input type="text" id="dst-src" /> </td>
+	</tr>
+	<tr>
+		<td> Wildcards: </td>
+		<td> <input type="text" id="wildcards" /> </td>
+	</tr>
+	<tr>
+		<td> Priority: </td>
+		<td> <input type="text" id="priority" /> </td>
+	</tr>
+	<tr>
+		<td><h4 id="actionHeadings"> Actions: </h4></td>
+	</tr>
+	<tr> 
+  		<td> Advanced Output</td>
+  		<td> <select id="moreOutput">
+  				<option></option>
+  				<option> all </option>
+  				<option> controller </option>
+  				<option> local </option>
+  				<option> ingress-port </option>
+  				<option> normal </option>
+  				<option> flood </option>
+			 </select> 
+		</td>
+  	</tr>
+  	<tr> 
+  		<td> Enqueue</td>
+  		<td> <input type="text" id="enqueue" /> </td>
+  	</tr>
+ 	<tr> 
+  		<td> Strip Virtual Lan </td>
+  		<td> <input type="text" id="strip-vlan" /> </td>
+  	</tr>
+	<tr> 
+  		<td> Set Virtual Lan</td>
+  		<td> <input type="text" id="set-vlan" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Virtual Lan Priority</td>
+  		<td> <input type="text" id="set-vlan-priority" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Data Layer Source</td>
+  		<td> <input type="text" id="set-src-mac" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Data Layer Destination</td>
+  		<td> <input type="text" id="set-dst-mac" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Network Type of Service</td>
+  		<td> <input type="text" id="set-tos-bits" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Network Source</td>
+  		<td> <input type="text" id="set-src-ip" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Network Destination</td>
+  		<td> <input type="text" id="set-dst-ip" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Transport Source</td>
+  		<td> <input type="text" id="set-src-port" /> </td>
+  	</tr>
+  	<tr> 
+  		<td> Set Transport Destination</td>
+  		<td> <input type="text" id="set-dst-port" /> </td>
+  	</tr>
+</table>
+</div>
