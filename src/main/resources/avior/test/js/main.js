@@ -6,6 +6,7 @@ require.config({
 		jquery: "lib/jquery",
 		underscore: "lib/lodash",
 		backbone: "lib/backbone",
+		marionette: "lib/backbone.marionette",
 		template: "../tpl",
 		openflow: "openflow/ofp"
 	},
@@ -13,6 +14,10 @@ require.config({
         "backbone" : {
             deps: ["jquery","underscore"],
             exports: "Backbone"
+        },
+        "marionette": {
+        	deps: ["jquery", "underscore", "backbone"],
+        	exports: "Marionette"
         }
     }
 });

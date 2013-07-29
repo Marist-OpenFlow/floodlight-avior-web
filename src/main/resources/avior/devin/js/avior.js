@@ -2,10 +2,11 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"marionette",
 	"floodlight/switch",
 	"view/switchDetail",
 	"router/router",
-], function($, _, Backbone, Switch, SwitchDetail, Router){
+], function($, _, Backbone, Marionette, Switch, SwitchDetail, Router){
 	return {
 		Switch: Switch,
 		SwitchDetail: SwitchDetail,

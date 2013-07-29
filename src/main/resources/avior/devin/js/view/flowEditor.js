@@ -3,7 +3,6 @@ define([
 	"underscore",
 	"backbone",
 	"model/flowMod",
-	"floodlight/deleteFlowsFl",
 	"text!template/flowEd.html",
 	"text!template/flowEd2.html",
 	"text!template/advancedFlow.html",

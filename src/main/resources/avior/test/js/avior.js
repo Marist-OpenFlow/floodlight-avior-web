@@ -9,8 +9,9 @@ define([
 	"view/memoryview",
 	"view/modulesview",
 	"view/statusview",
-	"view/uptimeview"
-], function($, _, Backbone, Memory, Modules, Status, Uptime, MemoryView, ModulesView, StatusView, UptimeView){
+	"view/uptimeview",
+	"router/router",
+], function($, _, Backbone, Memory, Modules, Status, Uptime, MemoryView, ModulesView, StatusView, UptimeView, Router){
 	return {
 		Memory: Memory,
 		Modules: Modules,
@@ -20,6 +21,7 @@ define([
 		ModulesView: ModulesView,
 		StatusView: StatusView,
 		UptimeView: UptimeView,
+		Router: Router,
 		
 		initialize: function(){
 			$(document).ready(function(){
@@ -37,6 +39,9 @@ define([
 				$('#statusview').append(statusview.render().el);
 				$('#memoryview').append(memoryview.render().el);
 				$('#modulesview').append(modulesview.render().el);
+				
+				var router = new Router();
+				Backbone.history.start();
 
 				/*
 				var flowview = new FlowView({model: new Flow});

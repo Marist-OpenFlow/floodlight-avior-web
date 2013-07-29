@@ -25,8 +25,6 @@ define([
 	"text!template/flowEntry.html",
 ], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, FlowCollection, swtchsSumTpl, header, descrip, portFrame, portRow, flowFrame, flowRow){
 	var SwitchesSumView = Backbone.View.extend({
-		el: $('body'),
-		
 		itemView: SwitchList,
 		
 		el: $('body'),
@@ -43,6 +41,7 @@ define([
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
 		initialize: function(item){
+			console.log("inside switchDetail");
 			var self = this;
 			this.subnets = new Array;
 			this.collection = new SwitchCollection();
@@ -63,7 +62,8 @@ define([
 		// render the heading and table template, 
 		// then render each model in this.collection
 		render: function() {
-			this.$el.html(this.template2(this.model.toJSON()));
+			//this.$el.html(this.template2(this.model.toJSON()));
+			$('#switchContent').append(this.template2(this.model.toJSON()));
 			this.$el.append(this.template1);
 			var self = this;
 			var sub;

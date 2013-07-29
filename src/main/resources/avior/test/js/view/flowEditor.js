@@ -3,11 +3,10 @@ define([
 	"underscore",
 	"backbone",
 	"model/flowMod",
-	"floodlight/deleteFlowsFl",
 	"text!template/flowEd.html",
 	"text!template/flowEd2.html",
 	"text!template/advancedFlow.html",
-], function($, _, Backbone, FlowMod, DeleteFlows, flowEd, flowEd2, advanced){
+], function($, _, Backbone, FlowMod, flowEd, flowEd2, advanced){
 	var FlowEdView = Backbone.View.extend({
 		el: $('body'),
 		
