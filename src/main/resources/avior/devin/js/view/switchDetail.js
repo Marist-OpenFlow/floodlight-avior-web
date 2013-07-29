@@ -74,37 +74,6 @@ define([
 						item.set("switchStatistics", switchStats.get(dp));
 						item.set("id", item.get("dpid"));
   						self.renderSwitch(item);
-  						
-  						
-  						
-  						
-  						// get ip address from inetAddress
-  						var ip = (item.get("inetAddress")).split(":")[0].split("/")[1]
-  						//console.log(JSON.stringify(ip));
-  						
-  						var matched = false;
-  						if (sub === undefined){
-  							sub = new Array;
-  							sub.push(item);
-  							this.subnets.push(sub);
-  						}
-  						else{
-  							for (var i = 0; i < this.subnets.length; i++) {
-  								var nextIP = (this.subnets[i][0].get("inetAddress")).split(":")[0].split("/")[1]
-  								console.log( nextIP  );
-    							if (nextIP === ip){
-  									this.subnets[i].push(item);
-  									matched = true;
-  								}
-							}
-							if (matched === false){
-								var newSub = new Array();
-								newSub.push(item);
-								this.subnets.push(newSub);
-							}
-  							console.log(matched);
-  						}
-  						
 					}, this);
 			
 			return this;
