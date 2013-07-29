@@ -2,13 +2,14 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-], function($, _, Backbone){
-	var Router = Backbone.Router.extend({
+	"marionette",
+], function($, _, Backbone, Marionette){
+	var Router = Marionette.AppRouter.extend({
 		routes: {
-			"switches": "defaultRoute",
+			"switches": "switchRoute",
 		},	
 		
-		defaultRoute: function() {
+		switchRoute: function() {
 			console.log("router routing routes");
 		},
 	});
