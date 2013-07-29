@@ -10,19 +10,18 @@ define([
 		template: _.template(uptimeTpl),
 		
 		initialize: function(){
-			var self = this;
-			setInterval(function(){self.model.fetch()}, 3000);
+			this.collapsed = true;
 			this.model.fetch();
+			var self = this;
 			// this.listenTo(this.model, "change", this.render);
 			this.listenTo(this.model, "sync", this.render);
-			//document.write("Hello");
-			var blue = (document.getElementById("switchesButton"));
-			blue.onclick = function() {alert("clicked");};
+			$('.controllerHeading').click(function() {self.clickable();});
 		},
+		
 		events: {
 			"click #loadup": "refresh",
-			"click #switchesButton": "clicked",
 		},
+		
 		// Re-render the titles of the todo item.
 	    render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
@@ -30,9 +29,21 @@ define([
 			console.log(JSON.stringify(this.model));
 			return this;
 	    },
+	    
 		refresh: function(){this.model.fetch();},
-		
-		clicked: function() {console.log("HELLO");},
+
+		//only call fetch when the view is visible
+		clickable: function() {
+			if (this.collapsed){
+				this.collapsed = false;
+				var self = this;
+				this.interval = setInterval(function(){self.model.fetch()}, 2000);
+			}
+			else{
+				this.collapsed = true;
+				clearInterval(this.interval);
+			}
+		},
 	});
 	return UptimeView;
 });
