@@ -34,8 +34,8 @@
 <!-- Body -->
 <body id="body" style="font-family:sans-serif;">
 
-
-	<div data-role="page" id="page1">
+<!-- Start of index page -->
+	<div data-role="page" id="index">
 <!-- Header -->
 	<header>
 	<div data-role="header" data-theme="f" data-position="fixed">
@@ -47,7 +47,7 @@
 <!-- /Header -->
 
 	<div data-role="content">
-	<p><a href="#page2" data-role="button">Show page "two"</a></p>
+
 <!-- Controller Information -->
 	<div id="controllerAccordian" data-role="collapsible" data-theme="c" data-content-theme="d  data-collapsed="true">
 	<h3>Live Controller Status</h3>
@@ -110,15 +110,15 @@
 	<h3>Left Panel: Overlay</h3>
 
 	<nav>
-	<a href="index.html" data-role="button">Home</a>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
 	<p>Overview:</p>
-	<a href="#page2" data-role="button" id="controllerButton">Controllers</a>
-	<a href="switches.html" data-role="button" id="switchesButton">Switches</a>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
 	<p>Tools:</p>
-	<a href="staticflowmanager.html" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
-	<a href="qos.html" data-role="button" id="qosButton">QoS</a>
-	<a href="vfilter.html" data-role="button" id="vfilterButton">Virtual Network Filter</a>
-	<a href="loadbalancer.html" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
 	</nav>
 
 	<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
@@ -137,15 +137,15 @@
 
 	<div data-role="controlgroup">
 	<nav>
-	<a href="#page1" data-role="button">Home</a>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
 	<p>Overview:</p>
-	<a href="controllers.html" data-role="button">Controllers</a>
-	<a href="switches.html" data-role="button">Switches</a>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
 	<p>Tools:</p>
-	<a href="staticflowmanager.html" data-role="button">Static Flow Manager</a>
-	<a href="qos.html" data-role="button">QoS</a>
-	<a href="vfilter.html" data-role="button">Virtual Network Filter</a>
-	<a href="loadbalancer.html" data-role="button">Load Balancer</a>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
 	</nav>
 	</div>
 
@@ -155,15 +155,13 @@
 <!-- /rightpanel3-->
 	
 	
-	</div>
+	</div><!-- /index page -->
 
 	
 
 	
-<!-- Start of second page -->
-<div data-role="page" id="page2">
-
-
+<!-- Start of controllers page -->
+<div data-role="page" id="controllers">
 
 <!-- Header -->
 	<header>
@@ -177,16 +175,17 @@
 
 
 	<div data-role="content">
-		<p>I'm the second in the source order so I'm hidden when the page loads. I'm just shown if a link that references my id is beeing clicked.</p>
-		<p><a href="#foo">Back to foo</a></p>
-	</div><!-- /content -->
+	<p>Controller Page</p>
+	</div>
 
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div><!-- /footer -->
-	
-	
-	<!-- Panels  -->
+<!-- Footer -->
+	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-theme="c" role="contentinfo" >
+	<p class="jqm-version"></p>
+	<p>&copy; 2013 Avior 2.0. Designed & Developed by Junaid Kapadia, Devin Young, & Kevin Pietrow</p>
+	</div>
+<!-- /Footer -->	
+
+<!-- Panels  -->
 
 		
 <!-- leftpanel3 -->
@@ -195,15 +194,15 @@
 	<h3>Left Panel: Overlay</h3>
 
 	<nav>
-	<a href="index.html" data-role="button">Home</a>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
 	<p>Overview:</p>
-	<a href="#page2" data-role="button">Controllers</a>
-	<a href="switches.html" data-role="button"">Switches</a>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
 	<p>Tools:</p>
-	<a href="staticflowmanager.html" data-role="button">Static Flow Manager</a>
-	<a href="qos.html" data-role="button" id="qosButton">QoS</a>
-	<a href="vfilter.html" data-role="button" id="vfilterButton">Virtual Network Filter</a>
-	<a href="loadbalancer.html" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
 	</nav>
 
 	<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
@@ -222,30 +221,426 @@
 
 	<div data-role="controlgroup">
 	<nav>
-	<a href="#page1" data-role="button">Home</a>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
 	<p>Overview:</p>
-	<a href="controllers.html" data-role="button">Controllers</a>
-	<a href="switches.html" data-role="button">Switches</a>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
 	<p>Tools:</p>
-	<a href="staticflowmanager.html" data-role="button">Static Flow Manager</a>
-	<a href="qos.html" data-role="button">QoS</a>
-	<a href="vfilter.html" data-role="button">Virtual Network Filter</a>
-	<a href="loadbalancer.html" data-role="button">Load Balancer</a>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
 	</nav>
 	</div>
 
 	<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
 
 	</div>
-<!-- /rightpanel3-->
+<!-- /rightpanel3-->	
 	
+</div><!-- /controller page -->
+
 	
-</div><!-- /page -->
+<!-- Start of switches page -->
+<div data-role="page" id="switches">
+
+<!-- Header -->
+	<header>
+	<div data-role="header" data-theme="f" data-position="fixed">
+	<h1>Avior 2.0</h1>
+	<a href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse">Menu-left</a>
+	<a href="#rightpanel3" data-icon="bars" data-iconpos="notext" data-rel="dialog" data-transition="fade">Menu-Right</a>
+	</div>
+	</header>
+<!-- /Header -->
+
+
+	<div data-role="content">
+	<p>Switches Page</p>
+	</div>
+
+<!-- Footer -->
+	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-theme="c" role="contentinfo" >
+	<p class="jqm-version"></p>
+	<p>&copy; 2013 Avior 2.0. Designed & Developed by Junaid Kapadia, Devin Young, & Kevin Pietrow</p>
+	</div>
+<!-- /Footer -->	
+
+<!-- Panels  -->
+
+		
+<!-- leftpanel3 -->
+	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="b">
+
+	<h3>Left Panel: Overlay</h3>
+
+	<nav>
+	<<a href="#index" data-role="button" id="indexButton">Home</a>
+	<p>Overview:</p>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
+	<p>Tools:</p>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	</nav>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /leftpanel3-->
 
 
 		
 
+
+<!-- rightpanel3 -->
+	<div data-role="panel" id="rightpanel3" data-position="right" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="a">
+
+	<h3>Right Panel: Overlay</h3>
+
+	<div data-role="controlgroup">
+	<nav>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
+	<p>Overview:</p>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
+	<p>Tools:</p>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	</nav>
+	</div>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /rightpanel3-->	
 	
+</div><!-- /switches page -->
+
+<!-- Start of staticFlowManager page -->
+<div data-role="page" id="staticflowmanager">
+
+<!-- Header -->
+	<header>
+	<div data-role="header" data-theme="f" data-position="fixed">
+	<h1>Avior 2.0</h1>
+	<a href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse">Menu-left</a>
+	<a href="#rightpanel3" data-icon="bars" data-iconpos="notext" data-rel="dialog" data-transition="fade">Menu-Right</a>
+	</div>
+	</header>
+<!-- /Header -->
+
+
+	<div data-role="content">
+	<p>Static Flow Manager</p>
+	</div>
+
+<!-- Footer -->
+	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-theme="c" role="contentinfo" >
+	<p class="jqm-version"></p>
+	<p>&copy; 2013 Avior 2.0. Designed & Developed by Junaid Kapadia, Devin Young, & Kevin Pietrow</p>
+	</div>
+<!-- /Footer -->	
+
+<!-- Panels  -->
+
+		
+<!-- leftpanel3 -->
+	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="b">
+
+	<h3>Left Panel: Overlay</h3>
+
+	<nav>
+	<<a href="#index" data-role="button" id="indexButton">Home</a>
+	<p>Overview:</p>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
+	<p>Tools:</p>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	</nav>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /leftpanel3-->
+
+
+		
+
+
+<!-- rightpanel3 -->
+	<div data-role="panel" id="rightpanel3" data-position="right" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="a">
+
+	<h3>Right Panel: Overlay</h3>
+
+	<div data-role="controlgroup">
+	<nav>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
+	<p>Overview:</p>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
+	<p>Tools:</p>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	</nav>
+	</div>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /rightpanel3-->	
+	
+</div><!-- /staticFlowManager page -->
+
+
+<!-- Start of QoS page -->
+<div data-role="page" id="qos">
+
+<!-- Header -->
+	<header>
+	<div data-role="header" data-theme="f" data-position="fixed">
+	<h1>Avior 2.0</h1>
+	<a href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse">Menu-left</a>
+	<a href="#rightpanel3" data-icon="bars" data-iconpos="notext" data-rel="dialog" data-transition="fade">Menu-Right</a>
+	</div>
+	</header>
+<!-- /Header -->
+
+
+	<div data-role="content">
+	<p>QoS Page</p>
+	</div>
+
+<!-- Footer -->
+	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-theme="c" role="contentinfo" >
+	<p class="jqm-version"></p>
+	<p>&copy; 2013 Avior 2.0. Designed & Developed by Junaid Kapadia, Devin Young, & Kevin Pietrow</p>
+	</div>
+<!-- /Footer -->	
+
+<!-- Panels  -->
+
+		
+<!-- leftpanel3 -->
+	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="b">
+
+	<h3>Left Panel: Overlay</h3>
+
+	<nav>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
+	<p>Overview:</p>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
+	<p>Tools:</p>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	</nav>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /leftpanel3-->
+
+
+		
+
+
+<!-- rightpanel3 -->
+	<div data-role="panel" id="rightpanel3" data-position="right" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="a">
+
+	<h3>Right Panel: Overlay</h3>
+
+	<div data-role="controlgroup">
+	<nav>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
+	<p>Overview:</p>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
+	<p>Tools:</p>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	</nav>
+	</div>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /rightpanel3-->	
+	
+</div><!-- /QoS page -->
+		
+<!-- Start of virtualNetworkFilter page -->
+<div data-role="page" id="vfilter">
+
+<!-- Header -->
+	<header>
+	<div data-role="header" data-theme="f" data-position="fixed">
+	<h1>Avior 2.0</h1>
+	<a href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse">Menu-left</a>
+	<a href="#rightpanel3" data-icon="bars" data-iconpos="notext" data-rel="dialog" data-transition="fade">Menu-Right</a>
+	</div>
+	</header>
+<!-- /Header -->
+
+
+	<div data-role="content">
+	<p>Virtual Network Filter Page</p>
+	</div>
+
+<!-- Footer -->
+	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-theme="c" role="contentinfo" >
+	<p class="jqm-version"></p>
+	<p>&copy; 2013 Avior 2.0. Designed & Developed by Junaid Kapadia, Devin Young, & Kevin Pietrow</p>
+	</div>
+<!-- /Footer -->	
+
+<!-- Panels  -->
+
+		
+<!-- leftpanel3 -->
+	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="b">
+
+	<h3>Left Panel: Overlay</h3>
+
+	<nav>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
+	<p>Overview:</p>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
+	<p>Tools:</p>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	</nav>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /leftpanel3-->
+
+
+		
+
+
+<!-- rightpanel3 -->
+	<div data-role="panel" id="rightpanel3" data-position="right" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="a">
+
+	<h3>Right Panel: Overlay</h3>
+
+	<div data-role="controlgroup">
+	<nav>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
+	<p>Overview:</p>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
+	<p>Tools:</p>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	</nav>
+	</div>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /rightpanel3-->	
+	
+</div><!-- /virtualNetworkFilter page -->
+	
+	<!-- Start of loadBalancer page -->
+<div data-role="page" id="loadbalancer">
+
+<!-- Header -->
+	<header>
+	<div data-role="header" data-theme="f" data-position="fixed">
+	<h1>Avior 2.0</h1>
+	<a href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse">Menu-left</a>
+	<a href="#rightpanel3" data-icon="bars" data-iconpos="notext" data-rel="dialog" data-transition="fade">Menu-Right</a>
+	</div>
+	</header>
+<!-- /Header -->
+
+
+	<div data-role="content">
+	<p>Load Balancer Page</p>
+	</div>
+
+<!-- Footer -->
+	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-theme="c" role="contentinfo" >
+	<p class="jqm-version"></p>
+	<p>&copy; 2013 Avior 2.0. Designed & Developed by Junaid Kapadia, Devin Young, & Kevin Pietrow</p>
+	</div>
+<!-- /Footer -->	
+
+<!-- Panels  -->
+
+		
+<!-- leftpanel3 -->
+	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="b">
+
+	<h3>Left Panel: Overlay</h3>
+
+	<nav>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
+	<p>Overview:</p>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
+	<p>Tools:</p>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	</nav>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /leftpanel3-->
+
+
+		
+
+
+<!-- rightpanel3 -->
+	<div data-role="panel" id="rightpanel3" data-position="right" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="a">
+
+	<h3>Right Panel: Overlay</h3>
+
+	<div data-role="controlgroup">
+	<nav>
+	<a href="#index" data-role="button" id="indexButton">Home</a>
+	<p>Overview:</p>
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
+	<p>Tools:</p>
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
+	</nav>
+	</div>
+
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
+
+	</div>
+<!-- /rightpanel3-->	
+	
+</div><!-- /loadBalancer page -->
 
 </body>
 </html>
