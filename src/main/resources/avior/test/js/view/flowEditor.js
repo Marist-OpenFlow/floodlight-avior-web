@@ -44,9 +44,9 @@ define([
 				case "ingressPort": 
 					this.ingressport = $(e.currentTarget).val();
 					break;
-				case "name": 
-					this.name = $(e.currentTarget).val();
-					break;
+				//case "name": 
+					//this.name = $(e.currentTarget).val();
+					//break;
 				case "egressport": 
 					this.actions = 'output=' + $(e.currentTarget).val();
 					break;
@@ -134,6 +134,15 @@ define([
 		},
 		
 		pushFlow: function() {
+			var flowAttrs = [this.ingressport, this.actions, this.srcport, 
+							 this.dstport, this.ethertype, this.dstmac, 
+							 this.srcmac, this.srcip, this.dstip, this.protocol];
+			this.name = '';
+			for (var x in flowAttrs){
+				if (flowAttrs[x] != undefined)
+					this.name += flowAttrs[x];
+				console.log(this.name);
+			}
 			var addFlow = new FlowMod("null");
 			addFlow.save({
 				'switch':$('#dpid').val(),
@@ -150,6 +159,11 @@ define([
 				'dst-ip':this.dstip,
 				'protocol':this.protocol,
 			});
+			//console.log(JSON.stringify(addFlow));
+			
+			//clear all flow attributes
+			for (var x in flowAttrs)
+				flowAttrs[x] = '';
 		},
 		
 		deleteFlow: function () {
