@@ -25,11 +25,9 @@ define([
 	"text!template/flowEntry.html",
 ], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, FlowCollection, swtchsSumTpl, header, descrip, portFrame, portRow, flowFrame, flowRow){
 	var SwitchesSumView = Backbone.View.extend({
-		el: $('body'),
-		
 		itemView: SwitchList,
 		
-		el: $('body'),
+		el: $('#content'),
 			
 		template1: _.template(swtchsSumTpl),
 		template2: _.template(header),
@@ -74,37 +72,6 @@ define([
 						item.set("switchStatistics", switchStats.get(dp));
 						item.set("id", item.get("dpid"));
   						self.renderSwitch(item);
-  						
-  						
-  						
-  						
-  						// get ip address from inetAddress
-  						var ip = (item.get("inetAddress")).split(":")[0].split("/")[1]
-  						//console.log(JSON.stringify(ip));
-  						
-  						var matched = false;
-  						if (sub === undefined){
-  							sub = new Array;
-  							sub.push(item);
-  							this.subnets.push(sub);
-  						}
-  						else{
-  							for (var i = 0; i < this.subnets.length; i++) {
-  								var nextIP = (this.subnets[i][0].get("inetAddress")).split(":")[0].split("/")[1]
-  								console.log( nextIP  );
-    							if (nextIP === ip){
-  									this.subnets[i].push(item);
-  									matched = true;
-  								}
-							}
-							if (matched === false){
-								var newSub = new Array();
-								newSub.push(item);
-								this.subnets.push(newSub);
-							}
-  							console.log(matched);
-  						}
-  						
 					}, this);
 			
 			return this;

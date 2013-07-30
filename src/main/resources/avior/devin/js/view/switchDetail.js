@@ -63,7 +63,7 @@ define([
 		// then render each model in this.collection
 		render: function() {
 			//this.$el.html(this.template2(this.model.toJSON()));
-			$('#switchContent').append(this.template2(this.model.toJSON()));
+			$('#content').append(this.template2(this.model.toJSON()));
 			this.$el.append(this.template1);
 			var self = this;
 			var sub;
