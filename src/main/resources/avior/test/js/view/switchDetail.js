@@ -56,6 +56,7 @@ define([
 			"click #loadswtch": "refresh",
 			"click #flowMod": "modFlows",
 			"click a.dpidLink": "clickSwitch",
+			"click #checkbox": "deleteFlow",
 		},
 		
 		// render the heading and table template, 
@@ -172,9 +173,12 @@ define([
 		
 		modFlows: function () {
 			$('#container').remove();
-			new FlowEditor(this.collection);
-		}
+			this.flowEditor = new FlowEditor(this.collection);
+		},
 		
+		deleteFlow: function() {
+			console.log("delete a flow!");
+		},
 		
 	});
 	return SwitchesSumView;

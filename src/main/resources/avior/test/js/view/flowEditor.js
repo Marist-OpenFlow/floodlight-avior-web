@@ -141,7 +141,7 @@ define([
 			for (var x in flowAttrs){
 				if (flowAttrs[x] != undefined)
 					this.name += flowAttrs[x];
-				console.log(this.name);
+				//console.log(this.name);
 			}
 			var addFlow = new FlowMod("null");
 			addFlow.save({
