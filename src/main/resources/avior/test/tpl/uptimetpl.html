@@ -1,4 +1,37 @@
-Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;<%= (systemUptimeMsec/1000) %> seconds
+Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;
+<% function(systemUptimeMsec) {
+	var max = systemUptimeMsec;
+	var current = Math.round(max / 1000);
+	var temp = 0;
+
+for (var i = 0; i < 4; i++) {
+    if (current > 86400) {
+        temp = Math.floor(current / 86400);
+        console.log(temp.toString() + " days");
+        current -= temp * 86400;
+    
+    }
+    else if (current > 3600) {
+        temp = Math.floor(current / 3600);
+        console.log(temp.toString() + " hours");
+        current -= temp * 3600; 
+    }
+    else if (current > 60) {
+        temp = Math.floor(current / 60);
+        console.log(temp.toString() + " minutes");
+        current -= temp * 60;
+    }
+    else if (current > 0) {
+        console.log(current.toString() + " seconds");
+        current = 0; 
+    }
+    else {}
+  	if (current > 0) {
+        console.log(", ");
+  	}
+}
+
+%> 
 
 <!--<button id="loadup">Refresh</button>-->
 
