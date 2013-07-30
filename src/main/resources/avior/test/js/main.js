@@ -19,7 +19,7 @@ require.config({
         	deps: ["jquery", "underscore", "backbone"],
         	exports: "Marionette"
         }
-    }
+    },
 });
 
 require([

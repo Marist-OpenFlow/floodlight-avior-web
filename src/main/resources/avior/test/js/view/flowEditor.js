@@ -14,10 +14,11 @@ define([
 		template2: _.template(flowEd2),
 		template3: _.template(advanced),
 
-		initialize: function(collec){
+		initialize: function(collec, display){
 			this.flows = new Array;
 			this.collection = collec;
-			this.render();
+			if (display)
+				this.render();
 		},
 		
 		events: {
@@ -166,9 +167,12 @@ define([
 				flowAttrs[x] = '';
 		},
 		
-		deleteFlow: function () {
+		deleteFlow: function (flowName) {
+			if (flowName instanceof Object === false)
+				this.name = flowName;
 			var x = new FlowMod("null");
 			x.destroy({data: { name: this.name }});
+			console.log(this.name);
 		},
 		
 		deleteFlows: function () {
