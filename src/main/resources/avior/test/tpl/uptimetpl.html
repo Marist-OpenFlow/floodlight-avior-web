@@ -1,4 +1,37 @@
-Uptime: <%= (systemUptimeMsec/1000) %> seconds
-
+Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;<%= systemUptimeMsec %>
+<% _.forEach([systemUptimeMsec], function(max) {
+	var current = Math.round(max / 1000);
+	var temp = 0;
+		
+	_.forEach([1,2,3,4], function(i) {
+	    if (current > 86400) {
+	        temp = Math.floor(current / 86400);
+	        %> <%= temp %> days<%
+	        current -= temp * 86400;
+	    
+	    }
+	    else if (current > 3600) {
+	        temp = Math.floor(current / 3600);
+	        %> <%= temp %> hours<%
+	        current -= temp * 3600; 
+	    }
+	    else if (current > 60) {
+	        temp = Math.floor(current / 60);
+	        %> <%= temp %> minutes<%
+	        current -= temp * 60;
+	        %> what is temp here?: <%= temp %> ---- <%
+	    }
+	    else if (current > 0) {
+	        %> <%= temp %> seconds<%
+	        current = 0; 
+	    }
+	    else {}
+	    
+	  	if (current > 0) {
+	        %>, <%
+	  	}
+	});
+}); %>
+ 
 <!--<button id="loadup">Refresh</button>-->
 

@@ -10,9 +10,12 @@ define([
 		template: _.template(statTpl),
 		
 		initialize: function(){
+			this.collapsed = true;
 			this.model.fetch();
+			var self = this;
 			// this.listenTo(this.model, "change", this.render);
 			this.listenTo(this.model, "sync", this.render);
+			$('.controllerHeading').click(function() {self.clickable();});
 		},
 		events: {
 			"click #loadstat": "refresh",
@@ -24,7 +27,20 @@ define([
 			//console.log(JSON.stringify(this.model));
 			return this;
 	    },
-		refresh: function(){this.model.fetch();}
+		refresh: function(){this.model.fetch();},
+		
+		//only call fetch when the view is visible
+		clickable: function() {
+			if (this.collapsed){
+				this.collapsed = false;
+				var self = this;
+				this.interval = setInterval(function(){self.model.fetch()}, 4000);
+			}
+			else{
+				this.collapsed = true;
+				clearInterval(this.interval);
+			}
+		},
 	});
 	return StatusView;
 });
