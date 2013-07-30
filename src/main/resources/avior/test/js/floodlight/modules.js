@@ -6,10 +6,10 @@ define([
 	Modules.prototype.parse = function(resp){
 		var newResp = new Array;
 		for (x in resp){
-			console.log(JSON.stringify(x));
+			//console.log(JSON.stringify(x));
 			newResp.push(x);
 		}
-		console.log(newResp);
+		//console.log(newResp);
 		return newResp;
 	};
 	

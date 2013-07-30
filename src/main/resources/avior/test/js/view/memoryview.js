@@ -23,8 +23,8 @@ define([
 		// Re-render the titles of the todo item.
 	    render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
-			console.log("Memory model ----------------->");
-			console.log(JSON.stringify(this.model));
+			//console.log("Memory model ----------------->");
+			//console.log(JSON.stringify(this.model));
 			return this;
 	    },
 		refresh: function(){this.model.fetch();},

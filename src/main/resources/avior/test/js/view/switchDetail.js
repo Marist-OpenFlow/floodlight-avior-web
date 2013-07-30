@@ -56,6 +56,7 @@ define([
 			"click #loadswtch": "refresh",
 			"click #flowMod": "modFlows",
 			"click a.dpidLink": "clickSwitch",
+			"click #checkbox": "deleteFlow",
 		},
 		
 		// render the heading and table template, 
@@ -141,22 +142,22 @@ define([
 		//attach flow info to page
 		displayFlows: function(dpid){
 			$('#container').append(this.template6());
-			console.log("here's DPID");
-			console.log(dpid);
+			//console.log("here's DPID");
+			//console.log(dpid);
 			var self = this;
 			var flows = new FlowCollection(dpid);
 			flows.fetch().complete(function () {
-				console.log("Attempted to fetch flows");
+				//console.log("Attempted to fetch flows");
 				_.forEach(flows.models, function(item) {
-					console.log("Item stringified =======================");
-					console.log(JSON.stringify(item));
-					console.log("Item regular ===========================");
-					console.log(item);
+					//console.log("Item stringified =======================");
+					//console.log(JSON.stringify(item));
+					//console.log("Item regular ===========================");
+					//console.log(item);
 					$('#flowTable').append(self.template7(item.toJSON()));
 				}, this);
 			});
 			
-			console.log("done with displayFlows()");
+			//console.log("done with displayFlows()");
 			// Construct table with flow information
 			
 			
@@ -172,9 +173,12 @@ define([
 		
 		modFlows: function () {
 			$('#container').remove();
-			new FlowEditor(this.collection);
-		}
+			this.flowEditor = new FlowEditor(this.collection);
+		},
 		
+		deleteFlow: function() {
+			console.log("delete a flow!");
+		},
 		
 	});
 	return SwitchesSumView;

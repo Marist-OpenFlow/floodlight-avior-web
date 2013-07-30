@@ -17,11 +17,11 @@ define([
 			if (obj) { 
 				var temp = this.parse(obj); 
 				this.model.modules = temp;
-				console.log("testing testing ============");
-				console.log(this.model.modules);
-				console.log("============================");
+				//console.log("testing testing ============");
+				//console.log(this.model.modules);
+				//console.log("============================");
 			}
-			else console.log('failure');
+			//else console.log('failure');
 		},
 		
 		parse: Util.missingCtlrErr,
