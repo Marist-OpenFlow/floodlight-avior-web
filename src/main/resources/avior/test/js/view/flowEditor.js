@@ -8,7 +8,7 @@ define([
 	"text!template/advancedFlow.html",
 ], function($, _, Backbone, FlowMod, flowEd, flowEd2, advanced){
 	var FlowEdView = Backbone.View.extend({
-		el: $('body'),
+		el: $('#content'),
 		
 		template1: _.template(flowEd),
 		template2: _.template(flowEd2),
