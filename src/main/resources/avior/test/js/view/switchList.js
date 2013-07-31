@@ -20,7 +20,7 @@ define([
 		initialize: function(options){
     		//console.log(JSON.stringify(options.features));
     		//console.log(JSON.stringify(options.stats));
-    		this.$el.id = "collapsibleDpid";
+    		this.$el.attr("collapsibleDpid");
     		this.$el.attr("data-role", "collapsible");
   		},
 
