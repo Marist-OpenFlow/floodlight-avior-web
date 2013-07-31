@@ -6,22 +6,34 @@ Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;
 	_.forEach([1,2,3,4], function(i) {
 	    if (current > 86400) {
 	        temp = Math.floor(current / 86400);
-	        %> <%= temp %> days<%
+	        %> <%= temp %> day<%
+	        if (temp > 1) {
+	        	%>s<%
+	        }
 	        current -= temp * 86400;
 	    
 	    }
 	    else if (current > 3600) {
 	        temp = Math.floor(current / 3600);
-	        %> <%= temp %> hours<%
+	        %> <%= temp %> hour<%
+	        if (temp > 1) {
+	        	%>s<%
+	        }
 	        current -= temp * 3600; 
 	    }
 	    else if (current > 60) {
 	        temp = Math.floor(current / 60);
-	        %> <%= temp %> minutes<%
+	        %> <%= temp %> minute<%
+	        if (temp > 1) {
+	        	%>s<%
+	        }
 	        current -= temp * 60;
 	    }
 	    else if (current > 0) {
-	        %> <%= current %> seconds<%
+	        %> <%= current %> second<%
+	        if (temp > 1) {
+	        	%>s<%
+	        }
 	        current = 0; 
 	    }
 	    else {}
