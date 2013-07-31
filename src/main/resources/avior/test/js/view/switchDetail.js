@@ -63,7 +63,7 @@ define([
 		// then render each model in this.collection
 		render: function() {
 			this.$el.html(this.template2(this.model.toJSON()));
-			this.$el.   (this.template1);
+			this.$el.append(this.template1);
 			var self = this;
 			var sub;
 			
@@ -75,7 +75,7 @@ define([
   						self.renderSwitch(item);
 					}, this);
 			
-			this.$("#content").trigger('create'); // this may be uglier than necessary
+			this.$el.trigger('create'); // this may be uglier than necessary
 			return this;
 		},
 		
