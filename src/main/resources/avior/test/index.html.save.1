@@ -1,0 +1,245 @@
+
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>Avior 2.0</title> 
+    <!-- Mobile View -->
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<!-- Mobile View -->
+	
+	<!-- JS for JQuery - Latest Stable Version 1.9.1  -->	
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<!-- /JS for JQuery  - Latest Stable Version 1.9.1   -->	
+
+	<!-- CSS & JS for JQuery Mobile - Latest Stable Version 1.3.2 -->	
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+	<!-- /CSS & JS for JQuery Mobile - Latest Stable Version 1.3.2 -->	
+	
+		
+	<!-- CSS & JS for Top Menu Effects -->	
+	<link rel="stylesheet" href="css/junaid.css/jqm-docs.css" />	
+    <script src="js/junaid.js/jqm-docs.js"></script>
+	<!-- /CSS & JS for Top Menu Effects -->
+	
+	<!-- Cross-Platform Table Resize -->
+	<link type="text/css" media="screen" rel="stylesheet" href="css/junaid.css/responsive-tables.css" />
+	<script type="text/javascript" src="js/junaid.js/responsive-tables.js"></script>
+	<!-- /Cross-Platform Table Resize -->
+    
+	<!-- /Backbone Template Call -->
+	<script data-main="js/main" src="js/lib/require.js" type="text/javascript"></script>
+	<!-- /Backbone Template Call -->
+</head> 
+
+<!-- Body -->
+<body id="body" style="font-family:sans-serif;">
+
+<!-- Start of index page -->
+	<div data-role="page" id="index">
+<!-- Header -->
+	<header>
+	<div data-role="header" data-theme="f" data-position="fixed">
+	<h1>Avior 2.0</h1>
+	<a href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse">Menu-left</a>
+	<a href="#rightpanel3" data-icon="bars" data-iconpos="notext" data-rel="dialog" data-transition="fade">Menu-Right</a>
+	</div>
+	</header>
+<!-- /Header -->
+
+
+
+	<div id="content" data-role="content">
+		
+		
+<FORM METHOD="LINK" ACTION="#controllers">
+<INPUT TYPE="button" VALUE="Clickable Button">
+</FORM>
+<input type="button" value="Page" onclick="location.href='#controllers';">
+	<select name="switch" id="dpid">
+					<option value="none">Choose Switch</option>
+                    <option></option>
+  				<% _.each(coll, function(i) { %>  <option><%= i.dpid %></option> <% }); %>
+        </select>
+
+<!-- Controller Information -->
+	<div id="controllerAccordian" data-role="collapsible" data-theme="c" data-content-theme="d  data-collapsed="true">
+	<h3 id="controllerHeading" class="controllerHeading">Live Controller Status</h3>
+	
+	<!-- All Controller information is being pulled from Backbone. Need to move titles into the html e.g "Total Controller Uptime"  -->
+	<p><div id="uptimeview"></div></p>
+	<p><div id="statusview"></div></p>
+	<p><div id="memoryview"></div></p>
+	<details>
+	<summary>Modules Loaded:</summary>
+	<p><div id="modulesview"></div></p>
+	</details>
+	</div>
+<!-- /Controller Information --> 
+
+
+<!-- /Switch & Host Information --> 
+	<h3>Switches (2)</h3>
+	<div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+
+	<div data-role="collapsible"   data-collapsed="true">
+	<h3>Switch 1</h3>
+	<p>I'm the collapsible set content for section 1.</p>
+	</div>
+
+	<div data-role="collapsible">
+	<h3>Switch 2</h3>
+	<p>I'm the collapsible set content for section 2.</p>
+	</div>
+
+	<h3>Hosts (2)</h3>
+
+	<div data-role="collapsible">
+	<h3>Host 1</h3>
+	<p>I'm the collapsible set content for section 2.</p>
+	</div>
+
+	<div data-role="collapsible">
+	<h3>Host 2</h3>
+	<p>I'm the collapsible set content for section 2.</p>
+	</div>
+<!-- /Switch & Host Information --> 
+
+
+	</div>
+	</div>
+	
+<!-- Footer -->
+	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-theme="c" role="contentinfo" >
+	<p class="jqm-version"></p>
+	<p>&copy; 2013 Avior 2.0. Designed & Developed by Junaid Kapadia, Devin Young, & Kevin Pietrow</p>
+	</div>
+<!-- /Footer -->	
+
+<!-- Panels  -->
+
+		
+<!-- leftpanel3 -->
+	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>Avior 2.0</title> 
+    <!-- Mobile View -->
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<!-- Mobile View -->
+	
+	<!-- JS for JQuery - Latest Stable Version 1.9.1  -->	
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<!-- /JS for JQuery  - Latest Stable Version 1.9.1   -->	
+
+	<!-- CSS & JS for JQuery Mobile - Latest Stable Version 1.3.2 -->	
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+	<!-- /CSS & JS for JQuery Mobile - Latest Stable Version 1.3.2 -->	
+	
+		
+	<!-- CSS & JS for Top Menu Effects -->	
+	<link rel="stylesheet" href="css/junaid.css/jqm-docs.css" />	
+    <script src="js/junaid.js/jqm-docs.js"></script>
+	<!-- /CSS & JS for Top Menu Effects -->
+	
+	<!-- Cross-Platform Table Resize -->
+	<link type="text/css" media="screen" rel="stylesheet" href="css/junaid.css/responsive-tables.css" />
+	<script type="text/javascript" src="js/junaid.js/responsive-tables.js"></script>
+	<!-- /Cross-Platform Table Resize -->
+    
+	<!-- /Backbone Template Call -->
+	<script data-main="js/main" src="js/lib/require.js" type="text/javascript"></script>
+	<!-- /Backbone Template Call -->
+</head> 
+
+<!-- Body -->
+<body id="body" style="font-family:sans-serif;">
+
+<!-- Start of index page -->
+	<div data-role="page" id="index">
+<!-- Header -->
+	<header>
+	<div data-role="header" data-theme="f" data-position="fixed">
+	<h1>Avior 2.0</h1>
+	<a href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse">Menu-left</a>
+	<a href="#rightpanel3" data-icon="bars" data-iconpos="notext" data-rel="dialog" data-transition="fade">Menu-Right</a>
+	</div>
+	</header>
+<!-- /Header -->
+
+
+
+	<div id="content" data-role="content">
+		
+		
+<FORM METHOD="LINK" ACTION="#controllers">
+<INPUT TYPE="button" VALUE="Clickable Button">
+</FORM>
+<input type="button" value="Page" onclick="location.href='#controllers';">
+	<select name="switch" id="dpid">
+					<option value="none">Choose Switch</option>
+                    <option></option>
+  				<% _.each(coll, function(i) { %>  <option><%= i.dpid %></option> <% }); %>
+        </select>
+
+<!-- Controller Information -->
+	<div id="controllerAccordian" data-role="collapsible" data-theme="c" data-content-theme="d  data-collapsed="true">
+	<h3 id="controllerHeading" class="controllerHeading">Live Controller Status</h3>
+	
+	<!-- All Controller information is being pulled from Backbone. Need to move titles into the html e.g "Total Controller Uptime"  -->
+	<p><div id="uptimeview"></div></p>
+	<p><div id="statusview"></div></p>
+	<p><div id="memoryview"></div></p>
+	<details>
+	<summary>Modules Loaded:</summary>
+	<p><div id="modulesview"></div></p>
+	</details>
+	</div>
+<!-- /Controller Information --> 
+
+
+<!-- /Switch & Host Information --> 
+	<h3>Switches (2)</h3>
+	<div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+
+	<div data-role="collapsible"   data-collapsed="true">
+	<h3>Switch 1</h3>
+	<p>I'm the collapsible set content for section 1.</p>
+	</div>
+
+	<div data-role="collapsible">
+	<h3>Switch 2</h3>
+	<p>I'm the collapsible set content for section 2.</p>
+	</div>
+
+	<h3>Hosts (2)</h3>
+
+	<div data-role="collapsible">
+	<h3>Host 1</h3>
+	<p>I'm the collapsible set content for section 2.</p>
+	</div>
+
+	<div data-role="collapsible">
+	<h3>Host 2</h3>
+	<p>I'm the collapsible set content for section 2.</p>
+	</div>
+<!-- /Switch & Host Information --> 
+
+
+	</div>
+	</div>
+	
+<!-- Footer -->
+	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-theme="c" role="contentinfo" >
+	<p class="jqm-version"></p>
+	<p>&copy; 2013 Avior 2.0. Designed & Developed by Junaid Kapadia, Devin Young, & Kevin Pietrow</p>
+	</div>
+<!-- /Footer -->	
+
+<!-- Panels  -->
+
+		
+<!-- leftpanel3 -->
+	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data

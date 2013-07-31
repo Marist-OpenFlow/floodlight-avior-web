@@ -1,3 +1,4 @@
+
 <!DOCTYPE html> 
 <html> 
 <head> 
@@ -5,7 +6,7 @@
     <!-- Mobile View -->
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<!-- Mobile View -->
-
+	
 	<!-- JS for JQuery - Latest Stable Version 1.9.1  -->	
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<!-- /JS for JQuery  - Latest Stable Version 1.9.1   -->	
@@ -14,13 +15,13 @@
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
     <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 	<!-- /CSS & JS for JQuery Mobile - Latest Stable Version 1.3.2 -->	
-
-
+	
+		
 	<!-- CSS & JS for Top Menu Effects -->	
 	<link rel="stylesheet" href="css/junaid.css/jqm-docs.css" />	
     <script src="js/junaid.js/jqm-docs.js"></script>
 	<!-- /CSS & JS for Top Menu Effects -->
-
+	
 	<!-- Cross-Platform Table Resize -->
 	<link type="text/css" media="screen" rel="stylesheet" href="css/junaid.css/responsive-tables.css" />
 	<script type="text/javascript" src="js/junaid.js/responsive-tables.js"></script>
@@ -35,8 +36,7 @@
 <body id="body" style="font-family:sans-serif;">
 
 <!-- Start of index page -->
-	<div data-role="page">
-		
+	<div data-role="page" id="index">
 <!-- Header -->
 	<header>
 	<div data-role="header" data-theme="f" data-position="fixed">
@@ -48,12 +48,25 @@
 <!-- /Header -->
 
 
+
 	<div id="content" data-role="content">
+		
+		
+<FORM METHOD="LINK" ACTION="#controllers">
+<INPUT TYPE="button" VALUE="Clickable Button">
+</FORM>
+<input type="button" value="Page" onclick="location.href='#controllers';">
+	<select name="switch" id="dpid">
+					<option value="none">Choose Switch</option>
+                    <option></option>
+  				<% _.each(coll, function(i) { %>  <option><%= i.dpid %></option> <% }); %>
+        </select>
 
 <!-- Controller Information -->
 	<div id="controllerAccordian" data-role="collapsible" data-theme="c" data-content-theme="d  data-collapsed="true">
 	<h3 id="controllerHeading" class="controllerHeading">Live Controller Status</h3>
-	<!-- All Controller information is being pulled from Backbone.-->
+	
+	<!-- All Controller information is being pulled from Backbone. Need to move titles into the html e.g "Total Controller Uptime"  -->
 	<p><div id="uptimeview"></div></p>
 	<p><div id="statusview"></div></p>
 	<p><div id="memoryview"></div></p>
@@ -64,7 +77,7 @@
 	</div>
 <!-- /Controller Information --> 
 
-	
+
 <!-- /Switch & Host Information --> 
 	<h3>Switches (2)</h3>
 	<div data-role="collapsible-set" data-theme="c" data-content-theme="d">
@@ -95,7 +108,7 @@
 
 	</div>
 	</div>
-
+	
 <!-- Footer -->
 	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-theme="c" role="contentinfo" >
 	<p class="jqm-version"></p>
@@ -105,21 +118,22 @@
 
 <!-- Panels  -->
 
+		
 <!-- leftpanel3 -->
-	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data-display="push" data-dismissible="true" data-theme="b">
+	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="b">
 
-	<h3>Main Menu</h3>
+	<h3>Left Panel: Overlay</h3>
 
 	<nav>
-	<input type="button" value="Home" onclick="location.href='#index';">
+	<a href="#index" data-role="button">Home</a>
 	<p>Overview:</p>
-	<input type="button" value="Controllers" onclick="location.href='#controllers';">
-	<input type="button" value="Switches" onclick="location.href='#switches';">
+	<a href="#controllers" data-role="button" id="controllerButton">Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
 	<p>Tools:</p>
-	<input type="button" value="Static Flow Manager" onclick="location.href='#staticflowmanager';">
-	<input type="button" value="QoS" onclick="location.href='#qos';">
-	<input type="button" value="Virtual Network Filter" onclick="location.href='#vfilter';">
-	<input type="button" value="Load Balancer" onclick="location.href='#loadbalancer';">
+	<a href="#staticflowmanager" data-role="button" id="staticflowmanagerButton">Static Flow Manager</a>
+	<a href="#qos" data-role="button" id="qosButton">QoS</a>
+	<a href="#vfilter" data-role="button" id="vfilterButton">Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" id="loadbalancerButton">Load Balancer</a>
 	</nav>
 
 	<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
@@ -129,21 +143,23 @@
 
 
 <!-- rightpanel3 -->
-	<div data-role="panel" id="rightpanel3" data-position="right" data-position-fixed="false" data-display="push" data-dismissible="true" data-theme="a">
+	<div data-role="panel" id="rightpanel3" data-position="right" data-position-fixed="false" data-display="overlay" data-dismissible="true" data-theme="a">
 
-	<h3>Right Panel Menu</h3>
+	<h3>Right Panel: Overlay</h3>
 
 	<div data-role="controlgroup">
 	<nav>
-	<input type="button" value="Home" onclick="location.href='#index';">
+	<a href="#index" data-role="button">Home</a>
 	<p>Overview:</p>
-	<a href="#controllers" data-role="button" >Controllers</a>
-	<input type="button" value="Controllers" onclick="location.href='#controllers';">
+<input type="button" data-role="button" value="Page" onclick="location.href='#controllers';">
+<input type="button" value="Page" onclick="location.href='#content';">
+	<a onclick href="#controllers" data-role="button" >Controllers</a>
+	<a href="#switches" data-role="button" id="switchesButton">Switches</a>
 	<p>Tools:</p>
-	<input type="button" value="Static Flow Manager" onclick="location.href='#staticflowmanager';">
-	<input type="button" value="QoS" onclick="location.href='#qos';">
-	<input type="button" value="Virtual Network Filter" onclick="location.href='#vfilter';">
-	<input type="button" value="Load Balancer" onclick="location.href='#loadbalancer';">
+	<a href="#staticflowmanager" data-role="button" >Static Flow Manager</a>
+	<a href="#qos" data-role="button" >QoS</a>
+	<a href="#vfilter" data-role="button" >Virtual Network Filter</a>
+	<a href="#loadbalancer" data-role="button" >Load Balancer</a>
 	</nav>
 	</div>
 
@@ -151,13 +167,23 @@
 
 	</div>
 <!-- /rightpanel3-->
+	
+	
+	</div><!-- /index page -->
 
 
+	<div data-role="content" id="staticflowmanager">
 	</div>
-<!-- /index page -->
-
-
-
+	<div id="controllers">
+	</div>
+	<div data-role="page" id="switches">
+	</div>
+	<div data-role="page" id="qos">
+	</div>
+	<div data-role="page" id="vfilter">
+	</div>
+	<div data-role="page" id="loadbalancer">
+	</div>
 
 </body>
 </html>
