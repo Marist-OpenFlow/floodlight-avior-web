@@ -1,4 +1,4 @@
-Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;<%= systemUptimeMsec %>
+Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;
 <% _.forEach([systemUptimeMsec], function(max) {
 	var current = Math.round(max / 1000);
 	var temp = 0;
@@ -19,10 +19,9 @@ Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;<%= systemUptimeMsec %>
 	        temp = Math.floor(current / 60);
 	        %> <%= temp %> minutes<%
 	        current -= temp * 60;
-	        %> what is temp here?: <%= temp %> ---- <%
 	    }
 	    else if (current > 0) {
-	        %> <%= temp %> seconds<%
+	        %> <%= current %> seconds<%
 	        current = 0; 
 	    }
 	    else {}
