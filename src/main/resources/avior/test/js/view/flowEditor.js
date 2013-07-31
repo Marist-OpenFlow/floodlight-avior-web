@@ -15,7 +15,7 @@ define([
 		template3: _.template(advanced),
 
 		initialize: function(collec, display){
-			this.flows = new Array;
+			this.nameList = new Object;
 			this.collection = collec;
 			if (display)
 				this.render();
@@ -45,9 +45,9 @@ define([
 				case "ingressPort": 
 					this.ingressport = $(e.currentTarget).val();
 					break;
-				//case "name": 
-					//this.name = $(e.currentTarget).val();
-					//break;
+				case "name":
+					this.name = $(e.currentTarget).val();
+					break;
 				case "egressport": 
 					this.actions = 'output=' + $(e.currentTarget).val();
 					break;
@@ -135,49 +135,55 @@ define([
 		},
 		
 		pushFlow: function() {
-			var flowAttrs = [this.ingressport, this.actions, this.srcport, 
-							 this.dstport, this.ethertype, this.dstmac, 
-							 this.srcmac, this.srcip, this.dstip, this.protocol];
-			this.name = '';
-			for (var x in flowAttrs){
-				if (flowAttrs[x] != undefined)
-					this.name += flowAttrs[x];
-				//console.log(this.name);
+			var proceed = true;
+			if (this.name in this.nameList){
+				proceed = confirm("Warning! " + this.name + " is already being used." 
+					   + " Proceeding will overwrite the current flow with" 
+					   + " this name. Would you like to proceed using "  
+					   + this.name + "?");
 			}
-			var addFlow = new FlowMod("null");
-			addFlow.save({
-				'switch':$('#dpid').val(),
-				'ingress-port':this.ingressport,
-				'name':this.name,
-				'actions':this.actions,
-				
-				'src-port':this.srcport,
-				'dst-port':this.dstport,
-				'ether-type':this.ethertype,
-				'dst-mac':this.dstmac,
-				'src-mac':this.srcmac,
-				'src-ip':this.srcip,
-				'dst-ip':this.dstip,
-				'protocol':this.protocol,
-			});
-			//console.log(JSON.stringify(addFlow));
 			
-			//clear all flow attributes
-			for (var x in flowAttrs)
-				flowAttrs[x] = '';
+			if (this.name in this.nameList === false || proceed){
+				this.nameList[this.name] = true;
+				var flowAttrs = [this.name, this.ingressport, this.actions, this.srcport, 
+							 	this.dstport, this.ethertype, this.dstmac, 
+							 	this.srcmac, this.srcip, this.dstip, this.protocol];
+
+				var addFlow = new FlowMod("null");
+				addFlow.save({
+					'switch':$('#dpid').val(),
+					'ingress-port':this.ingressport,
+					'name':this.name,
+					'actions':this.actions,
+				
+					'src-port':this.srcport,
+					'dst-port':this.dstport,
+					'ether-type':this.ethertype,
+					'dst-mac':this.dstmac,
+					'src-mac':this.srcmac,
+					'src-ip':this.srcip,
+					'dst-ip':this.dstip,
+					'protocol':this.protocol,
+				});
+				//console.log(JSON.stringify(addFlow));
+			
+				//clear all flow attributes
+				for (var x in flowAttrs)
+					flowAttrs[x] = '';
+			}
 		},
 		
-		deleteFlow: function (flowName) {
-			if (flowName instanceof Object === false)
-				this.name = flowName;
+		deleteFlow: function () {
 			var x = new FlowMod("null");
 			x.destroy({data: { name: this.name }});
-			console.log(this.name);
 		},
 		
 		deleteFlows: function () {
 			var x = new FlowMod("all");
 			x.fetch();
+			//x.fetch().complete(function () {
+    	  		//console.log(JSON.stringify(x));
+    	 	//});
 		},
 		
 		deleteSwFlows: function () {
@@ -191,6 +197,10 @@ define([
 			var d = c.get("ports");
 			$('#portBody').remove();
 			$('#flowEdTable').append(this.template2(c.toJSON()));
+		},
+		
+		listStaticFlowNames: function() {
+			
 		},
 		
 	});
