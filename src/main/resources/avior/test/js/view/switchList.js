@@ -11,22 +11,21 @@ define([
 		/*tagName: "dt",
 		template: _.template(swtchSumTpl),
 		
-		initialize: function(options){
-    		//console.log(JSON.stringify(options.features));
-    		//console.log(JSON.stringify(options.stats)); 
-  		},
-		
 		onBeforeRender: function(){
     		//console.log(JSON.stringify(this.model));
     		var features = new Features();
     		var switchStats = new SwitchStats();
   		}*/
 		
-		
-		
+		initialize: function(options){
+    		//console.log(JSON.stringify(options.features));
+    		//console.log(JSON.stringify(options.stats));
+    		this.$el.id = "collapsibleDpid";
+    		this.$el.attr("data-role", "collapsible");
+  		},
+
 		//pre-marionette stuff
-		//tagName: "tbody",
-		
+		tagName: "li",
 		template: _.template(swtchSumTpl),
 		
 		//render the switch model using the template

@@ -14,7 +14,7 @@ define([
 		//resp.desc = new Switch.Description;
 		//resp.desc.parse(resp.description);
 		//delete resp.description;
-
+	    
 		var ports = new PortCollection;
 		ports.parse(resp.ports);
 		resp.ports = ports;
