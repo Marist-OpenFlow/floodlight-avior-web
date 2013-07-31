@@ -8,7 +8,7 @@ define([
 ], function($, _, Backbone, Marionette, Switch, SwitchDetail){
 	var Router = Marionette.AppRouter.extend({
 		routes: {
-			"controllers": "switchRoute",
+			"switches": "switchRoute",
 		},	
 		
 		switchRoute: function() {

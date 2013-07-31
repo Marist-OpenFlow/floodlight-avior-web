@@ -56,7 +56,7 @@ define([
 			"click #loadswtch": "refresh",
 			"click #flowMod": "modFlows",
 			"click a.dpidLink": "clickSwitch",
-			"click #checkbox": "deleteFlow",
+			"click #removeFlo": "deleteFlow",
 		},
 		
 		// render the heading and table template, 
@@ -173,11 +173,16 @@ define([
 		
 		modFlows: function () {
 			$('#container').remove();
-			this.flowEditor = new FlowEditor(this.collection);
+			new FlowEditor(this.collection, true);
 		},
 		
-		deleteFlow: function() {
+		deleteFlow: function(e) {
+			var v = e;
+			console.log(v);
 			console.log("delete a flow!");
+			//$('#container').remove();
+			this.flowEditor = new FlowEditor(this.collection, false);
+			this.flowEditor.deleteFlow("red");
 		},
 		
 	});
