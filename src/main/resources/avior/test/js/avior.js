@@ -41,16 +41,16 @@ define([
 				$('#modulesview').append(modulesview.render().el);
 				
 				var router = new Router();
-				//Backbone.history.start();
+				Backbone.history.start();
 				
-				if ( history && history.pushState ) {
+				/*if ( history && history.pushState ) {
     				Backbone.history.start({pushState: true});
     				console.log('has pushState');
 				}
 				else {
     				Backbone.history.start();
     				console.log('no pushState');
-				}
+				}*/
 
 			
 				/*
