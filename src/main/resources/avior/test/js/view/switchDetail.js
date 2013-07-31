@@ -83,7 +83,7 @@ define([
 			var switchList = new SwitchList({
 				model: item
 			});
-			$('dt').append(switchList.render().el);
+			$('#collapsibleDpid').append(switchList.render().el);
 		},
 		
 		//clear the container div, create 
