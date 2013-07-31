@@ -25,7 +25,7 @@ define([
 		
 		
 		//pre-marionette stuff
-		tagName: "tbody",
+		//tagName: "tbody",
 		
 		template: _.template(swtchSumTpl),
 		
