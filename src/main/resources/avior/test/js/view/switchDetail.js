@@ -49,11 +49,13 @@ define([
 			switchStats = new SwitchStats();
 			switchStats.fetch();	
 			this.listenTo(switchStats, "sync", this.render);
+			//$('#pleaseWork').click(function(e) {self.clickSwitch(e);});
 		},
 		
 		events: {
 			"click #loadswtch": "refresh",
 			"click #flowMod": "modFlows",
+			//"click h3.ui-collapsible-heading": "clickSwitch",
 			"click a.dpidLink": "clickSwitch",
 			"click #removeFlo": "deleteFlow",
 		},
@@ -75,7 +77,6 @@ define([
 
 			this.$el.html(this.template2).trigger('create');
 			switchList.appendTo(this.$el).trigger('create');
-
 			return this;
 		},
 		
@@ -91,6 +92,7 @@ define([
 		//description model and port model
 		//for specific dpid and place in view
 		clickSwitch: function(e) {
+			console.log("clickSwitch");
 			$('#container').remove();
 			
 			var oneSwitch = this.collection.get(e.currentTarget.id);
@@ -109,12 +111,12 @@ define([
 			var desc = new Description(oneSwitch.get("description"));
 			desc.set("dpid", dpid);
 			desc.set("connectedSince", oneSwitch.get("connectedSince"));	
-			this.$el.append(this.template3(desc.toJSON()));	
+			this.$el.append(this.template3(desc.toJSON())).trigger('create');	
 		},
 		
 		//attach port info to page
 		displayPorts: function(dpid, oneSwitch){
-			$('#container').append(this.template4());
+			$('#con3').append(this.template4());
 			var ports = new PortCollection();
 			var portArray = oneSwitch.get("ports");
 			var portStatArray = new PortStatistics(dpid);
@@ -142,7 +144,7 @@ define([
 		
 		//attach flow info to page
 		displayFlows: function(dpid){
-			$('#container').append(this.template6());
+			$('#container1').append(this.template6());
 			//console.log("here's DPID");
 			//console.log(dpid);
 			var self = this;
@@ -173,7 +175,7 @@ define([
 		},
 		
 		modFlows: function () {
-			//$('#container').remove();
+			//$('#container1').remove();
 			new FlowEditor(this.collection, true);
 		},
 		
