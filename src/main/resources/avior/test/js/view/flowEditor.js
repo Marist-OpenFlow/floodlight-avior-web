@@ -17,6 +17,7 @@ define([
 		initialize: function(collec, display){
 			this.nameList = new Object;
 			this.collection = collec;
+			console.log(this.collection);
 			if (display)
 				this.render();
 		},
@@ -33,8 +34,9 @@ define([
 		},
 		
 		render: function() {
+			$('#container2').remove();
 			this.$el.append(this.template1({coll: this.collection.toJSON()})).trigger('create');
-			$('#container').append(this.template3).trigger('create');
+			$('#container2').append(this.template3).trigger('create');
 		},
 		
 		validate: function(e){

@@ -174,7 +174,7 @@ define([
 		},
 		
 		modFlows: function () {
-			$('#container').remove();
+			//$('#container').remove();
 			new FlowEditor(this.collection, true);
 		},
 		
