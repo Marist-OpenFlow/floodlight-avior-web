@@ -13,6 +13,7 @@ define([
 	"router/router",
 ], function($, _, Backbone, Memory, Modules, Status, Uptime, MemoryView, ModulesView, StatusView, UptimeView, Router){
 	return {
+		/* 
 		Memory: Memory,
 		Modules: Modules,
 		Status: Status, 
@@ -25,16 +26,19 @@ define([
 		
 		initialize: function(){
 			$(document).ready(function(){
+				/* Create views for the controller */
 				var statusview = new StatusView({model: new Status});
 				var uptimeview = new UptimeView({model: new Uptime});
 				var memoryview = new MemoryView({model: new Memory});
 				var modulesview = new ModulesView({model: new Modules});
 				
+				/* Delegate events for controller views */
 				statusview.delegateEvents(statusview.events);
 				uptimeview.delegateEvents(uptimeview.events);
 				memoryview.delegateEvents(memoryview.events);
 				modulesview.delegateEvents(modulesview.events);
 				
+				/* Link controller aspects to id tags */
 				$('#uptimeview').append(uptimeview.render().el);
 				$('#statusview').append(statusview.render().el);
 				$('#memoryview').append(memoryview.render().el);

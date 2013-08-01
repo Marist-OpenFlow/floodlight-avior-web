@@ -13,20 +13,19 @@ define([
 			this.collapsed = true;
 			this.model.fetch();
 			var self = this;
-			// this.listenTo(this.model, "change", this.render);
+			// Update the model when changes occur
 			this.listenTo(this.model, "sync", this.render);
 			$('.controllerHeading').click(function() {self.clickable();});
 		},
 		
+		// This is possibly deprecated
 		events: {
 			"click #loadup": "refresh",
 		},
 		
-		// Re-render the titles of the todo item.
+		// Render the model
 	    render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
-			//console.log("Uptime model ----------------->");
-			//console.log(JSON.stringify(this.model));
 			return this;
 	    },
 	    

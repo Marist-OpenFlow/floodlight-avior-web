@@ -1,15 +1,17 @@
 define([
 	"model/modulesmodel"
 ], function(Modules){
+	/* Floodlight specific URL for modules loaded by controller */
 	Modules.prototype.urlRoot = "/wm/core/module/loaded/json";
 	
+	/* Floodlight specific parse method */
 	Modules.prototype.parse = function(resp){
 		var newResp = new Array;
+		/* For each element in the JSON, push a new entry to newResp */
 		for (x in resp){
-			//console.log(JSON.stringify(x));
 			newResp.push(x);
 		}
-		//console.log(newResp);
+		/* Return parsed elements */
 		return newResp;
 	};
 	

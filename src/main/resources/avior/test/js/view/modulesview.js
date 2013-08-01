@@ -12,17 +12,17 @@ define([
 		initialize: function(){
 			var self = this;
 			this.model.fetch();
-			// this.listenTo(this.model, "change", this.render);
+			// Update when changes occur to the model
 			this.listenTo(this.model, "sync", this.render);
 		},
+		
+		// This is most likely deprecated
 		events: {
 			"click #loadmod": "refresh",
 		},
-		// Re-render the titles of the todo item.
+		// Render the model
 	    render: function() {
 			this.$el.html(this.template({mods: this.model.toJSON()}));
-			//console.log("Modules model ----------------->");
-			//console.log((this.model.toJSON()));
 			return this;
 	    },
 		refresh: function(){this.model.fetch();}
