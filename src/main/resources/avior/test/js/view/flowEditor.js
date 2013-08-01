@@ -33,8 +33,8 @@ define([
 		},
 		
 		render: function() {
-			this.$el.append(this.template1({coll: this.collection.toJSON()}));
-			$('#container').append(this.template3);
+			this.$el.append(this.template1({coll: this.collection.toJSON()})).trigger('create');
+			$('#container').append(this.template3).trigger('create');
 		},
 		
 		validate: function(e){
@@ -196,7 +196,7 @@ define([
 			var c = this.collection.get(v);
 			var d = c.get("ports");
 			$('#portBody').remove();
-			$('#flowEdTable').append(this.template2(c.toJSON()));
+			$('#flowEdTable').append(this.template2(c.toJSON())).trigger('create');
 		},
 		
 		listStaticFlowNames: function() {
