@@ -5,7 +5,7 @@ define([
 	"marionette",
 	"floodlight/featuresFl",
 	"floodlight/switchStatisticsFl",
-	"view/switchList",
+	"view/switchList", // should rename this, maybe SwitchSummary?
 	"collection/switchCollection",
 	"model/description",
 	"collection/portCollection",
@@ -23,9 +23,9 @@ define([
 
 	"text!template/flowTable.html",
 	"text!template/flowEntry.html",
-], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchList, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, FlowCollection, swtchsSumTpl, header, descrip, portFrame, portRow, flowFrame, flowRow){
+], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchSummary, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, FlowCollection, swtchsSumTpl, header, descrip, portFrame, portRow, flowFrame, flowRow){
 	var SwitchesSumView = Backbone.View.extend({
-		itemView: SwitchList,
+		itemView: SwitchSummary,
 		
 		el: $('#content'),
 			
@@ -62,28 +62,30 @@ define([
 		// render the heading and table template, 
 		// then render each model in this.collection
 		render: function() {
-			this.$el.html(this.template2(this.model.toJSON()));
-			this.$el.append(this.template1);
+		    // hack to turn template HTML into object without yet adding it to document
+		    var switchList = $('<div/>').html(this.template1).contents();
 			var self = this;
-			var sub;
-			
+			// one concern about this forEach is that it will happen every time this view is rendered
 			_.forEach(self.collection.models, function(item) {
 						var dp = item.get("dpid");
 						item.set("features", features.get(dp));
 						item.set("switchStatistics", switchStats.get(dp));
 						item.set("id", item.get("dpid"));
-  						self.renderSwitch(item);
+  						self.renderSwitch(item, switchList);
 					}, this);
-			
+
+			this.$el.html(this.template2);
+			switchList.appendTo(this.$el).trigger('create');
+
 			return this;
 		},
 		
 		//display the dpid list
-		renderSwitch: function(item){
-			var switchList = new SwitchList({
+		renderSwitch: function(item,container){
+			var switchSum = new SwitchSummary({
 				model: item
 			});
-			$('dt').append(switchList.render().el);
+			container.append(switchSum.render().el);
 		},
 		
 		//clear the container div, create 

@@ -5,7 +5,7 @@ define([
 	"text!template/port.html"
 ], function($, _, Backbone, portTpl){
 	var PortView = Backbone.View.extend({
-		tagName: "tbody",
+		//tagName: "tbody",
 		
 		template: _.template(portTpl),
 		

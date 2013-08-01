@@ -1,7 +1,7 @@
 define([
 	"model/features"
 ], function(Features){
-	//get list of switch features connected to controller
+	/* Floodlight specific URL for switch features */
 	Features.prototype.url = "/wm/core/switch/all/features/json"; 
 	
 	/*Features.prototype.parse = function(resp) {

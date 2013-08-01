@@ -1,7 +1,7 @@
 define([
 	"model/flowMod"
 ], function(FlowMod){
-	//push flows! and delete flows!
+	/* Floodlight specific URL for pushing and deleting flows */
 	FlowMod.prototype.urlRoot = function () {
 		if (this.dpid === "null"){
 			this.unset(this.dpid);

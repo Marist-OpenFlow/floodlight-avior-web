@@ -1,9 +1,12 @@
 Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;
-<% _.forEach([systemUptimeMsec], function(max) {
+<% /* Bring in the System Uptime */
+	_.forEach([systemUptimeMsec], function(max) {
 	var current = Math.round(max / 1000);
 	var temp = 0;
-		
+	
+	/* Loop four times, print out time measurements */
 	_.forEach([1,2,3,4], function(i) {
+		/* Check to see how many days controller has been active */
 	    if (current > 86400) {
 	        temp = Math.floor(current / 86400);
 	        %> <%= temp %> day<%
@@ -11,8 +14,8 @@ Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;
 	        	%>s<%
 	        }
 	        current -= temp * 86400;
-	    
 	    }
+	    /* Check for how many hours */
 	    else if (current > 3600) {
 	        temp = Math.floor(current / 3600);
 	        %> <%= temp %> hour<%
@@ -21,6 +24,7 @@ Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;
 	        }
 	        current -= temp * 3600; 
 	    }
+	    /* Check for how many minutes */
 	    else if (current > 60) {
 	        temp = Math.floor(current / 60);
 	        %> <%= temp %> minute<%
@@ -29,6 +33,7 @@ Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;
 	        }
 	        current -= temp * 60;
 	    }
+	    /* Display seconds left */
 	    else if (current > 0) {
 	        %> <%= current %> second<%
 	        if (current > 1) {
@@ -38,6 +43,7 @@ Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;
 	    }
 	    else {}
 	    
+	    /* If there is time left, place a comma after the designation */
 	  	if (current > 0) {
 	        %>, <%
 	  	}

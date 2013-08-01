@@ -1,7 +1,7 @@
 define([
 	"model/switchStatistics"
 ], function(SwitchStatistics){
-	//get list of switch features connected to controller
+	/* Floodlight specific URL for switch statistics */
 	SwitchStatistics.prototype.url = "/wm/core/switch/all/aggregate/json"; 
 	return SwitchStatistics;
 });

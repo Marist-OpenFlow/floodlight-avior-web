@@ -4,6 +4,7 @@
 require.config({
 	paths: {
 		jquery: "lib/jquery",
+		jquerymob: "lib/jquery.mobile",
 		underscore: "lib/lodash",
 		backbone: "lib/backbone",
 		marionette: "lib/backbone.marionette",
@@ -12,11 +13,11 @@ require.config({
 	},
     shim: {
         "backbone" : {
-            deps: ["jquery","underscore"],
+            deps: ["jquery", "jquerymob", "underscore"],
             exports: "Backbone"
         },
         "marionette": {
-        	deps: ["jquery", "underscore", "backbone"],
+        	deps: ["jquery", "jquerymob", "underscore", "backbone"],
         	exports: "Marionette"
         }
     },

@@ -1,7 +1,7 @@
 define([
 	"model/portStatistics"
 ], function(PortStatistics){
-	//get list of port features connected to controller
+	/* Floodlight specific URL for ports on a switch */
 	PortStatistics.prototype.urlRoot = function() {return "/wm/core/switch/" + this.dpid + "/port/json";};
 	PortStatistics.prototype.initialize = function(dpid) {this.dpid = dpid;};
 	return PortStatistics;
