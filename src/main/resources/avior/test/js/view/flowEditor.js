@@ -88,7 +88,7 @@ define([
 					this.dstsrc = $(e.currentTarget).val();
 					break;
 				case "wildcards": 
-					this.wildcards = $(e.cu"rrentTarget).val();
+					this.wildcards = $(e.currentTarget).val();
 					break;
 				case "priority": 
 					this.priority = $(e.currentTarget).val();

@@ -14,12 +14,14 @@ define([
 	"view/statusview",
 	"view/uptimeview",
 	"view/flowEditor",
-], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor){
+	"text!template/controller.html",
+], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, controllerTpl){
 	/* Structure used to navigate through views */
 	var Router = Marionette.AppRouter.extend({
+		template: _.template(controllerTpl),
+		
 		routes: {
 			"": "home",
-			"index": "home2",
 			"controllers": "controllerRoute",
 			"switches": "switchRoute",
 			"staticflowmanager": "staticFlowRoute",
@@ -29,6 +31,8 @@ define([
 		},
 		
 		 home: function() {
+		 	$('#content').empty();
+		 	$('#content').append(this.template).trigger('create');
 		 	// Create views for controller aspects
 			this.statusview = new StatusView({model: new Status});
 			this.uptimeview = new UptimeView({model: new Uptime});
@@ -49,29 +53,39 @@ define([
 			$('#modulesview').append(this.modulesview.render().el);
         },
         
-        home2: function() {				
-			//Link controller aspects to id tags
-			var self = this;
-			$('#content').append(this.uptimeview.render().el).trigger('create');
-			$('#content').append(self.statusview.render().el).trigger('create');
-			$('#content').append(self.memoryview.render().el).trigger('create');
-			$('#content').append(self.modulesview.render().el).trigger('create');
-        },
-        
         controllerRoute: function() {
-        	//$('#container').remove();
-			//new FlowEditor(this.collection, true);
 			$('#content').empty();
-			$('#content').append("");
+			$('#content').append("Controller Details Coming Soon!");
         },
         
 		
 		switchRoute: function() {
-			console.log("router routing routers");
 			var switchDetail = new SwitchDetail({model: new Switch});
 			switchDetail.delegateEvents(switchDetail.events);
-			this.collection = switchDetail.collection;
+			//this.collection = switchDetail.collection;
 		},
+		
+		staticFlowRoute: function() {
+        	//$('#container').remove();
+			//new FlowEditor(this.collection, true);
+			$('#content').empty();
+			$('#content').append("Static Flow Entry Pusher Coming Soon!");
+        },
+        
+         qosRoute: function() {
+			$('#content').empty();
+			$('#content').append("QoS Coming Soon!");
+        },
+        
+         vfilterRoute: function() {
+			$('#content').empty();
+			$('#content').append("Virtual Network Filter Coming Soon!");
+        },
+        
+         loadbalancerRoute: function() {
+			$('#content').empty();
+			$('#content').append("Load Balancer Coming Soon!");
+        },
 
 	});
 	return Router;
