@@ -1,17 +1,22 @@
-<div id="container">
-<table id="flowEdTable">
-	<tr>
-		<td> DPID: </td>
-		<td> <select id="dpid">
-				<option></option>
-  				<% _.each(coll, function(i) { %>  <option><%= i.dpid %></option> <% }); %>
-			 </select> 
-		</td>
-	</tr>
-</table>
-<a href="#" id="advanced"> advanced </a>
-<br><button id="getFlows">Push Flow</button>
-<button id="removeFlow">Delete Flow</button>
-<button id="removeSwFlows">Clear A Switches Flows</button>
-<button id="removeFlows">Delete All Flows</button>
-</div>
+	<div id="container">
+	
+	<label for="flowEdTableLabel">Select DPID:</label>
+	<select name="flowEdTable" id="flowEdTable">
+	<option></option>
+	<% _.each(coll, function(i) { %>  <option><%= i.dpid %></option> <% }); %>
+	</select>
+		
+	<details id='advanced'>
+	  <summary>Advanced</summary>
+	  <p></p>
+	</details>
+	
+	<button id="getFlows">Push Flow</button>
+	<button id="removeFlow">Delete Flow</button>
+	<button id="removeSwFlows">Clear A Switches Flows</button>
+	<button id="removeFlows">Delete All Flows</button>
+	
+		
+	</div>
+	
+	<!--<a href="#" id="advanced"> advanced </a>-->
