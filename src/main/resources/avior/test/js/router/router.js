@@ -9,13 +9,15 @@ define([
 	"floodlight/modules",
 	"floodlight/status",
 	"floodlight/uptime",
+	"floodlight/hostCollectionFl",
 	"view/memoryview",
 	"view/modulesview",
 	"view/statusview",
 	"view/uptimeview",
 	"view/flowEditor",
+	"view/hostview",
 	"text!template/controller.html",
-], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, controllerTpl){
+], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, HostView, controllerTpl){
 	/* Structure used to navigate through views */
 	var Router = Marionette.AppRouter.extend({
 		template: _.template(controllerTpl),
@@ -38,12 +40,18 @@ define([
 			this.uptimeview = new UptimeView({model: new Uptime});
 			this.memoryview = new MemoryView({model: new Memory});
 			this.modulesview = new ModulesView({model: new Modules});
+			
+			// Create view for hosts
+			this.hostview = new HostView();
 
-			//Delegate events for controller views
+			// Delegate events for controller views
 			this.statusview.delegateEvents(this.statusview.events);
 			this.uptimeview.delegateEvents(this.uptimeview.events);
 			this.memoryview.delegateEvents(this.memoryview.events);
 			this.modulesview.delegateEvents(this.modulesview.events);
+			
+			// Delegate events for host view
+			this.hostview.delegateEvents(this.hostview.events);
 
 				
 			// Link controller aspects to id tags
@@ -51,6 +59,9 @@ define([
 			$('#statusview').append(this.statusview.render().el);
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
+			
+			// Link host to id tag
+			$('#hostview').append(this.hostview.render().el);
         },
         
         controllerRoute: function() {
