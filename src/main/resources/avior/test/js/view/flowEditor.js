@@ -3,15 +3,15 @@ define([
 	"underscore",
 	"backbone",
 	"model/flowMod",
-	"text!template/flowEd.html",
-	"text!template/flowEd2.html",
+	"text!template/flowEditor.html",
+	"text!template/portSelect.html",
 	"text!template/advancedFlow.html",
-], function($, _, Backbone, FlowMod, flowEd, flowEd2, advanced){
+], function($, _, Backbone, FlowMod, flowEditor, portSelect, advanced){
 	var FlowEdView = Backbone.View.extend({
 		el: $('#content'),
 		
-		template1: _.template(flowEd),
-		template2: _.template(flowEd2),
+		template1: _.template(flowEditor),
+		template2: _.template(portSelect),
 		template3: _.template(advanced),
 
 		initialize: function(collec, display){

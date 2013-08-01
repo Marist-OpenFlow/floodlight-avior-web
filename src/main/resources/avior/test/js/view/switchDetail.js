@@ -5,7 +5,7 @@ define([
 	"marionette",
 	"floodlight/featuresFl",
 	"floodlight/switchStatisticsFl",
-	"view/switchList", // should rename this, maybe SwitchSummary?
+	"view/switchSummary", // should rename this, maybe SwitchSummary?
 	"collection/switchCollection",
 	"model/description",
 	"collection/portCollection",
@@ -15,21 +15,20 @@ define([
 	"floodlight/flowModFl",
 	"view/flowEditor",
 	"floodlight/flowCollectionFl",
-	"text!template/switchesSumTemplate.html",
-	"text!template/switchSummary.html",
+	"text!template/switchContainer.html",
+	"text!template/switchHeading.html",
 	"text!template/description.html",
-	"text!template/ports.html",
-	"text!template/port.html",
-
+	"text!template/portTable.html",
+	"text!template/portRow.html",
 	"text!template/flowTable.html",
 	"text!template/flowEntry.html",
-], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchSummary, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, FlowCollection, swtchsSumTpl, header, descrip, portFrame, portRow, flowFrame, flowRow){
+], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchSummary, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, FlowCollection, swtchContainer, header, descrip, portFrame, portRow, flowFrame, flowRow){
 	var SwitchesSumView = Backbone.View.extend({
 		itemView: SwitchSummary,
 		
 		el: $('#content'),
 			
-		template1: _.template(swtchsSumTpl),
+		template1: _.template(swtchContainer),
 		template2: _.template(header),
 		template3: _.template(descrip),
 		template4: _.template(portFrame),
