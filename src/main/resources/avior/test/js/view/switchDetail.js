@@ -74,7 +74,7 @@ define([
   						self.renderSwitch(item, switchList);
 					}, this);
 
-			this.$el.html(this.template2);
+			this.$el.html(this.template2).trigger('create');
 			switchList.appendTo(this.$el).trigger('create');
 
 			return this;

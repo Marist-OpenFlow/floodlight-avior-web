@@ -26,7 +26,7 @@ define([
 		initialize: function(){
 			$(document).ready(function(){
 				//Create views for the controller 
-				var statusview = new StatusView({model: new Status});
+				/*var statusview = new StatusView({model: new Status});
 				var uptimeview = new UptimeView({model: new Uptime});
 				var memoryview = new MemoryView({model: new Memory});
 				var modulesview = new ModulesView({model: new Modules});
@@ -41,10 +41,10 @@ define([
 				$('#uptimeview').append(uptimeview.render().el);
 				$('#statusview').append(statusview.render().el);
 				$('#memoryview').append(memoryview.render().el);
-				$('#modulesview').append(modulesview.render().el);
+				$('#modulesview').append(modulesview.render().el);*/
 				
-				//$.mobile.linkBindingEnabled = false;
-    			//$.mobile.hashListeningEnabled = false;
+				$.mobile.linkBindingEnabled = false;
+    			$.mobile.hashListeningEnabled = false;
 				var router = new Router();
 				Backbone.history.start();
 				

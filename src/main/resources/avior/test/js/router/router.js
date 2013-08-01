@@ -17,11 +17,12 @@ define([
 	/* Structure used to navigate through views */
 	var Router = Marionette.AppRouter.extend({
 		routes: {
-			//"": "home",
+			"": "home",
+			"index": "home2",
 			"switches": "switchRoute",
 		},
 		
-		/* home: function() {
+		 home: function() {
 			this.statusview = new StatusView({model: new Status});
 			this.uptimeview = new UptimeView({model: new Uptime});
 			this.memoryview = new MemoryView({model: new Memory});
@@ -30,8 +31,8 @@ define([
 			//Delegate events for controller views
 			this.statusview.delegateEvents(statusview.events);
 			this.uptimeview.delegateEvents(uptimeview.events);
-			memoryview.delegateEvents(memoryview.events);
-			modulesview.delegateEvents(modulesview.events);
+			this.memoryview.delegateEvents(memoryview.events);
+			this.modulesview.delegateEvents(modulesview.events);
 				
 			//Link controller aspects to id tags
 			$('#uptimeview').append(this.uptimeview.render().el);
@@ -39,7 +40,14 @@ define([
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
         },
-        */
+        
+        home2: function() {				
+			//Link controller aspects to id tags
+			$('#uptimeview').append(this.uptimeview.render().el).trigger('create');
+			$('#statusview').append(this.statusview.render().el).trigger('create');
+			$('#memoryview').append(this.memoryview.render().el).trigger('create');
+			$('#modulesview').append(this.modulesview.render().el).trigger('create');
+        },
         
 		
 		switchRoute: function() {
