@@ -22,7 +22,7 @@ define([
 		StatusView: StatusView,
 		UptimeView: UptimeView,
 		Router: Router,
-		
+
 		initialize: function(){
 			$(document).ready(function(){
 				//Create views for the controller 
@@ -42,13 +42,13 @@ define([
 				$('#statusview').append(statusview.render().el);
 				$('#memoryview').append(memoryview.render().el);
 				$('#modulesview').append(modulesview.render().el);*/
-				
+
 				$.mobile.linkBindingEnabled = false;
     			$.mobile.hashListeningEnabled = false;
 				var router = new Router();
 				Backbone.history.start();
-				
-			
+
+
 				/*
 				var flowview = new FlowView({model: new Flow});
 				$(document.body).append(flowview.render().el);
@@ -58,5 +58,3 @@ define([
 		}
 	};
 });
-
-
