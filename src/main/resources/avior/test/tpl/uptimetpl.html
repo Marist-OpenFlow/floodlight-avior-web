@@ -9,24 +9,36 @@ Network Uptime: &nbsp;&nbsp;&nbsp;&nbsp;
 		/* Check to see how many days controller has been active */
 	    if (current > 86400) {
 	        temp = Math.floor(current / 86400);
-	        %> <%= temp %> days<%
+	        %> <%= temp %> day<%
+	        if (temp > 1) {
+	        	%>s<%
+	        }
 	        current -= temp * 86400;
 	    }
 	    /* Check for how many hours */
 	    else if (current > 3600) {
 	        temp = Math.floor(current / 3600);
-	        %> <%= temp %> hours<%
+	        %> <%= temp %> hour<%
+	        if (temp > 1) {
+	        	%>s<%
+	        }
 	        current -= temp * 3600; 
 	    }
 	    /* Check for how many minutes */
 	    else if (current > 60) {
 	        temp = Math.floor(current / 60);
-	        %> <%= temp %> minutes<%
+	        %> <%= temp %> minute<%
+	        if (temp > 1) {
+	        	%>s<%
+	        }
 	        current -= temp * 60;
 	    }
 	    /* Display seconds left */
 	    else if (current > 0) {
-	        %> <%= current %> seconds<%
+	        %> <%= current %> second<%
+	        if (current > 1) {
+	        	%>s<%
+	        }
 	        current = 0; 
 	    }
 	    else {}
