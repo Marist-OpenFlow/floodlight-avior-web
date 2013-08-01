@@ -25,7 +25,7 @@ define([
   		},
 
 		//pre-marionette stuff
-		tagName: "li",
+		//tagName: "li",
 		template: _.template(swtchSumTpl),
 		
 		//render the switch model using the template
