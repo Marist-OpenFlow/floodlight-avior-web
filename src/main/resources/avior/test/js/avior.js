@@ -13,7 +13,7 @@ define([
 	"router/router",
 ], function($, _, Backbone, Memory, Modules, Status, Uptime, MemoryView, ModulesView, StatusView, UptimeView, Router){
 	return {
-		/* 
+		/* This may not be necessary */
 		Memory: Memory,
 		Modules: Modules,
 		Status: Status, 
