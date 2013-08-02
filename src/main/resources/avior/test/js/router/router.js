@@ -61,7 +61,7 @@ define([
 			$('#modulesview').append(this.modulesview.render().el);
 			
 			// Link host to id tag
-			$('#hostview').append(this.hostview.render().el);
+			$('#displayhosts').append(this.hostview.render().el);
         },
         
         controllerRoute: function() {
