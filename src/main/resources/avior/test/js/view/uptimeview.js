@@ -17,6 +17,7 @@ define([
 			// Update the model when changes occur
 			this.listenTo(this.model, "sync", this.render);
 			$('.controllerHeading').click(function() {self.clickable();});
+			console.log(document.getElementById("controllerHeading"));
 		},
 		
 		// This is possibly deprecated
