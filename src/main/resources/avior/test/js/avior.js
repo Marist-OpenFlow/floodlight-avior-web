@@ -10,6 +10,7 @@ define([
 		initialize: function(){
 			//$(document).ready(function(){
 				$(document).bind('pageinit');
+				$(function() { $("#some-div").show(); });
 				$.mobile.linkBindingEnabled = false;
     			$.mobile.hashListeningEnabled = false;
 				
