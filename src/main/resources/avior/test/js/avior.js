@@ -8,13 +8,14 @@ define([
 		Router: Router,
 
 		initialize: function(){
-			$(document).ready(function(){
+			//$(document).ready(function(){
+				$(document).bind('pageinit');
 				$.mobile.linkBindingEnabled = false;
     			$.mobile.hashListeningEnabled = false;
 				
 				var router = new Router();
 				Backbone.history.start();
-			});
+			//});
 		}
 	};
 });

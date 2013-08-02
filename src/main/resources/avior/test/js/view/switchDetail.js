@@ -41,6 +41,7 @@ define([
 		// and render this collection upon sync with server 	
 		initialize: function(item){
 			var self = this;
+			this.collapsed = true;
 			this.subnets = new Array;
 			this.collection = new SwitchCollection();
 			this.collection.fetch();
@@ -49,14 +50,11 @@ define([
 			switchStats = new SwitchStats();
 			switchStats.fetch();	
 			this.listenTo(switchStats, "sync", this.render);
-			//$('#pleaseWork').click(function(e) {self.clickSwitch(e);});
 		},
 		
 		events: {
 			"click #loadswtch": "refresh",
 			"click #flowMod": "modFlows",
-			//"click h3.ui-collapsible-heading": "clickSwitch",
-			"click a.dpidLink": "clickSwitch",
 			"click #removeFlo": "deleteFlow",
 		},
 		
@@ -77,6 +75,7 @@ define([
 
 			this.$el.html(this.template2).trigger('create');
 			switchList.appendTo(this.$el).trigger('create');
+			$('.switchHeading').click(function(e) {self.clickSwitch(e);});
 			return this;
 		},
 		
@@ -92,31 +91,43 @@ define([
 		//description model and port model
 		//for specific dpid and place in view
 		clickSwitch: function(e) {
-			console.log("clickSwitch");
-			$('#container').remove();
+			//if (this.collapsed){
+				this.collapsed = false;
+				var self = this;
+				//console.log(e.currentTarget);
+				var x = document.getElementById("my" + e.currentTarget.id);
+				$(x).empty();
 			
-			var oneSwitch = this.collection.get(e.currentTarget.id);
-			var dpid = oneSwitch.get("dpid");
-			this.currentDPID = dpid;
+				var oneSwitch = this.collection.get(e.currentTarget.id);
+				var dpid = oneSwitch.get("dpid");
+				this.currentDPID = dpid;
 			
-			this.displayDesc(dpid, oneSwitch);
+				this.displayDesc(dpid, oneSwitch);
 			
-			this.displayPorts(dpid, oneSwitch);
+				this.displayPorts(dpid, oneSwitch);
 			
-			this.displayFlows(dpid);
+				this.displayFlows(dpid);
+			//}
+			//else{
+			//this.collapsed = true;
+			//}
 		},
 		
 		//attach switch description info to page
 		displayDesc: function(dpid, oneSwitch){
+			$('#container').remove();
+			var x = document.getElementById("my" + dpid);
 			var desc = new Description(oneSwitch.get("description"));
 			desc.set("dpid", dpid);
 			desc.set("connectedSince", oneSwitch.get("connectedSince"));	
-			this.$el.append(this.template3(desc.toJSON())).trigger('create');	
+			$(x).append(this.template3(desc.toJSON())).trigger('create');	
 		},
 		
 		//attach port info to page
 		displayPorts: function(dpid, oneSwitch){
-			$('#con3').append(this.template4());
+			var x = document.getElementById("my" + dpid);
+			console.log(x);
+			$('#container').append(this.template4());
 			var ports = new PortCollection();
 			var portArray = oneSwitch.get("ports");
 			var portStatArray = new PortStatistics(dpid);
@@ -144,7 +155,8 @@ define([
 		
 		//attach flow info to page
 		displayFlows: function(dpid){
-			$('#container1').append(this.template6());
+			var x = document.getElementById("my" + dpid);
+			$('#container').append(this.template6());
 			//console.log("here's DPID");
 			//console.log(dpid);
 			var self = this;
