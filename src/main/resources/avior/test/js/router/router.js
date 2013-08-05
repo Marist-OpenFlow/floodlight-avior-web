@@ -16,11 +16,13 @@ define([
 	"view/uptimeview",
 	"view/flowEditor",
 	"view/hostview",
+	"text!template/login.html",
 	"text!template/controller.html",
-], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, HostView, controllerTpl){
+], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, HostView, loginTpl, controllerTpl){
 	/* Structure used to navigate through views */
 	var Router = Marionette.AppRouter.extend({
 		template: _.template(controllerTpl),
+		template2: _.template(loginTpl),
 		
 		routes: {
 			"": "home",
@@ -32,6 +34,13 @@ define([
 			"vfilter": "vfilterRoute",
 			"loadbalancer": "loadbalancerRoute",
 		},
+		
+		/*initialize: function() {
+			var self = this;
+			this.loggedIn = false;
+			$('#content').append(this.template2).trigger('create');
+			$('#userLogin').click(function() {self.loggedIn = true; self.home();});
+		},*/
 		
 		 home: function() {
 		 	$('#content').empty();
@@ -97,6 +106,7 @@ define([
          qosRoute: function() {
 			$('#content').empty();
 			$('#content').append("QoS Coming Soon!");
+			//$('#content').append(this.template2).trigger('create');
         },
         
          vfilterRoute: function() {
