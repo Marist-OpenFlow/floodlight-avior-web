@@ -25,6 +25,7 @@ define([
 		routes: {
 			"": "home",
 			"controllers": "controllerRoute",
+			"hosts": "hostRoute",
 			"switches": "switchRoute",
 			"staticflowmanager": "staticFlowRoute",
 			"qos": "qosRoute",
@@ -69,20 +70,30 @@ define([
 			$('#content').append("Controller Details Coming Soon!");
         },
         
+        hostRoute: function() {
+			$('#content').empty();
+			$('#content').append("Host Details Coming Soon!");
+        },
 		
 		switchRoute: function() {
+			$('#content').empty();
 			var switchDetail = new SwitchDetail({model: new Switch});
 			switchDetail.delegateEvents(switchDetail.events);
-			//this.collection = switchDetail.collection;
+			this.collection = switchDetail.collection;
+			switchDetail.listenTo(switchDetail.switchStats, "sync", switchDetail.render);
 		},
 		
 		staticFlowRoute: function() {
-        	//$('#container').remove();
-			//new FlowEditor(this.collection, true);
 			$('#content').empty();
-			$('#content').append("Static Flow Entry Pusher Coming Soon!");
+			if (this.collection === undefined){
+				var switchDetail = new SwitchDetail({model: new Switch});
+				switchDetail.delegateEvents(switchDetail.events);
+				switchDetail.listenTo(switchDetail.switchStats, "sync", function () {new FlowEditor(switchDetail.collection, true);});
+			}
+			else
+				new FlowEditor(this.collection, true);
         },
-        
+
          qosRoute: function() {
 			$('#content').empty();
 			$('#content').append("QoS Coming Soon!");

@@ -32,8 +32,8 @@ define([
 		},
 		
 		render: function() {
-			$('#container2').remove();
-			this.$el.append(this.template1({coll: this.collection.toJSON()})).trigger('create');
+			//$('#container2').remove();
+			this.$el.html(this.template1({coll: this.collection.toJSON()})).trigger('create');
 		},
 		
 		validate: function(e){
@@ -216,6 +216,7 @@ define([
 		},
 		
 		showPorts: function (e) {
+			console.log(JSON.stringify(this.collection));
 			var v = $(e.currentTarget).val();
 			var c = this.collection.get(v);
 			var d = c.get("ports");

@@ -47,31 +47,28 @@ define([
 			this.collection.fetch();
 			features = new Features();
 			features.fetch();
-			switchStats = new SwitchStats();
-			switchStats.fetch();	
-			this.listenTo(switchStats, "sync", this.render);
+			this.switchStats = new SwitchStats();
+			this.switchStats.fetch();	
+			this.listenTo(this.switchStats, "sync", this.setCollection);
 		},
 		
 		events: {
 			"click #loadswtch": "refresh",
-			"click #flowMod": "modFlows",
+			//"click #flowMod": "modFlows",
 			"click #removeFlo": "deleteFlow",
 		},
 		
-		// render the heading and table template, 
-		// then render each model in this.collection
+		//render the heading and table template, 
+		//then render each model in this.collection
 		render: function() {
+		    
 		    // hack to turn template HTML into object without yet adding it to document
 		    var switchList = $('<div/>').html(this.template1).contents();
 			var self = this;
-			// one concern about this forEach is that it will happen every time this view is rendered
+
 			_.forEach(self.collection.models, function(item) {
-						var dp = item.get("dpid");
-						item.set("features", features.get(dp));
-						item.set("switchStatistics", switchStats.get(dp));
-						item.set("id", item.get("dpid"));
-  						self.renderSwitch(item, switchList);
-					}, this);
+  				self.renderSwitch(item, switchList);
+			}, this);
 
 			this.$el.html(this.template2).trigger('create');
 			switchList.appendTo(this.$el).trigger('create');
@@ -79,15 +76,24 @@ define([
 			//switch details appending...move to specific 
 			//functions for description, ports, flows
 			_.forEach(self.collection.models, function(item) {
-				var dp = item.get("dpid");
-						
+				var dp = item.get("dpid");	
 				this.displayDesc(dp, item);
-						
 				this.displayPorts(dp, item);
-
     	 		this.displayFlows(dp, item);		
 			}, this);		
 			return this;
+		},
+		
+		//set the attribute of this.collection
+		setCollection: function () {
+			var self = this;
+			_.forEach(this.collection.models, function(item) {
+						var dp = item.get("dpid");
+						item.set("features", features.get(dp));
+						item.set("switchStatistics", self.switchStats.get(dp));
+						item.set("id", item.get("dpid"));
+  						//self.renderSwitch(item, switchList);
+					}, this);
 		},
 		
 		//display the dpid list
