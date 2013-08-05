@@ -24,12 +24,7 @@ define([
 		
 		// Render the collection
 	    render: function() {
-			// May not be necessary
-			this.$el.html(this.template(this.collection.toJSON()));
-			_.forEach(this.collection.models, function(host) {
-				$('#hostEntries').append(self.template2(host.toJSON()));
-			}, this);
-			
+			this.$el.html(this.template({hosts: this.collection.models}));
 			return this;
 	    },
 		refresh: function(){this.collection.fetch();},

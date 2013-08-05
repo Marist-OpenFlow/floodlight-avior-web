@@ -42,7 +42,7 @@ define([
 			this.modulesview = new ModulesView({model: new Modules});
 			
 			// Create view for hosts
-			this.hostview = new HostView();
+			this.hostview = new HostView({collection: new Host});
 
 			// Delegate events for controller views
 			this.statusview.delegateEvents(this.statusview.events);

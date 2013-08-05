@@ -1,3 +1,25 @@
 <h3>Hosts</h3>
-<div id="hostEntries" data-role="collapsible-set">
+<div data-role="collapsible-set">
+	<!-- Loop over hosts, display each one as own accordion -->
+	<% _.each(hosts, function(host) {
+		console.log(JSON.stringify(hosts));
+		console.log(JSON.stringify(host));%>
+		<h3><%= host.ipv4 %></h3>
+		<% console.log(host.get("ipv4")); 
+		console.log(host.get("mac"));%>
+		<p>IP Address(es): 
+			<% _.forEach(host.get("ipv4"), function(current) {
+				%><%= current %><br><%
+			}); %>
+		<br>
+		Attached to switch: %><%= host.get("attachmentPoint") %> by port 
+		<br>
+		Mac Address(es): 
+			<% _.forEach(host.get("mac"), function(current) {
+				%><%= current %><br><%
+			 }); %>
+		
+		<br>
+		Last Seen: %><%= (host.get("lastSeen")).toLocaleString() %><%
+		}); %> </p>
 </div>
