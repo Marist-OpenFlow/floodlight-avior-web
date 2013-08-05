@@ -17,7 +17,7 @@ define([
 		initialize: function(collec, display){
 			this.nameList = new Object;
 			this.collection = collec;
-			console.log(this.collection);
+			//console.log(this.collection);
 			if (display)
 				this.render();
 		},
@@ -84,7 +84,7 @@ define([
 				case "dst-port": 
 					this.dstport = $(e.currentTarget).val();
 					break;
-				case "dst-src": 
+				case "src-port": 
 					this.dstsrc = $(e.currentTarget).val();
 					break;
 				case "wildcards": 

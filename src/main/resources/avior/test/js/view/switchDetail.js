@@ -79,63 +79,14 @@ define([
 			//switch details appending...move to specific 
 			//functions for description, ports, flows
 			_.forEach(self.collection.models, function(item) {
-						var dp = item.get("dpid");
+				var dp = item.get("dpid");
 						
-						//DESCRIPTION
-						//$('#container').remove();
-						var x = document.getElementById("my" + dp);
-						var desc = new Description(item.get("description"));
-						desc.set("dpid", dp);
-						desc.set("connectedSince", item.get("connectedSince"));	
-						$(x).append(this.template3(desc.toJSON())).trigger('create');
+				this.displayDesc(dp, item);
 						
-						//PORTS
-						var x = document.getElementById("my" + dp);
-						var y = document.getElementById("container" + dp);
-						console.log(x);
-						$(y).append(this.template4(desc.toJSON())).trigger('create');
-						var ports = new PortCollection();
-						var portArray = item.get("ports");
-						var portStatArray = new PortStatistics(dp);
-						var self2 = self;
-			
-						//get port statistics, append as a submodel to port model
-						//and append port model to port collection
-						portStatArray.fetch().complete(function () {
-							var numPorts = 0;
-							_.forEach(portArray, function(item) {
-								var p = new Port(item);
-								p.set("portStatistics", portStatArray.get(dp)[numPorts]);
-        						ports.add(p);
-        						numPorts += 1;
-        					}, this);
-        		
-        					_.forEach(ports.models, function(item) {
-        						var z = document.getElementById("portTable" + dp);
-								$(z).append(self2.template5(item.toJSON())).trigger('create');
-								//console.log(JSON.stringify(item));
-        					}, this);
-        					item.set("portModel", ports);
-        					
-        				//FLOWS
-        				var x = document.getElementById("my" + dp);
-        				var y = document.getElementById("flowTable" + dp);
-						$(x).append(self.template6(desc.toJSON())).trigger('create');
-						//console.log("here's DPID");
-						//console.log(dpid);
-						flows = new FlowCollection(dp);
-						flows.fetch().complete(function () {
-							//console.log("Attempted to fetch flows");
-							_.forEach(flows.models, function(item) {
-								//console.log("Item stringified =======================");
-								//console.log(JSON.stringify(item));
-								//console.log("Item regular ===========================");
-								//console.log(item);
-								$(y).append(self2.template7(item.toJSON())).trigger('create');
-							}, this);
-						});
-    	 	});				
-					}, this);			
+				this.displayPorts(dp, item);
+
+    	 		this.displayFlows(dp, item);		
+			}, this);		
 			return this;
 		},
 		
@@ -150,17 +101,58 @@ define([
 		
 		//attach switch description info to page
 		displayDesc: function(dpid, oneSwitch){
-	
+			var x = document.getElementById("my" + dpid);
+			var desc = new Description(oneSwitch.get("description"));
+			desc.set("dpid", dpid);
+			desc.set("connectedSince", oneSwitch.get("connectedSince"));	
+			$(x).append(this.template3(desc.toJSON())).trigger('create');
 		},
 		
 		//attach port info to page
 		displayPorts: function(dpid, oneSwitch){
-
+			var self = this;
+			var x = document.getElementById("my" + dpid);
+			var y = document.getElementById("container" + dpid);
+			$(y).append(this.template4(oneSwitch.toJSON())).trigger('create');
+			var ports = new PortCollection();
+			var portArray = oneSwitch.get("ports");
+			var portStatArray = new PortStatistics(dpid);
+					
+			
+			//get port statistics, append as a submodel to port model
+			//and append port model to port collection
+			portStatArray.fetch().complete(function () {
+				var numPorts = 0;
+				_.forEach(portArray, function(item) {
+					var p = new Port(item);
+					p.set("portStatistics", portStatArray.get(dpid)[numPorts]);
+        			ports.add(p);
+        			numPorts += 1;
+        		}, this);
+     					
+     					
+        		_.forEach(ports.models, function(item) {
+        			var z = document.getElementById("portTable" + dpid);
+					$(z).append(self.template5(item.toJSON())).trigger('create');
+        		}, this);
+        		oneSwitch.set("portModel", ports);
+        	});
 		},
 		
 		//attach flow info to page
-		displayFlows: function(dpid){
-
+		displayFlows: function(dpid, oneSwitch){
+			var self = this;
+			var flows = new FlowCollection(dpid);
+			flows.fetch().complete(function () {
+				_.forEach(flows.models, function(item) {
+					if (item != null){
+						var x = document.getElementById("my" + dpid);    	
+						$(x).append(self.template6(oneSwitch.toJSON())).trigger('create');
+						var y = document.getElementById("flowTable" + dpid);
+						$(y).append(self.template7(item.toJSON())).trigger('create');
+					}
+				}, this);
+			});
 		},
 		
 		//updates this.collection, features and switchStats
@@ -178,8 +170,8 @@ define([
 		
 		deleteFlow: function(e) {
 			var v = e;
-			console.log(v);
-			console.log("delete a flow!");
+			//console.log(v);
+			//console.log("delete a flow!");
 			//$('#container').remove();
 			this.flowEditor = new FlowEditor(this.collection, false);
 			this.flowEditor.deleteFlow("red");
