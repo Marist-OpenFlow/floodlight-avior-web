@@ -5,14 +5,12 @@ define([
 	"model/flowMod",
 	"text!template/flowEditor.html",
 	"text!template/portSelect.html",
-	"text!template/advancedFlow.html",
-], function($, _, Backbone, FlowMod, flowEditor, portSelect, advanced){
+], function($, _, Backbone, FlowMod, flowEditor, portSelect){
 	var FlowEdView = Backbone.View.extend({
 		el: $('#content'),
 		
 		template1: _.template(flowEditor),
 		template2: _.template(portSelect),
-		template3: _.template(advanced),
 
 		initialize: function(collec, display){
 			this.nameList = new Object;
@@ -36,7 +34,6 @@ define([
 		render: function() {
 			$('#container2').remove();
 			this.$el.append(this.template1({coll: this.collection.toJSON()})).trigger('create');
-			$('#container2').append(this.template3).trigger('create');
 		},
 		
 		validate: function(e){
@@ -85,7 +82,7 @@ define([
 					this.dstport = $(e.currentTarget).val();
 					break;
 				case "src-port": 
-					this.dstsrc = $(e.currentTarget).val();
+					this.srcport = $(e.currentTarget).val();
 					break;
 				case "wildcards": 
 					this.wildcards = $(e.currentTarget).val();
@@ -93,9 +90,11 @@ define([
 				case "priority": 
 					this.priority = $(e.currentTarget).val();
 					break;
+				case "active": 
+					this.active = $(e.currentTarget).val();
+					break;
 				case "moreOutput": 
 					this.actions = 'output=' + $(e.currentTarget).val();
-					console.log(this.actions);
 					break;
 				case "enqueue": 
 					this.actions = 'enqueue=' + $(e.currentTarget).val();
@@ -104,7 +103,7 @@ define([
 					this.actions = 'strip-vlan=' + $(e.currentTarget).val();
 					break;
 				case "set-vlan": 
-					this.actions = 'set-vlan=' + $(e.currentTarget).val();
+					this.actions = 'set-vlan-id=' + $(e.currentTarget).val();
 					break;
 				case "set-vlan-priority": 
 					this.actions = 'set-vlan-priority=' + $(e.currentTarget).val();
@@ -138,18 +137,20 @@ define([
 		
 		pushFlow: function() {
 			var proceed = true;
-			if (this.name in this.nameList){
-				proceed = confirm("Warning! " + this.name + " is already being used." 
-					   + " Proceeding will overwrite the current flow with" 
-					   + " this name. Would you like to proceed using "  
-					   + this.name + "?");
-			}
+			//if (this.name in this.nameList){
+				//proceed = confirm("Warning! " + this.name + " is already being used." 
+					   //+ " Proceeding will overwrite the current flow with" 
+					  // + " this name. Would you like to proceed using "  
+					  // + this.name + "?");
+			//}
 			
 			if (this.name in this.nameList === false || proceed){
 				this.nameList[this.name] = true;
 				var flowAttrs = [this.name, this.ingressport, this.actions, this.srcport, 
 							 	this.dstport, this.ethertype, this.dstmac, 
-							 	this.srcmac, this.srcip, this.dstip, this.protocol];
+							 	this.srcmac, this.srcip, this.dstip, this.protocol, 
+							 	this.vlanid, this.vlanpriority, this.tosbits, this.wildcards,
+							 	this.priority, this.active];
 
 				var addFlow = new FlowMod("null");
 				addFlow.save({
@@ -166,12 +167,33 @@ define([
 					'src-ip':this.srcip,
 					'dst-ip':this.dstip,
 					'protocol':this.protocol,
+					'vlan-id':this.vlanid,
+					'vlan-priority':this.vlanpriority,
+					'tos-bits':this.tosbits,
+					'wildcards':this.wildcards,
+					'priority':this.priority,
+					'active':this.active,
 				});
 				//console.log(JSON.stringify(addFlow));
 			
 				//clear all flow attributes
-				for (var x in flowAttrs)
-					flowAttrs[x] = '';
+				this.ingressport = '';
+				this.name = '';
+				this.actions = '';
+				this.srcport = '';
+				this.dstport = '';
+				this.ethertype = '';
+				this.dstmac = '';
+				this.srcmac = '';
+				this.srcip = '';
+				this.dstip = '';
+				this.protocol = '';
+				this.vlanid = '';
+				this.vlanpriority = '';
+				this.tosbits = '';
+				this.wildcards = '';
+				this.priority = '';
+				this.active = '';
 			}
 		},
 		
