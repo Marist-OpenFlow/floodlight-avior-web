@@ -25,6 +25,7 @@ define([
 		routes: {
 			"": "home",
 			"controllers": "controllerRoute",
+			"hosts": "hostRoute",
 			"switches": "switchRoute",
 			"staticflowmanager": "staticFlowRoute",
 			"qos": "qosRoute",
@@ -69,6 +70,10 @@ define([
 			$('#content').append("Controller Details Coming Soon!");
         },
         
+        hostRoute: function() {
+			$('#content').empty();
+			$('#content').append("Host Details Coming Soon!");
+        },
 		
 		switchRoute: function() {
 			$('#content').empty();
