@@ -25,7 +25,7 @@ define([
 		template2: _.template(loginTpl),
 		
 		routes: {
-			"": "home",
+			"home": "home",
 			"controllers": "controllerRoute",
 			"hosts": "hostRoute",
 			"switches": "switchRoute",

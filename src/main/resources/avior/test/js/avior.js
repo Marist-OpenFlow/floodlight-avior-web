@@ -16,6 +16,8 @@ define([
 				$.mobile.linkBindingEnabled = false;
     			$.mobile.hashListeningEnabled = false;
     			
+    			window.location.href = "http://localhost:8080/avior/test/index.html#login";
+    			
     			var self = this;
 				$('#content').append(this.template).trigger('create');
 				$('#userLogin').click(function() {self.validate();});
@@ -28,6 +30,7 @@ define([
 				document.getElementById("leftpanel3").style.display='block';
 				var router = new Router(); 
 				Backbone.history.start();
+				window.location.href = "http://localhost:8080/avior/test/index.html#home";
 			}
 			else {
 				$('#content').empty();
