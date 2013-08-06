@@ -22,7 +22,8 @@ define([
 	"text!template/portRow.html",
 	"text!template/flowTable.html",
 	"text!template/flowEntry.html",
-], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchSummary, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, FlowCollection, swtchContainer, header, descrip, portFrame, portRow, flowFrame, flowRow){
+	"text!template/flowCount.html",
+], function($, _, Backbone, Marionette, Features, SwitchStats, SwitchSummary, SwitchCollection, Description, PortCollection, PortFL, Port, PortStatistics, FlowMod, FlowEditor, FlowCollection, swtchContainer, header, descrip, portFrame, portRow, flowFrame, flowRow, flowCount){
 	var SwitchesSumView = Backbone.View.extend({
 		itemView: SwitchSummary,
 		
@@ -35,6 +36,7 @@ define([
 		template5: _.template(portRow),
 		template6: _.template(flowFrame),
 		template7: _.template(flowRow),
+		template8: _.template(flowCount),
 		currentDPID: '',
 			
 		// construct a new collection with switch info from server
@@ -122,6 +124,7 @@ define([
 			$(y).append(this.template4(oneSwitch.toJSON())).trigger('create');
 			var ports = new PortCollection();
 			var portArray = oneSwitch.get("ports");
+			//console.log(portArray.length);
 			var portStatArray = new PortStatistics(dpid);
 					
 			
@@ -150,8 +153,18 @@ define([
 			var self = this;
 			var flows = new FlowCollection(dpid);
 			flows.fetch().complete(function () {
+				//console.log(flows.length);
+				
+
+        			var x = document.getElementById("my" + dpid);    	
+					$(x).append(self.template8(oneSwitch.toJSON())).trigger('create');
+        			var z = document.getElementById("flowCount" + dpid);
+					
 				_.forEach(flows.models, function(item) {
 					if (item != null){
+						$(z).remove();
+						oneSwitch.set("flowLength", flows.length);
+						console.log(JSON.stringify(flows));
 						var x = document.getElementById("my" + dpid);    	
 						$(x).append(self.template6(oneSwitch.toJSON())).trigger('create');
 						var y = document.getElementById("flowTable" + dpid);
@@ -166,7 +179,7 @@ define([
 		refresh: function(){
 			features.fetch();
 			this.collection.fetch();
-			switchStats.fetch();
+			this.switchStats.fetch();
 		},
 		
 		modFlows: function () {

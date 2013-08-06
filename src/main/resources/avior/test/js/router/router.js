@@ -35,13 +35,6 @@ define([
 			"loadbalancer": "loadbalancerRoute",
 		},
 		
-		/*initialize: function() {
-			var self = this;
-			this.loggedIn = false;
-			$('#content').append(this.template2).trigger('create');
-			$('#userLogin').click(function() {self.loggedIn = true; self.home();});
-		},*/
-		
 		 home: function() {
 		 	$('#content').empty();
 		 	$('#content').append(this.template).trigger('create');
@@ -106,13 +99,10 @@ define([
          qosRoute: function() {
 			$('#content').empty();
 			$('#content').append("QoS Coming Soon!");
-			//$('#content').append(this.template2).trigger('create');
         },
         
          vfilterRoute: function() {
 			$('#content').empty();
-			$('#content').append(" ");
-			$('#content').append(" ");
 			$('#content').append("Virtual Network Filter Coming Soon!");
         },
         
