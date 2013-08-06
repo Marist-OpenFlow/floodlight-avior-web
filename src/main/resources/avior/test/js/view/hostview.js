@@ -3,14 +3,12 @@ define([
 	"underscore",
 	"backbone",
 	"floodlight/hostCollectionFl",
-	"text!template/hostTable.html",
-	"text!template/hostEntry.html"
-], function($, _, Backbone, HostCollection, hostTableTpl, hostEntryTpl){
+	"text!template/hostTable.html"
+], function($, _, Backbone, HostCollection, hostTableTpl){
 	var HostView = Backbone.View.extend({
 	    tagName: "div",
 	    
 		template: _.template(hostTableTpl),
-		template2: _.template(hostEntryTpl),
 		
 		initialize: function(){
 			var self = this;
@@ -24,7 +22,7 @@ define([
 		
 		// Render the collection
 	    render: function() {
-			this.$el.html(this.template({hosts: this.collection.models}));
+			this.$el.html(this.template({hosts: this.collection.models})).trigger('create');
 			return this;
 	    },
 		refresh: function(){this.collection.fetch();},
