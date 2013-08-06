@@ -111,6 +111,8 @@ define([
         
          vfilterRoute: function() {
 			$('#content').empty();
+			$('#content').append(" ");
+			$('#content').append(" ");
 			$('#content').append("Virtual Network Filter Coming Soon!");
         },
         
