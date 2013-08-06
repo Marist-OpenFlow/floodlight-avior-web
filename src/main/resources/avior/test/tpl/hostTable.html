@@ -1,22 +1,36 @@
-<h3>Hosts</h3>
+<h3>Hosts (<%= _.size(hosts) %>)</h3>
 <div data-role="collapsible-set" data-theme="c" data-content-theme="d">
 	<!-- Loop over hosts, display each one as own accordion -->
 	<% _.each(hosts, function(host) {
+		console.log(JSON.stringify(host.get("attachmentPoint")));
 		%><div data-role="collapsible">
 		<h3><%= host.get("ipv4") %></h3>
-		<p>IP Address(es): 
-			<% _.forEach(host.get("ipv4"), function(current) {
-				%><%= current %><br><%
+		<!-- Create table for IP addresses. 
+			Code in place to handle singular and plural in title
+			Table borders invisible -->
+		<p><table border="0"><tr><td>IP Address<% if (_.size(host.get("ipv4")) > 1) { %>es<%}%>: </td>
+			<% _.each(host.get("ipv4"), function(current) {
+				%><td><%= current %></td><%
 			}); %>
-		<br>
-		Attached to switch: <%= host.get("attachmentPoint") %> by port 
-		<br>
-		Mac Address(es): 
-			<% _.forEach(host.get("mac"), function(current) {
-				%><%= current %><br><%
+		</tr></table><br>
+		
+		<!-- Use same table format as IP addresses -->
+		<table border="0"><tr><td>Mac Address<% if (_.size(host.get("mac")) > 1) { %>es<%}%>: </td>
+			<% _.each(host.get("mac"), function(current) {
+				%><td><%= current %></td><%
 			 }); %>
 		
+		</tr></table><br>
+		
+		<!-- TODO: Use table format, with visible table -->
+		Attached to switch<% if (_.size(host.get("attachmentPoint")) > 1) { %>es<%}%>: 
+		<% _.each(host.get("attachmentPoint"), function(current) {
+				%><br>DPID: <%= current.switchDPID %><br>
+				Port: <%= current.port %><br><%
+			 }); %>
 		<br>
+		
+		<!-- Use same table format as IP addresses -->
 		Last Seen: <%= (host.get("lastSeen")).toLocaleString() %>
 		</p>
 		</div>
