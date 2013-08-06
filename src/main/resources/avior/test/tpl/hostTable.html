@@ -2,7 +2,12 @@
 <div data-role="collapsible-set" data-theme="c" data-content-theme="d">
 	<!-- Loop over hosts, display each one as own accordion -->
 	<% _.each(hosts, function(host) { %><div data-role="collapsible">
-		<h3><%= host.get("ipv4") %></h3>
+		<h3><% if (host.get("ipv4").length > 0) {
+				%><%= host.get("ipv4") %><%console.log(host.get("ipv4")); } 
+			else {
+				%>(no IP address found)<%;
+			}
+		%></h3>
 		<!-- Create table for IP addresses. 
 			Code in place to handle singular and plural in title
 			Table borders invisible -->
@@ -10,15 +15,15 @@
 			<% _.each(host.get("ipv4"), function(current) {
 				%><td><%= current %></td><%
 			}); %>
-		</tr></table><br>
+		</tr>
 		
-		<!-- Use same table format as IP addresses -->
-		<table border="0"><tr><td>Mac Address<% if (_.size(host.get("mac")) > 1) { %>es<%}%>: </td>
+		<!-- Use same table as IP addresses -->
+		<tr><td>Mac Address<% if (_.size(host.get("mac")) > 1) { %>es<%}%>: </td>
 			<% _.each(host.get("mac"), function(current) {
 				%><td><%= current %></td><%
 			 }); %>
 		
-		</tr></table><br>
+		</tr></table>
 		
 		<!-- TODO: Use table format, with visible table -->
 		Attached to switch<% if (_.size(host.get("attachmentPoint")) > 1) { %>es<%}%>: 
@@ -28,7 +33,7 @@
 			 }); %>
 		<br>
 		
-		<!-- Use same table format as IP addresses -->
+		<!-- Need to get .toLocalString() working -->
 		Last Seen: <%= (host.get("lastSeen")).toLocaleString() %>
 		</p>
 		</div>
