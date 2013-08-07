@@ -30,6 +30,9 @@ define([
 			"hosts": "hostRoute",
 			"switches": "switchRoute",
 			"staticflowmanager": "staticFlowRoute",
+			"firewall": "firewallRoute",
+			"topology": "topologyRoute",
+			"ADVAlanche": "ADVAlancheRoute",
 			"qos": "qosRoute",
 			"vfilter": "vfilterRoute",
 			"loadbalancer": "loadbalancerRoute",
@@ -94,6 +97,21 @@ define([
 			}
 			else
 				new FlowEditor(this.collection, true);
+        },
+        
+        firewallRoute: function() {
+        	$('#content').empty();
+			$('#content').append("Firewall Coming Soon!");
+        },
+        
+        topologyRoute: function () {
+        	$('#content').empty();
+			$('#content').append("Topology Coming Soon!");
+        },
+        
+        ADVAlancheRoute: function () {
+        	$('#content').empty();
+			$('#content').append("ADVAlanche Coming Soon!");
         },
 
          qosRoute: function() {
