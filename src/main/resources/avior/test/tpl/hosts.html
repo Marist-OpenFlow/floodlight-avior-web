@@ -31,13 +31,6 @@
 				%><td><%= current.switchDPID %>
 				, on port <%= current.port %></td><%
 			 }); %>
-		</tr>
-		
-		<!-- TODO: Need to get .toLocalString() working -->
-		<tr><td>Last Seen: </td>
-			<td><% function() { 
-				var lastseen = new Date(host.get("lastSeen")).toLocaleString();
-				%><%= lastseen %><% }; %> </td>
 		</tr></table>
 		</p>
 		</div>
