@@ -72,12 +72,17 @@ define([
         
         controllerRoute: function() {
 			$('#content').empty();
-			$('#content').append("Controller Details Coming Soon!");
+		
         },
         
         hostRoute: function() {
 			$('#content').empty();
-			$('#content').append("Host Details Coming Soon!");
+			// Create view for hosts
+			this.hostview = new HostView({collection: new Host});
+			// Delegate events for host view
+			this.hostview.delegateEvents(this.hostview.events);
+			// Link host to id tag
+			$('#content').append(this.hostview.render().el);
         },
 		
 		switchRoute: function() {
