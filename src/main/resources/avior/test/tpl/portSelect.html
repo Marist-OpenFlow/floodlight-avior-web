@@ -1,13 +1,13 @@
 	<div id="portBody">
 	
 	<label for="ingressPortLabel">Ingress Port:</label>
-	<select name="ingressPort" id="ingressPort">
+	<select name="ingressPort" id="ingressPort" selected="">
 	<option></option>
 	<% _.each(ports, function(i) { %>  <option><%= i.portNumber %></option> <% }); %>
 	 </select> 
 	
 	<label for="egressPortLabel">Egress Port:</label>
-	<select name="egressPort" id="egressport">
+	<select name="egressPort" id="egressport" selected="">
 	<option></option>
 	<% _.each(ports, function(i) { %>  <option><%= i.portNumber %></option> <% }); %>
 	 </select> 

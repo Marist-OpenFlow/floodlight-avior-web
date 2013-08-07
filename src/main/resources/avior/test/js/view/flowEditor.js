@@ -44,7 +44,8 @@ define([
 			{
 				case "ingressPort": 
 					this.ingressport = $(e.currentTarget).val();
-					//this.textFields = $(e.currentTarget.id);
+					//this.textFields[this.j] = (e.currentTarget.id);
+					//this.j += 1;
 					break;
 				case "name":
 					this.name = $(e.currentTarget).val();
@@ -53,9 +54,9 @@ define([
 					break;
 				case "egressport": 
 					this.actions = 'output=' + $(e.currentTarget).val();
-					//this.textFields = $(e.currentTarget.id);
-					break;
-					
+					//this.textFields[this.j] = (e.currentTarget.id);
+					//this.j += 1;
+					break;	
 				case "src-mac": 
 					this.srcmac = $(e.currentTarget).val();
 					this.textFields[this.j] = (e.currentTarget.id);
@@ -254,6 +255,8 @@ define([
 					console.log(this.textFields[i]);
 					document.getElementById(this.textFields[i]).value="";
 				}
+				
+				$('#portBody').remove();
 				this.textFields = [];
 			}
 		},
