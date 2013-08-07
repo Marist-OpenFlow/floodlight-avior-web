@@ -16,7 +16,7 @@ define([
 				$.mobile.linkBindingEnabled = false;
     			$.mobile.hashListeningEnabled = false;
     			
-    			window.location.href = "http://localhost:8080/avior/test/index.html#login";
+    			window.location.href = "/avior/test/index.html#login";
     			
     			var self = this;
 				$('#content').append(this.template).trigger('create');

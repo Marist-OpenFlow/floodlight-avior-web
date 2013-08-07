@@ -72,7 +72,24 @@ define([
         
         controllerRoute: function() {
 			$('#content').empty();
+			$('#content').append(this.template).trigger('create');
+		 	// Create views for controller aspects
+			this.statusview = new StatusView({model: new Status});
+			this.uptimeview = new UptimeView({model: new Uptime});
+			this.memoryview = new MemoryView({model: new Memory});
+			this.modulesview = new ModulesView({model: new Modules});
 		
+			// Delegate events for controller views
+			this.statusview.delegateEvents(this.statusview.events);
+			this.uptimeview.delegateEvents(this.uptimeview.events);
+			this.memoryview.delegateEvents(this.memoryview.events);
+			this.modulesview.delegateEvents(this.modulesview.events);
+				
+			// Link controller aspects to id tags
+			$('#uptimeview').append(this.uptimeview.render().el);
+			$('#statusview').append(this.statusview.render().el);
+			$('#memoryview').append(this.memoryview.render().el);
+			$('#modulesview').append(this.modulesview.render().el);
         },
         
         hostRoute: function() {
