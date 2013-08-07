@@ -30,7 +30,7 @@ define([
 				document.getElementById("leftpanel3").style.display='block';
 				var router = new Router(); 
 				Backbone.history.start();
-				window.location.href = "http://localhost:8080/avior/test/index.html#home";
+				window.location.href = "/avior/test/index.html#home";
 			}
 			else {
 				$('#content').empty();
