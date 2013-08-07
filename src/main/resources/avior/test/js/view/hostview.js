@@ -3,7 +3,7 @@ define([
 	"underscore",
 	"backbone",
 	"floodlight/hostCollectionFl",
-	"text!template/hostTable.html"
+	"text!template/hosts.html"
 ], function($, _, Backbone, HostCollection, hostTableTpl){
 	var HostView = Backbone.View.extend({
 	    tagName: "div",

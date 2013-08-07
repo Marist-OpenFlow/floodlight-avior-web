@@ -23,18 +23,22 @@
 				%><td><%= current %></td><%
 			 }); %>
 		
-		</tr></table>
+		</tr>
 		
-		<!-- TODO: Use table format, with visible table -->
-		Attached to switch<% if (_.size(host.get("attachmentPoint")) > 1) { %>es<%}%>: 
+		<!-- Same table still -->
+		<tr><td>Attached to switch<% if (_.size(host.get("attachmentPoint")) > 1) { %>es<%}%>: </td>
 		<% _.each(host.get("attachmentPoint"), function(current) {
-				%><br>DPID: <%= current.switchDPID %><br>
-				Port: <%= current.port %><br><%
+				%><td><%= current.switchDPID %>
+				, on port <%= current.port %></td><%
 			 }); %>
-		<br>
+		</tr>
 		
-		<!-- Need to get .toLocalString() working -->
-		Last Seen: <%= (host.get("lastSeen")).toLocaleString() %>
+		<!-- TODO: Need to get .toLocalString() working -->
+		<tr><td>Last Seen: </td>
+			<td><% function() { 
+				var lastseen = new Date(host.get("lastSeen")).toLocaleString();
+				%><%= lastseen %><% }; %> </td>
+		</tr></table>
 		</p>
 		</div>
 		<% }); %>
