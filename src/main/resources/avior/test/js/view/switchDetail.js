@@ -71,8 +71,10 @@ define([
 			_.forEach(self.collection.models, function(item) {
   				self.renderSwitch(item, switchList);
 			}, this);
-
-			this.$el.html(this.template2).trigger('create');
+			
+			switchCount = this.collection.length;
+			
+			this.$el.html(this.template2(switchCount)).trigger('create');
 			switchList.appendTo(this.$el).trigger('create');
 			
 			//switch details appending...move to specific 

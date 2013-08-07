@@ -14,6 +14,8 @@ define([
 
 		initialize: function(collec, display){
 			this.nameList = new Object;
+			this.textFields = new Array;
+			this.j = 0;
 			this.collection = collec;
 			//console.log(this.collection);
 			if (display)
@@ -37,98 +39,151 @@ define([
 		},
 		
 		validate: function(e){
-			//var val = e.currentTarget.id;
 			
 			switch (e.currentTarget.id)
 			{
 				case "ingressPort": 
 					this.ingressport = $(e.currentTarget).val();
+					//this.textFields = $(e.currentTarget.id);
 					break;
 				case "name":
 					this.name = $(e.currentTarget).val();
+					this.textFields[this.j] = e.currentTarget.id;
+					this.j += 1;
 					break;
 				case "egressport": 
 					this.actions = 'output=' + $(e.currentTarget).val();
+					//this.textFields = $(e.currentTarget.id);
 					break;
 					
 				case "src-mac": 
 					this.srcmac = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "dst-mac": 
 					this.dstmac = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "ether-type": 
 					this.ethertype = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "vlan-id": 
 					this.vlanid = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "vlan-priority": 
 					this.vlanpriority = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "dst-ip": 
 					this.dstip = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "src-ip": 
 					this.srcip = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "protocol": 
 					this.protocol = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "tos-bits": 
 					this.tosbits = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "dst-port": 
 					this.dstport = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "src-port": 
 					this.srcport = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "wildcards": 
 					this.wildcards = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "priority": 
 					this.priority = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "active": 
 					this.active = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "moreOutput": 
 					this.actions = 'output=' + $(e.currentTarget).val();
 					break;
 				case "enqueue": 
 					this.actions = 'enqueue=' + $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "strip-vlan": 
 					this.actions = 'strip-vlan=' + $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "set-vlan": 
 					this.actions = 'set-vlan-id=' + $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "set-vlan-priority": 
 					this.actions = 'set-vlan-priority=' + $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "set-src-mac": 
 					this.actions = 'set-src-mac=' + $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
 					console.log(this.actions);
+					this.j += 1;
 					break;
 				case "set-dst-mac": 
 					this.actions = 'set-dst-mac=' + $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "set-tos-bits": 
 					this.actions = 'set-tos-bits=' + $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "set-src-ip": 
 					this.actions = 'set-src-ip=' + $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "set-dst-ip": 
 					this.actions = 'set-dst-ip=' + $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "set-src-port": 
 					this.actions = 'set-src-port=' + $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				case "set-dst-port": 
 					this.actions = 'set-dst-port=' + $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
 					break;
 				default:
 					break;
@@ -194,6 +249,12 @@ define([
 				this.wildcards = '';
 				this.priority = '';
 				this.active = '';
+				
+				for (var i in this.textFields){
+					console.log(this.textFields[i]);
+					document.getElementById(this.textFields[i]).value="";
+				}
+				this.textFields = [];
 			}
 		},
 		
