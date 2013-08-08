@@ -34,21 +34,21 @@
 <body id="body" style="font-family:sans-serif;">
 <div id="some-div" style="display:none">
 <!-- Start of index page -->
-	<div data-role="page">
+	<div data-role="page" class="responsive">
 
 	
 <!-- Header -->
 	<header>
 	<div data-role="header" data-theme="f" >
 	<h1>Avior 2.0</h1>
-	<a id="leftpanel3" href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse" style="display: none;">Menu-left</a>
+	<a id="leftpanel3" href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse" style="display: none;">Main Menu</a>
 	<a id="rightpanel3" href="#rightpanel3" data-icon="bars" data-iconpos="notext" data-rel="dialog" data-transition="fade" style="display: none;">Menu-Right</a>
 	</div>
 	</header>
 <!-- /Header -->
 
   
-	<div id="content" data-role="content"></div>
+	<div id="content" class="responsive" data-role="content"></div>
 
 
 <!-- Footer -->
@@ -61,12 +61,13 @@
 <!-- Panels  -->
 
 <!-- leftpanel3 -->
-	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data-display="push" data-dismissible="true" data-theme="b">
+	<div data-role="panel" id="leftpanel3" data-position="left" data-position-fixed="false" data-display="push" data-dismissible="true" data-theme="a">
 
 	<h3>Main Menu</h3>
 
 	<nav>
 	<input data-rel="close" class="link" value="Home" onclick="location.href='#home';" type="button">
+	<div data-role="controlgroup">
 	<p>Overview:</p>
 	<input data-rel="close" class="link" type="button" value="Controllers" onclick="location.href='#controllers';">
 	<input data-rel="close" class="link" type="button" value="Hosts" onclick="location.href='#hosts';">
@@ -79,15 +80,16 @@
 	<input data-rel="close" class="link" type="button" value="QoS" onclick="location.href='#qos';">
 	<input data-rel="close" class="link" type="button" value="Virtual Network Filter" onclick="location.href='#vfilter';">
 	<input data-rel="close" class="link" type="button" value="Load Balancer" onclick="location.href='#loadbalancer';">
+	</div>
 	</nav>
 
-	<a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a>
+	<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
 
 	</div>
 <!-- /leftpanel3-->
 
 
-<!-- rightpanel3 -->
+<!-- rightpanel3 Not used for now
 	<div data-role="panel" id="rightpanel3" data-position="right" data-position-fixed="false" data-display="push" data-dismissible="true" data-theme="a">
 
 	<h3>Right Panel Menu</h3>
@@ -113,7 +115,7 @@
 	<a href="#demo-links" data-rel="close" data-role="button" data-theme="c" data-icon="delete" data-inline="true">Close panel</a>
 
 	</div>
-<!-- /rightpanel3-->
+ /rightpanel3-->
 
 	</div>
 <!-- /index page -->

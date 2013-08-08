@@ -46,18 +46,12 @@ define([
 			this.uptimeview = new UptimeView({model: new Uptime});
 			this.memoryview = new MemoryView({model: new Memory});
 			this.modulesview = new ModulesView({model: new Modules});
-			
-			// Create view for hosts
-			this.hostview = new HostView({collection: new Host});
 
 			// Delegate events for controller views
 			this.statusview.delegateEvents(this.statusview.events);
 			this.uptimeview.delegateEvents(this.uptimeview.events);
 			this.memoryview.delegateEvents(this.memoryview.events);
 			this.modulesview.delegateEvents(this.modulesview.events);
-			
-			// Delegate events for host view
-			this.hostview.delegateEvents(this.hostview.events);
 
 				
 			// Link controller aspects to id tags
@@ -65,9 +59,6 @@ define([
 			$('#statusview').append(this.statusview.render().el);
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
-			
-			// Link host to id tag
-			$('#displayhosts').append(this.hostview.render().el);
         },
         
         controllerRoute: function() {
@@ -94,10 +85,13 @@ define([
         
         hostRoute: function() {
 			$('#content').empty();
+			
 			// Create view for hosts
 			this.hostview = new HostView({collection: new Host});
+			
 			// Delegate events for host view
 			this.hostview.delegateEvents(this.hostview.events);
+			
 			// Link host to id tag
 			$('#content').append(this.hostview.render().el);
         },

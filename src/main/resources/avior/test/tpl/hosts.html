@@ -3,7 +3,7 @@
 	<!-- Loop over hosts, display each one as own accordion -->
 	<% _.each(hosts, function(host) { %><div data-role="collapsible">
 		<h3><% if (host.get("ipv4").length > 0) {
-				%><%= host.get("ipv4") %><%console.log(host.get("ipv4")); } 
+				%><%= host.get("ipv4")[0] %><% } 
 			else {
 				%>(no IP address found)<%;
 			}
@@ -23,18 +23,20 @@
 				%><td><%= current %></td><%
 			 }); %>
 		
-		</tr></table>
+		</tr>
 		
-		<!-- TODO: Use table format, with visible table -->
-		Attached to switch<% if (_.size(host.get("attachmentPoint")) > 1) { %>es<%}%>: 
+		<!-- Same table still -->
+		<tr><td>Attached to switch<% if (_.size(host.get("attachmentPoint")) > 1) { %>es<%}%>: </td>
 		<% _.each(host.get("attachmentPoint"), function(current) {
-				%><br>DPID: <%= current.switchDPID %><br>
-				Port: <%= current.port %><br><%
+				%><td><%= current.switchDPID %>
+				, on port <%= current.port %></td><%
 			 }); %>
-		<br>
+		</tr>
 		
-		<!-- Need to get .toLocalString() working -->
-		Last Seen: <%= (host.get("lastSeen")).toLocaleString() %>
+		<!-- TODO: Need to get .toLocalString() working -->
+		<tr><td>Last Seen: </td>
+			<td><%= new Date(host.get("lastSeen")).toLocaleString() %> </td>
+		</tr></table>
 		</p>
 		</div>
 		<% }); %>
