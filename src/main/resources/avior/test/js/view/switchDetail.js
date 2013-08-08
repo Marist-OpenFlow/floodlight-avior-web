@@ -166,9 +166,12 @@ define([
 					if (item != null){
 						$(z).remove();
 						oneSwitch.set("flowLength", flows.length);
-						console.log(JSON.stringify(flows));
-						var x = document.getElementById("my" + dpid);    	
-						$(x).append(self.template6(oneSwitch.toJSON())).trigger('create');
+						
+						if (document.getElementById("flowTable" + dpid) === null) {
+							var x = document.getElementById("my" + dpid);    	
+							$(x).append(self.template6(oneSwitch.toJSON())).trigger('create');
+						}
+
 						var y = document.getElementById("flowTable" + dpid);
 						$(y).append(self.template7(item.toJSON())).trigger('create');
 					}
