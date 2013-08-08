@@ -1,27 +1,2 @@
-<table class="responsive" id=<%= "portTable" + dpid %> >
-	<tbody>
-		<tr>
-			<th> Name </th>
-			<th> Number </th>
-			<th> RX Packets </th>
-			<th> TX Packets </th>
-			<th> RX Bytes </th>
-			<th> TX Bytes </th>
-			<th> Dropped </th>
-			<th> Errors </th>
-		</tr>
-		
-		<tr id="portStats">
-	<td> <%= name  %> </td>
-	<td> <%= portNumber %> </td>
-	<td> <%= portStatistics.receivePackets %> </td>
-	<td> <%= portStatistics.transmitPackets %> </td>
-	<td> <%= portStatistics.receiveBytes %> </td>
-	<td> <%= portStatistics.transmitBytes %> </td>
-	<td> <%= portStatistics.receiveDropped + portStatistics.transmitDropped %> </td>
-	<td> <%= portStatistics.receiveErrors + portStatistics.transmitErrors + portStatistics.receiveFrameErrors + portStatistics.receiveOverrunErrors + portStatistics.receiveCRCErrors %> </td>
-</tr>
-	</tbody>
-</table>
 <div id="switchAccordianSet" class="responsive" data-role="collapsible-set" data-theme="c" data-content-theme="d  data-collapsed="true">
 </div>
