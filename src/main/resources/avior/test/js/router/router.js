@@ -102,10 +102,12 @@ define([
 			switchDetail.delegateEvents(switchDetail.events);
 			this.collection = switchDetail.collection;
 			switchDetail.listenTo(switchDetail.switchStats, "sync", switchDetail.render);
+	
 		},
 		
 		staticFlowRoute: function() {
 			$('#content').empty();
+			//clearInterval(this.interval);
 			if (this.collection === undefined){
 				var switchDetail = new SwitchDetail({model: new Switch});
 				switchDetail.delegateEvents(switchDetail.events);
@@ -143,6 +145,17 @@ define([
          loadbalancerRoute: function() {
 			$('#content').empty();
 			$('#content').append("Load Balancer Coming Soon!");
+        },
+        
+        liveUpdate: function(switchDetail) {
+        	console.log(switchDetail.collection);
+        	//live update when view is visible
+			var self = this;
+			_.forEach(switchDetail.collection.models, function(item) {
+				console.log("hello");
+				var dp = item.get("dpid");
+				this.interval = setInterval(function(){switchDetail.displayFlow(dp, item);}, 2000);
+			}, this);
         },
 
 	});
