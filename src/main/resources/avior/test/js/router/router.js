@@ -16,9 +16,10 @@ define([
 	"view/uptimeview",
 	"view/flowEditor",
 	"view/hostview",
+	"view/topologyView",
 	"text!template/login.html",
 	"text!template/controller.html",
-], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, HostView, loginTpl, controllerTpl){
+], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, HostView, TopologyView, loginTpl, controllerTpl){
 	/* Structure used to navigate through views */
 	var Router = Marionette.AppRouter.extend({
 		template: _.template(controllerTpl),
@@ -124,7 +125,9 @@ define([
         
         topologyRoute: function () {
         	$('#content').empty();
-			$('#content').append("Topology Coming Soon!");
+			//$('#content').append("Topology Coming Soon!");
+			var topology = new TopologyView();
+			topology.render();
         },
         
         ADVAlancheRoute: function () {
