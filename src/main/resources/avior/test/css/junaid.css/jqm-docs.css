@@ -465,3 +465,10 @@ ul.bullet li { list-style:square; padding:.4em 0; margin-left:1.2em; border-bott
 	overflow-x:auto;
 
 }
+
+#portTable {
+
+overflow:auto;
+	overflow-x:auto;
+
+}

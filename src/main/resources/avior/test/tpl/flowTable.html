@@ -1,5 +1,5 @@
 <h4> <%= "Flows (" + flowLength + ")" %> </h4>
-<table class='responsive' sid=<%= "flowTable" + dpid %> >
+<table class="flowTable" id=<%= "flowTable" + dpid %> border="1" cellspacing="1" cellpadding="5">
 	<tbody>
 		<tr>
 			<th> Flow Priority </th>
@@ -9,7 +9,9 @@
 			<th> Bytes </th>
 			<th> Age </th>
 			<th> Timeout </th>
-			<th> <button id="removeFlo">Delete</button> </th>
+			<th><div data-role="controlgroup" data-type="horizontal" data-mini="true">
+			<p id="removeFlo" data-role="button" data-icon="refresh" data-theme="b">Refresh</p>
+			</div></th>
 		</tr>
 	</tbody>
 </table>

@@ -5,6 +5,7 @@ require.config({
 	paths: {
 		jquery: "lib/jquery",
 		jquerymob: "lib/jquery.mobile",
+		responsiveTables: "lib/responsive-tables",
 		underscore: "lib/lodash",
 		backbone: "lib/backbone",
 		marionette: "lib/backbone.marionette",
@@ -13,11 +14,11 @@ require.config({
 	},
     shim: {
         "backbone" : {
-            deps: ["jquery", "jquerymob", "underscore"],
+            deps: ["jquery", "jquerymob", "responsiveTables", "underscore"],
             exports: "Backbone"
         },
         "marionette": {
-        	deps: ["jquery", "jquerymob", "underscore", "backbone"],
+        	deps: ["jquery", "jquerymob", "responsiveTables", "underscore", "backbone"],
         	exports: "Marionette"
         }
     },

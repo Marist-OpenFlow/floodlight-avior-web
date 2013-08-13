@@ -16,9 +16,10 @@ define([
 	"view/uptimeview",
 	"view/flowEditor",
 	"view/hostview",
+	"view/topologyView",
 	"text!template/login.html",
 	"text!template/controller.html",
-], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, HostView, loginTpl, controllerTpl){
+], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, HostView, TopologyView, loginTpl, controllerTpl){
 	/* Structure used to navigate through views */
 	var Router = Marionette.AppRouter.extend({
 		template: _.template(controllerTpl),
@@ -133,13 +134,18 @@ define([
 			switchDetail.delegateEvents(switchDetail.events);
 			this.collection = switchDetail.collection;
 			switchDetail.listenTo(switchDetail.switchStats, "sync", switchDetail.render);
+	
 		},
 		
 		staticFlowRoute: function() {
 			$('#content').empty();
+<<<<<<< HEAD
 			// Clears out any previous intervals
 			clearInterval(this.interval);
 			
+=======
+			//clearInterval(this.interval);
+>>>>>>> a9a68be82ea678aad36f1032ac4d28014e82f352
 			if (this.collection === undefined){
 				var switchDetail = new SwitchDetail({model: new Switch});
 				switchDetail.delegateEvents(switchDetail.events);
@@ -159,10 +165,16 @@ define([
         
         topologyRoute: function () {
         	$('#content').empty();
+<<<<<<< HEAD
         	// Clears out any previous intervals
 			clearInterval(this.interval);
 			
 			$('#content').append("Topology Coming Soon!");
+=======
+			//$('#content').append("Topology Coming Soon!");
+			var topology = new TopologyView();
+			topology.render();
+>>>>>>> a9a68be82ea678aad36f1032ac4d28014e82f352
         },
         
         ADVAlancheRoute: function () {
@@ -195,6 +207,17 @@ define([
 			clearInterval(this.interval);
 			
 			$('#content').append("Load Balancer Coming Soon!");
+        },
+        
+        liveUpdate: function(switchDetail) {
+        	console.log(switchDetail.collection);
+        	//live update when view is visible
+			var self = this;
+			_.forEach(switchDetail.collection.models, function(item) {
+				console.log("hello");
+				var dp = item.get("dpid");
+				this.interval = setInterval(function(){switchDetail.displayFlow(dp, item);}, 2000);
+			}, this);
         },
 
 	});
