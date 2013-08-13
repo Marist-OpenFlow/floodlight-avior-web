@@ -15,12 +15,12 @@ define([
 			var self = this;
 			// Update the model when changes occur
 			this.listenTo(this.model, "sync", this.render);
-			$('.controllerHeading').click(function() {self.clickable();});
+			// $('.controllerHeading').click(function() {self.clickable();});
 		},
-		// This event most likely deprecated
+		/* This event most likely deprecated
 		events: {
 			"click #loadstat": "refresh",
-		},
+		}, */
 		// Render the model
 	    render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
@@ -29,6 +29,7 @@ define([
 		refresh: function(){this.model.fetch();},
 		
 		//only call fetch when the view is visible
+		/*
 		clickable: function() {
 			if (this.collapsed){
 				this.collapsed = false;
@@ -39,7 +40,7 @@ define([
 				this.collapsed = true;
 				clearInterval(this.interval);
 			}
-		},
+		}, */
 	});
 	return StatusView;
 });

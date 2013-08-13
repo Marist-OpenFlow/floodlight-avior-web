@@ -16,13 +16,13 @@ define([
 			var self = this;
 			// Update the model when changes occur
 			this.listenTo(this.model, "sync", this.render);
-			$('.controllerHeading').click(function() {self.clickable();});
+			// $('.controllerHeading').click(function() {self.clickable();});
 		},
 		
-		// This is possibly deprecated
+		/* This event most likely deprecated
 		events: {
-			"click #loadup": "refresh",
-		},
+			"click #loadstat": "refresh",
+		}, */
 		
 		// Render the model
 	    render: function() {
@@ -32,7 +32,8 @@ define([
 	    
 		refresh: function(){this.model.fetch();},
 
-		//only call fetch when the view is visible
+		// only call fetch when the view is visible
+		/*
 		clickable: function() {
 			if (this.collapsed){
 				this.collapsed = false;
@@ -43,7 +44,7 @@ define([
 				this.collapsed = true;
 				clearInterval(this.interval);
 			}
-		},
+		}, */
 	});
 	return UptimeView;
 });

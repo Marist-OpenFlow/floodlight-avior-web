@@ -20,6 +20,13 @@ define([
 			$('#displayhosts').click(function() {self.clickable();});
 		},
 		
+		// Button to refresh hosts
+		events: {
+			"click #refreshhosts": "refresh",
+		},
+		
+		refresh: function(){this.model.fetch();},
+		
 		// Render the collection
 	    render: function() {
 			this.$el.html(this.template({hosts: this.collection.models})).trigger('create');
@@ -27,18 +34,7 @@ define([
 	    },
 		refresh: function(){this.collection.fetch();},
 		
-		//only call fetch when the view is visible
-		clickable: function() {
-			if (this.collapsed){
-				this.collapsed = false;
-				var self = this;
-				this.interval = setInterval(function(){self.collection.fetch()}, 2000);
-			}
-			else{
-				this.collapsed = true;
-				clearInterval(this.interval);
-			}
-		},
+		
 	});
 	return HostView;
 });

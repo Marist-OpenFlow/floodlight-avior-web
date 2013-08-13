@@ -40,6 +40,10 @@ define([
 		
 		 home: function() {
 		 	$('#content').empty();
+		 	
+		 	// Clears out any previous intervals
+		 	clearInterval(this.interval);
+		 	
 		 	$('#content').append(this.template).trigger('create');
 		 	// Create views for controller aspects
 			this.statusview = new StatusView({model: new Status});
@@ -59,11 +63,23 @@ define([
 			$('#statusview').append(this.statusview.render().el);
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
+			
+			//only call fetch when the view is visible
+			this.interval = setInterval(function(){
+					this.uptimeview.fetch();
+					this.statusview.fetch();
+					this.memoryview.fetch();
+				}, 2000);
         },
         
         controllerRoute: function() {
 			$('#content').empty();
+			
+			// Clears out any previous intervals
+			clearInterval(this.interval);
+			
 			$('#content').append(this.template).trigger('create');
+			
 		 	// Create views for controller aspects
 			this.statusview = new StatusView({model: new Status});
 			this.uptimeview = new UptimeView({model: new Uptime});
@@ -81,10 +97,22 @@ define([
 			$('#statusview').append(this.statusview.render().el);
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
+			
+			var self = this;
+			
+			//only call fetch when the view is visible
+			this.interval = setInterval(function(){
+					self.uptimeview.model.fetch();
+					self.statusview.model.fetch();
+					self.memoryview.model.fetch();
+				}, 2000);
         },
         
         hostRoute: function() {
 			$('#content').empty();
+			
+			// Clears out any previous intervals
+			clearInterval(this.interval);
 			
 			// Create view for hosts
 			this.hostview = new HostView({collection: new Host});
@@ -98,6 +126,9 @@ define([
 		
 		switchRoute: function() {
 			$('#content').empty();
+			// Clears out any previous intervals
+			clearInterval(this.interval);
+			
 			var switchDetail = new SwitchDetail({model: new Switch});
 			switchDetail.delegateEvents(switchDetail.events);
 			this.collection = switchDetail.collection;
@@ -106,6 +137,9 @@ define([
 		
 		staticFlowRoute: function() {
 			$('#content').empty();
+			// Clears out any previous intervals
+			clearInterval(this.interval);
+			
 			if (this.collection === undefined){
 				var switchDetail = new SwitchDetail({model: new Switch});
 				switchDetail.delegateEvents(switchDetail.events);
@@ -117,31 +151,49 @@ define([
         
         firewallRoute: function() {
         	$('#content').empty();
+        	// Clears out any previous intervals
+			clearInterval(this.interval);
+			
 			$('#content').append("Firewall Coming Soon!");
         },
         
         topologyRoute: function () {
         	$('#content').empty();
+        	// Clears out any previous intervals
+			clearInterval(this.interval);
+			
 			$('#content').append("Topology Coming Soon!");
         },
         
         ADVAlancheRoute: function () {
         	$('#content').empty();
+        	// Clears out any previous intervals
+			clearInterval(this.interval);
+			
 			$('#content').append("ADVAlanche Coming Soon!");
         },
 
          qosRoute: function() {
 			$('#content').empty();
+			// Clears out any previous intervals
+			clearInterval(this.interval);
+			
 			$('#content').append("QoS Coming Soon!");
         },
         
          vfilterRoute: function() {
 			$('#content').empty();
+			// Clears out any previous intervals
+			clearInterval(this.interval);
+			
 			$('#content').append("Virtual Network Filter Coming Soon!");
         },
         
          loadbalancerRoute: function() {
 			$('#content').empty();
+			// Clears out any previous intervals
+			clearInterval(this.interval);
+			
 			$('#content').append("Load Balancer Coming Soon!");
         },
 
