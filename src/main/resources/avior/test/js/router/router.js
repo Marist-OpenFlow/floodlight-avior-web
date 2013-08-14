@@ -161,10 +161,15 @@ define([
         
         topologyRoute: function () {
         	$('#content').empty();
+        	
         	// Clears out any previous intervals
 			clearInterval(this.interval);
-			//$('#content').append("Topology Coming Soon!");
-			var topology = new TopologyView();
+			
+			//switch and host array placeHolders for testing 
+			var s = [1,2,3,4,5,6,7,8,9,10];
+			var h = [1,2,3,4,5];
+			
+			var topology = new TopologyView(s, h);
 			topology.render();
         },
         
