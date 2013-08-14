@@ -66,11 +66,11 @@ define([
 			$('#modulesview').append(this.modulesview.render().el);
 			
 			//only call fetch when the view is visible
-			this.interval = setInterval(function(){
+			/*this.interval = setInterval(function(){
 					this.uptimeview.fetch();
 					this.statusview.fetch();
 					this.memoryview.fetch();
-				}, 2000);
+				}, 2000);*/
         },
         
         controllerRoute: function() {
@@ -139,13 +139,9 @@ define([
 		
 		staticFlowRoute: function() {
 			$('#content').empty();
-<<<<<<< HEAD
 			// Clears out any previous intervals
 			clearInterval(this.interval);
-			
-=======
-			//clearInterval(this.interval);
->>>>>>> a9a68be82ea678aad36f1032ac4d28014e82f352
+
 			if (this.collection === undefined){
 				var switchDetail = new SwitchDetail({model: new Switch});
 				switchDetail.delegateEvents(switchDetail.events);
@@ -165,16 +161,11 @@ define([
         
         topologyRoute: function () {
         	$('#content').empty();
-<<<<<<< HEAD
         	// Clears out any previous intervals
 			clearInterval(this.interval);
-			
-			$('#content').append("Topology Coming Soon!");
-=======
 			//$('#content').append("Topology Coming Soon!");
 			var topology = new TopologyView();
 			topology.render();
->>>>>>> a9a68be82ea678aad36f1032ac4d28014e82f352
         },
         
         ADVAlancheRoute: function () {
