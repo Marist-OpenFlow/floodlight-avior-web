@@ -141,11 +141,17 @@ define([
 		
 		staticFlowRoute: function() {
 			$('#content').empty();
+<<<<<<< HEAD
 
 			// Clears out any previous intervals
 			clearInterval(this.interval);
 			
 			//clearInterval(this.interval);
+=======
+			// Clears out any previous intervals
+			clearInterval(this.interval);
+
+>>>>>>> cc3d17426882e2aad078af3eef4b56ac7b48ec38
 			if (this.collection === undefined){
 				var switchDetail = new SwitchDetail({model: new Switch});
 				switchDetail.delegateEvents(switchDetail.events);
@@ -165,6 +171,7 @@ define([
         
         topologyRoute: function () {
         	$('#content').empty();
+<<<<<<< HEAD
 
         	// Clears out any previous intervals
 			clearInterval(this.interval);
@@ -173,6 +180,17 @@ define([
 
 			//$('#content').append("Topology Coming Soon!");
 			var topology = new TopologyView();
+=======
+        	
+        	// Clears out any previous intervals
+			clearInterval(this.interval);
+			
+			//switch and host array placeHolders for testing 
+			var s = [1,2,3,4,5,6,7,8,9,10];
+			var h = [1,2,3,4,5];
+			
+			var topology = new TopologyView(s, h);
+>>>>>>> cc3d17426882e2aad078af3eef4b56ac7b48ec38
 			topology.render();
         },
         
