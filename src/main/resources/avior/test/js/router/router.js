@@ -41,23 +41,23 @@ define([
 		
 		 home: function() {
 		 	$('#content').empty();
-		 	
-		 	// Clears out any previous intervals
-		 	clearInterval(this.interval);
-		 	
-		 	$('#content').append(this.template).trigger('create');
+			
+			// Clears out any previous intervals
+			clearInterval(this.interval);
+			
+			$('#content').append(this.template).trigger('create');
+			
 		 	// Create views for controller aspects
 			this.statusview = new StatusView({model: new Status});
 			this.uptimeview = new UptimeView({model: new Uptime});
 			this.memoryview = new MemoryView({model: new Memory});
 			this.modulesview = new ModulesView({model: new Modules});
-
+		
 			// Delegate events for controller views
 			this.statusview.delegateEvents(this.statusview.events);
 			this.uptimeview.delegateEvents(this.uptimeview.events);
 			this.memoryview.delegateEvents(this.memoryview.events);
 			this.modulesview.delegateEvents(this.modulesview.events);
-
 				
 			// Link controller aspects to id tags
 			$('#uptimeview').append(this.uptimeview.render().el);
@@ -65,11 +65,13 @@ define([
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
 			
+			var self = this;
+			
 			//only call fetch when the view is visible
 			this.interval = setInterval(function(){
-					this.uptimeview.fetch();
-					this.statusview.fetch();
-					this.memoryview.fetch();
+					self.uptimeview.model.fetch();
+					self.statusview.model.fetch();
+					self.memoryview.model.fetch();
 				}, 2000);
         },
         
@@ -139,13 +141,11 @@ define([
 		
 		staticFlowRoute: function() {
 			$('#content').empty();
-<<<<<<< HEAD
+
 			// Clears out any previous intervals
 			clearInterval(this.interval);
 			
-=======
 			//clearInterval(this.interval);
->>>>>>> a9a68be82ea678aad36f1032ac4d28014e82f352
 			if (this.collection === undefined){
 				var switchDetail = new SwitchDetail({model: new Switch});
 				switchDetail.delegateEvents(switchDetail.events);
@@ -165,16 +165,15 @@ define([
         
         topologyRoute: function () {
         	$('#content').empty();
-<<<<<<< HEAD
+
         	// Clears out any previous intervals
 			clearInterval(this.interval);
 			
 			$('#content').append("Topology Coming Soon!");
-=======
+
 			//$('#content').append("Topology Coming Soon!");
 			var topology = new TopologyView();
 			topology.render();
->>>>>>> a9a68be82ea678aad36f1032ac4d28014e82f352
         },
         
         ADVAlancheRoute: function () {
