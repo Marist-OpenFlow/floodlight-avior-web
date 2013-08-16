@@ -23,7 +23,92 @@ define([
 		
 		//render the topology model using d3.js
 		render: function() {
-			/*var svgContainer = d3.select(this.el).append("svg")
+			
+			var height = window.innerHeight-45;
+			var width = window.innerWidth-45;
+
+var force = d3.layout.force()
+    .size([width, height])
+    .charge(-400)
+    .linkDistance(40)
+    .on("tick", tick);
+
+var drag = force.drag()
+    .on("dragstart", dragstart);
+
+var svg = d3.select(this.el).append("svg")
+    .attr("width", width)
+    .attr("height", height);
+    
+$(window).bind('resize', function () { 
+
+    			$("svg").attr("height", window.innerHeight-45);
+    			$("svg").attr("width", window.innerWidth-45);
+
+			});
+
+var link = svg.selectAll(".link"),
+    node = svg.selectAll(".node");
+
+d3.json("tpl/miserables.json", function(error, graph) {
+  force
+      .nodes(graph.nodes)
+      .links(graph.links)
+      .start();
+
+  link = link.data(graph.links)
+    .enter().append("line")
+      .attr("class", "link");
+
+  node = node.data(graph.nodes)
+    .enter().append("circle")
+      .attr("class", "node")
+      .attr("r", 12)
+      .call(drag);
+});
+
+function tick() {
+  link.attr("x1", function(d) { return d.source.x; })
+      .attr("y1", function(d) { return d.source.y; })
+      .attr("x2", function(d) { return d.target.x; })
+      .attr("y2", function(d) { return d.target.y; });
+
+  node.attr("cx", function(d) { return d.x = Math.max(12, Math.min(width - 12, d.x)); })
+      .attr("cy", function(d) { return d.y = Math.max(12, Math.min(height - 12, d.y)); });
+}
+
+function dragstart(d) {
+  d.fixed = true;
+  d3.select(this).classed("fixed", true);
+}
+			
+			
+			
+			//dynamically set the height and width of the
+			//iframe dynamically based on browser window size
+			/*var height = window.innerHeight;
+			var width = window.innerWidth;
+			console.log("in main doc");
+			console.log(width);
+			
+			var frame = d3.select(this.el).append("iframe")
+										  .attr("id", "frameID")
+										  .attr("src", "/avior/test/tpl/topology.html")
+										  .attr("scrolling", "no")
+										  .attr("height", height)
+										  .attr("width", width - 45);
+										  
+			$(window).bind('resize', function () { 
+
+    			$("iframe").attr("height", window.innerHeight);
+    			$("iframe").attr("width", window.innerWidth - 45);
+    			console.log($("iframe"));
+
+			});							  
+			$("iframe").contents().find("body").removeClass("hidden");
+			$("#iFrame").contents().find("body").removeClass("hidden");
+				
+			var svgContainer = d3.selectAll("body").append("svg")
 												  .attr("width", 1000)
 												  .attr("height", 1000);
 			
@@ -38,27 +123,9 @@ define([
         	var hostNodes = svgContainer.selectAll("rect")
 	                          		   .data(this.hosts)
     	                      		   .enter()
-        	                  		   .append("rect");*/
-			
-			//dynamically set the height and width of the
-			//iframe dynamically based on browser window size
-			var height = window.innerHeight;
-			var width = window.innerWidth;
-			console.log(width);
-			
-			var frame = d3.select(this.el).append("iframe")
-										  //.attr("src", "http://fox.com")
-										  .attr("scrolling", "no")
-										  .attr("height", height)
-										  .attr("width", width - 45);
-										  
-			$(window).bind('resize', function () { 
-
-    			$("iframe").attr("height", window.innerHeight);
-    			$("iframe").attr("width", window.innerWidth - 45);
-    			console.log($("iframe"));
-
-			});							  
+        	                  		   .append("rect");	*/
+				
+				
 										                    		      	                  		          	                  	  				
 			var topology = new TopologyCollection({model: Topology});
 			topology.fetch().complete(function () {

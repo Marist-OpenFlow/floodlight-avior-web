@@ -1,6 +1,97 @@
-<script type="text/javascript"> 
-	d3.select("#content").append("div").text("Topology Coming Soon!"); 
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.link {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node {
+  cursor: move;
+  fill: #ccc;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node.fixed {
+  fill: #f00;
+}
+
+.center
+{
+margin-left:auto;
+margin-right:auto;
+background-color:#b0e0e6;
+}
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+
+			
+
+var height = window.innerHeight;
+			var width = window.innerWidth;
+
+var force = d3.layout.force()
+    .size([width, height])
+    .charge(-400)
+    .linkDistance(40)
+    .on("tick", tick);
+
+var drag = force.drag()
+    .on("dragstart", dragstart);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+    
+$(window).bind('resize', function () { 
+
+    			$("svg").attr("height", window.innerHeight);
+    			$("svg").attr("width", window.innerWidth);
+
+			});
+
+var link = svg.selectAll(".link"),
+    node = svg.selectAll(".node");
+
+d3.json("miserables.json", function(error, graph) {
+  force
+      .nodes(graph.nodes)
+      .links(graph.links)
+      .start();
+
+  link = link.data(graph.links)
+    .enter().append("line")
+      .attr("class", "link");
+
+  node = node.data(graph.nodes)
+    .enter().append("circle")
+      .attr("class", "node")
+      .attr("r", 12)
+      .call(drag);
+});
+
+function tick() {
+  link.attr("x1", function(d) { return d.source.x; })
+      .attr("y1", function(d) { return d.source.y; })
+      .attr("x2", function(d) { return d.target.x; })
+      .attr("y2", function(d) { return d.target.y; });
+
+  node.attr("cx", function(d) { return d.x; })
+      .attr("cy", function(d) { return d.y; });
+}
+
+function dragstart(d) {
+  d.fixed = true;
+  d3.select(this).classed("fixed", true);
+}
+
 </script>
-<svg width="500" height="50">
-	<circle cx="25" cy="25" r="22" fill="blue" stroke="green" stroke-width="5"/>
-</svg>
+</script>
+</body>
+</html>
