@@ -123,6 +123,8 @@ define([
 			// Delegate events for host view
 			this.hostview.delegateEvents(this.hostview.events);
 			
+			this.hostCollection = this.hostview.collection;
+			
 			// Link host to id tag
 			$('#content').append(this.hostview.render().el);
         },
@@ -134,7 +136,7 @@ define([
 			
 			var switchDetail = new SwitchDetail({model: new Switch});
 			switchDetail.delegateEvents(switchDetail.events);
-			this.collection = switchDetail.collection;
+			this.switchCollection = switchDetail.collection;
 			switchDetail.listenTo(switchDetail.switchStats, "sync", switchDetail.render);
 	
 		},
@@ -145,7 +147,7 @@ define([
 			// Clears out any previous intervals
 			clearInterval(this.interval);
 
-			if (this.collection === undefined){
+			if (this.switchCollection === undefined){
 				var switchDetail = new SwitchDetail({model: new Switch});
 				switchDetail.delegateEvents(switchDetail.events);
 				switchDetail.listenTo(switchDetail.switchStats, "sync", function () {new FlowEditor(switchDetail.collection, true);});
@@ -168,12 +170,29 @@ define([
         	// Clears out any previous intervals
 			clearInterval(this.interval);
 			
-			//switch and host array placeHolders for testing 
-			var s = [1,2,3,4,5,6,7,8,9,10];
-			var h = [1,2,3,4,5];
+			var self = this;
 			
-			var topology = new TopologyView(s, h);
-			topology.render();
+			if (this.hostCollection === undefined){
+				this.hostview = new HostView({collection: new Host});
+				this.hostview.delegateEvents(this.hostview.events);
+				this.hostCollection = this.hostview.collection;
+			}
+			
+			if (this.switchCollection === undefined){
+				var switchDetail = new SwitchDetail({model: new Switch});
+				switchDetail.delegateEvents(switchDetail.events);
+				switchDetail.listenTo(switchDetail.switchStats, "sync", function () {
+																			self.switchCollection = switchDetail.collection;
+																			//create graph nodes based on switch and host data
+																			var topology = new TopologyView(self.switchCollection, self.hostCollection);
+																			topology.render();
+																		});
+			}
+			else{
+				//create graph nodes based on switch and host data
+				var topology = new TopologyView(self.switchCollection, self.hostCollection);
+				topology.render();
+			}
         },
         
         ADVAlancheRoute: function () {
