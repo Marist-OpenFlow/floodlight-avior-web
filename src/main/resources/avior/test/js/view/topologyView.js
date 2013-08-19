@@ -16,9 +16,11 @@ define([
 		// connected to the controller
 		initialize: function(s, h) {
 			this.switches = s;
-			this.hosts = h;
+			this.hosts = {};
+			this.hosts['hosts'] = h;
+			this.switches.push(this.hosts);
 			//console.log(JSON.stringify(this.switches));
-			//console.log(JSON.stringify(this.hosts));
+			//console.log(this.hosts);
 		},
 		
 		//render the topology model using d3.js
@@ -70,9 +72,9 @@ define([
 				
 			// create source and target links based on dpid instead of index
 			_.forEach(switchLinks.models, function(e) { 
-    				
+    			
     			// Get the source and target nodes
-    			var sourceNode = self.switches.filter(function(n) { return n.id === e.attributes['src-switch']; })[0],
+    			var sourceNode = self.switches.filter(function(n) { if (n.id === undefined) console.log(JSON.stringify(n.attributes.hosts.models)); return n.id === e.attributes['src-switch']; })[0],
         		targetNode = self.switches.filter(function(n) { return n.id === e.attributes['dst-switch']; })[0];
 
     			// Add the edge to the array
