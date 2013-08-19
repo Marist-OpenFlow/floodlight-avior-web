@@ -37,7 +37,7 @@ define([
 		
 		showTopo: function(switchLinks) {
 			var self = this;
-			var height = window.innerHeight-45;
+			var height = window.innerHeight;
 			var width = window.innerWidth-45;
 			
 			var force = d3.layout.force()
@@ -54,51 +54,46 @@ define([
     			.attr("height", height);
     
 			$(window).bind('resize', function () { 
-
-    			$("svg").attr("height", window.innerHeight-45);
-    			$("svg").attr("width", window.innerWidth-45);
-
+				height = window.innerHeight;
+				width = window.innerWidth-45;
+    			$("svg").attr("height", height);
+    			$("svg").attr("width", width);
+				console.log(window.innerHeight);
+				console.log(window.innerWidth);
+				console.log($("svg"));
 			});
 
 			var link = svg.selectAll(".link"),
     		node = svg.selectAll(".node");
 			
-			d3.json("tpl/miserables.json", function(error, graph) {
-				var self2 = self;
-				var edges = [];
+			var edges = [];
 				
-				console.log(JSON.stringify(switchLinks));
-				// create source and target links based on dpid instead of index
-				_.forEach(switchLinks.models, function(e) { 
-    				// Get the source and target nodes
-    				//console.log(JSON.stringify(e.attributes['src-switch']));
-    				var sourceNode = self.switches.filter(function(n) { return n.id === e.attributes['src-switch']; })[0],
-        			targetNode = self.switches.filter(function(n) { return n.id === e.attributes['dst-switch']; })[0];
-					//console.log(JSON.stringify(targetNode));
-    				// Add the edge to the array
-   		 			edges.push({source: sourceNode, target: targetNode});
-   		 			//console.log(edges);
-				}, this);
-				console.log(self.switches.models);
-				
-  				force
-      				.nodes(self2.switches.models)
-      				.links(edges)
-      				//.links(graph.links)
-      				.start();
-      				
-      				//console.log(JSON.stringify(force));
+			// create source and target links based on dpid instead of index
+			_.forEach(switchLinks.models, function(e) { 
+    				
+    			// Get the source and target nodes
+    			var sourceNode = self.switches.filter(function(n) { return n.id === e.attributes['src-switch']; })[0],
+        		targetNode = self.switches.filter(function(n) { return n.id === e.attributes['dst-switch']; })[0];
 
-  				link = link.data(edges)
-    					   .enter().append("line")
-      					   .attr("class", "link");
+    			// Add the edge to the array
+   		 		edges.push({source: sourceNode, target: targetNode});
+			}, this);
+			
+  			force
+      			.nodes(this.switches.models)
+      			.links(edges)
+      			.start();
 
-   				node = node.data(self2.switches.models)
-    					   .enter().append("circle")
-      					   .attr("class", "node")
-      					   .attr("r", 12)
-      					   .call(drag);
-			});
+  			link = link.data(edges)
+    				   .enter().append("line")
+      				   .attr("class", "link");
+
+   			node = node.data(this.switches.models)
+    				   .enter().append("circle")
+      				   .attr("class", "node")
+      				   .attr("r", 12)
+      				   .call(drag);
+
 
 			function tick() {
 				
