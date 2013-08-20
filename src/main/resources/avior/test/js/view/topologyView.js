@@ -124,6 +124,7 @@ define([
       				   .attr("r", 12)
       				   .style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; })
       				   .call(drag);
+      				 
 
 
 			function tick() {
