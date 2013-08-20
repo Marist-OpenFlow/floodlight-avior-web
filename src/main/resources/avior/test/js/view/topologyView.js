@@ -5,8 +5,9 @@ define([
 	"marionette",
 	"floodlight/topologyFl",
 	"model/topology",
-	"text!template/topology.html"
-], function($, _, Backbone, Marionette, TopologyCollection, Topology, topologyTpl){
+	"text!template/topology.html",
+	"text!template/switchHeading.html",
+], function($, _, Backbone, Marionette, TopologyCollection, Topology, topologyTpl, switchHeading){
 	var TopologyView = Backbone.Marionette.ItemView.extend({
 		el: $('#content'),
 		
@@ -32,6 +33,7 @@ define([
 		render: function() {
 			var self = this;
 			this.switchLinks;
+			this.$el.append(this.template).trigger('create');
 			var topology = new TopologyCollection({model: Topology});
 			topology.fetch().complete(function () {
 				this.switchLinks = topology;
@@ -119,13 +121,21 @@ define([
       				   .attr("class", "link");
 
    			node = node.data(this.switches.models)
-    				   .enter().append("circle")
-      				   .attr("class", "node")
-      				   .attr("r", 12)
-      				   .style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; })
+   					   .enter().append("g")
+   					   .attr("class", "node")
+   					   //.append("circle")
+      				   //.attr("r", 12)
+      				   //.style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; })
       				   .call(drag);
-      				 
-
+      			
+      		node.append("circle")
+      				   .attr("r", 12)
+      				   .style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; });	
+      				   
+			node.append("text")
+    .attr("x", 12)
+    .attr("dy", ".35em")
+    .text(function() { return "red"; });
 
 			function tick() {
 				
@@ -134,8 +144,9 @@ define([
       			.attr("x2", function(d) { return d.target.x; })
       			.attr("y2", function(d) { return d.target.y; });
 
-  				node.attr("cx", function(d) { return d.x = Math.max(12, Math.min(width - 12, d.x)); })
-      		    	.attr("cy", function(d) { return d.y = Math.max(12, Math.min(height - 12, d.y)); });
+  				//node.attr("cx", function(d) { return d.x = Math.max(12, Math.min(width - 12, d.x)); })
+      		    	//.attr("cy", function(d) { return d.y = Math.max(12, Math.min(height - 12, d.y)); });
+      		    	node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 			}	
 
 			function dragstart(d) {
