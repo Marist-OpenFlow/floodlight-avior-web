@@ -153,7 +153,7 @@ define([
 				switchDetail.listenTo(switchDetail.switchStats, "sync", function () {new FlowEditor(switchDetail.collection, true);});
 			}
 			else
-				new FlowEditor(this.collection, true);
+				new FlowEditor(this.switchCollection, true);
         },
         
         firewallRoute: function() {
@@ -165,13 +165,13 @@ define([
         },
         
         topologyRoute: function () {
-        	$('#content').empty();
+        	$("#content").empty();
         	
         	// Clears out any previous intervals
 			clearInterval(this.interval);
 			
 			var self = this;
-			
+			console.log(this.topology);
 			if (this.hostCollection === undefined){
 				this.hostview = new HostView({collection: new Host});
 				this.hostview.delegateEvents(this.hostview.events);
@@ -184,14 +184,25 @@ define([
 				switchDetail.listenTo(switchDetail.switchStats, "sync", function () {
 																			self.switchCollection = switchDetail.collection;
 																			//create graph nodes based on switch and host data
-																			var topology = new TopologyView(self.switchCollection, self.hostCollection);
-																			topology.render();
+																			self.topology = new TopologyView(self.switchCollection, self.hostCollection);											
+																			self.topology.render();
 																		});
 			}
+			
+			else if(this.switchCollection.models.length > 0 && this.hostCollection.models.length > 0 && this.topology === undefined){
+				this.topology = new TopologyView(self.switchCollection, self.hostCollection);
+				this.topology.render();
+			}
+			 
+			else if (this.topology != undefined)
+				this.topology.render();
+			
 			else{
 				//create graph nodes based on switch and host data
-				var topology = new TopologyView(self.switchCollection, self.hostCollection);
-				topology.render();
+				this.hostview.listenTo(this.hostview.collection, "sync", function () {
+					this.topology = new TopologyView(self.switchCollection, self.hostCollection);
+					this.topology.render();
+				});
 			}
         },
         

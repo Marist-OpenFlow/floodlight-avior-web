@@ -25,7 +25,7 @@ define([
 		
 		validate: function() {
 			var self = this;
-			if ( $("#Lusername").val() === "admin" && $("#Lpassword").val() === "admin" ){
+			if ( $("#Lusername").val() === "" && $("#Lpassword").val() === "" ){
 				document.getElementById("rightpanel3").style.display='block';
 				document.getElementById("leftpanel3").style.display='block';
 				var router = new Router(); 

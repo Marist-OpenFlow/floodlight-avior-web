@@ -15,10 +15,14 @@ define([
 		// accepts an array of switch dpids and hosts
 		// connected to the controller
 		initialize: function(s, h) {
+			//console.log(s);
+			//console.log(h);
 			this.switches = s;
-			this.hosts = {};
-			this.hosts['hosts'] = h;
-			this.switches.push(this.hosts);
+			_.forEach(h.models, function(item) {
+				if (item.attributes.attachmentPoint.length != 0)
+					this.switches.push(item);
+					//console.log(JSON.stringify(item.attributes.attachmentPoint));
+			}, this);
 			//console.log(JSON.stringify(this.switches));
 			//console.log(this.hosts);
 		},
@@ -60,9 +64,9 @@ define([
 				width = window.innerWidth-45;
     			$("svg").attr("height", height);
     			$("svg").attr("width", width);
-				console.log(window.innerHeight);
-				console.log(window.innerWidth);
-				console.log($("svg"));
+				//console.log(window.innerHeight);
+				//console.log(window.innerWidth);
+				//console.log($("svg"));
 			});
 
 			var link = svg.selectAll(".link"),
@@ -74,7 +78,7 @@ define([
 			_.forEach(switchLinks.models, function(e) { 
     			
     			// Get the source and target nodes
-    			var sourceNode = self.switches.filter(function(n) { if (n.id === undefined) console.log(JSON.stringify(n.attributes.hosts.models)); return n.id === e.attributes['src-switch']; })[0],
+    			var sourceNode = self.switches.filter(function(n) { return n.id === e.attributes['src-switch']; })[0],
         		targetNode = self.switches.filter(function(n) { return n.id === e.attributes['dst-switch']; })[0];
 
     			// Add the edge to the array
