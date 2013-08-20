@@ -18,6 +18,7 @@ define([
 			//console.log(s);
 			//console.log(h);
 			this.switches = s;
+			this.hosts = h;
 			_.forEach(h.models, function(item) {
 				if (item.attributes.attachmentPoint.length != 0)
 					this.switches.push(item);
@@ -78,13 +79,36 @@ define([
 			_.forEach(switchLinks.models, function(e) { 
     			
     			// Get the source and target nodes
-    			var sourceNode = self.switches.filter(function(n) { return n.id === e.attributes['src-switch']; })[0],
-        		targetNode = self.switches.filter(function(n) { return n.id === e.attributes['dst-switch']; })[0];
-
+    			var sourceNode = self.switches.filter(function(n) {
+    												  	return n.id === e.attributes['src-switch']; 
+    												  })[0],
+        		targetNode = self.switches.filter(function(n) {
+    											  		return n.id === e.attributes['dst-switch']; 
+    											 })[0];
+	
     			// Add the edge to the array
    		 		edges.push({source: sourceNode, target: targetNode});
 			}, this);
 			
+			_.forEach(this.hosts.models, function(e) { 
+    			console.log(JSON.stringify(e));
+    			// Get the source and target nodes
+    			if (e.attributes.attachmentPoint.length > 0) {
+    			var sourceNode = self.switches.filter(function(n) { 
+    													return e.attributes.attachmentPoint[0].switchDPID ===  n.id; 
+    												  })[0],
+        		targetNode = self.switches.filter(function(n) { 
+    											  		return n.id === e.attributes.attachmentPoint[0].switchDPID; 
+    											  })[0];
+
+    			// Add the edge to the array
+    			if (targetNode != undefined)
+    				targetNode = e;
+   		 		edges.push({source: sourceNode, target: targetNode});
+   		 		}
+			}, this);
+			
+			console.log((edges.length));
   			force
       			.nodes(this.switches.models)
       			.links(edges)
@@ -98,6 +122,7 @@ define([
     				   .enter().append("circle")
       				   .attr("class", "node")
       				   .attr("r", 12)
+      				   .style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; })
       				   .call(drag);
 
 

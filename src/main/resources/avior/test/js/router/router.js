@@ -171,7 +171,6 @@ define([
 			clearInterval(this.interval);
 			
 			var self = this;
-			console.log(this.topology);
 			if (this.hostCollection === undefined){
 				this.hostview = new HostView({collection: new Host});
 				this.hostview.delegateEvents(this.hostview.events);
