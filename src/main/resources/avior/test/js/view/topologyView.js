@@ -13,11 +13,16 @@ define([
 		
 		template: _.template(topologyTpl),
 		
+		events: {
+			"click #showLabels": "toggleLabels"
+		},
+		
 		// accepts an array of switch dpids and hosts
 		// connected to the controller
 		initialize: function(s, h) {
 			//console.log(s);
 			//console.log(h);
+			this.toggleCount = 0;
 			this.switches = s;
 			this.hosts = h;
 			_.forEach(h.models, function(item) {
@@ -58,7 +63,7 @@ define([
 			var drag = force.drag()
     			.on("dragstart", dragstart);
 
-			var svg = d3.select(this.el).append("svg")
+			this.svg = d3.select(this.el).append("svg")
     			.attr("width", width)
     			.attr("height", height);
     
@@ -72,8 +77,8 @@ define([
 				//console.log($("svg"));
 			});
 
-			var link = svg.selectAll(".link"),
-    		node = svg.selectAll(".node");
+			var link = this.svg.selectAll(".link"),
+    		node = this.svg.selectAll(".node");
 			
 			var edges = [];
 				
@@ -131,11 +136,12 @@ define([
       		node.append("circle")
       				   .attr("r", 12)
       				   .style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; });	
-      				   
-			node.append("text")
+      			
+      		//this.toggleLabels();		   
+			/*node.append("text")
     			.attr("x", 12)
     			.attr("dy", ".35em")
-    			.text(function(d) { if (d.attributes.id === undefined) return d.attributes['ipv4'][0] ; else return d.attributes.id; });
+    			.text(function(d) { if (d.attributes.id === undefined) return d.attributes['ipv4'][0] ; else return d.attributes.id; });*/
 
 			function tick() {
 				
@@ -155,7 +161,25 @@ define([
 			}									                    		      	                  		          	                  	  		
         		
 		},
-				
+		
+		toggleLabels: function (e) {
+		
+		
+    
+			var node = this.svg.selectAll(".node");
+			if (this.toggleCount % 2 === 0) {
+				node.append("text")
+    				.attr("x", 12)
+    				.attr("dy", ".35em")
+    				.text(function(d) { if (d.attributes.id === undefined) return d.attributes['ipv4'][0] ; else return d.attributes.id; });
+				this.toggleCount++;	
+			}
+			else {
+				var labels = this.svg.selectAll("text");
+				labels.remove();	
+				this.toggleCount++;
+			}
+		},		
 	});
 	return TopologyView;
 }); 
