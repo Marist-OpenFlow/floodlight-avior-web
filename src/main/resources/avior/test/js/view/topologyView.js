@@ -133,9 +133,9 @@ define([
       				   .style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; });	
       				   
 			node.append("text")
-    .attr("x", 12)
-    .attr("dy", ".35em")
-    .text(function() { return "red"; });
+    			.attr("x", 12)
+    			.attr("dy", ".35em")
+    			.text(function(d) { if (d.attributes.id === undefined) return d.attributes['ipv4'][0] ; else return d.attributes.id; });
 
 			function tick() {
 				
