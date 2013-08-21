@@ -32,6 +32,8 @@ define([
 			}, this);
 			//console.log(JSON.stringify(this.switches));
 			//console.log(this.hosts);
+			console.log(window.innerHeight);
+			console.log(window.innerWidth);
 		},
 		
 		//render the topology model using d3.js
@@ -63,7 +65,7 @@ define([
 			var drag = force.drag()
     			.on("dragstart", dragstart);
 
-			this.svg = d3.select(this.el).append("svg")
+			this.svg = d3.select(".inner").append("svg")
     			.attr("width", width)
     			.attr("height", height);
     
