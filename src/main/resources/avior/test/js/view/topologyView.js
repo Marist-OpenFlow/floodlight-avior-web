@@ -128,20 +128,11 @@ define([
    			node = node.data(this.switches.models)
    					   .enter().append("g")
    					   .attr("class", "node")
-   					   //.append("circle")
-      				   //.attr("r", 12)
-      				   //.style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; })
       				   .call(drag);
       			
       		node.append("circle")
       				   .attr("r", 12)
       				   .style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; });	
-      			
-      		//this.toggleLabels();		   
-			/*node.append("text")
-    			.attr("x", 12)
-    			.attr("dy", ".35em")
-    			.text(function(d) { if (d.attributes.id === undefined) return d.attributes['ipv4'][0] ; else return d.attributes.id; });*/
 
 			function tick() {
 				
