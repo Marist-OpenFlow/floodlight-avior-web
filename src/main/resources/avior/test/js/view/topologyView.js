@@ -134,7 +134,41 @@ define([
       			
       		node.append("circle")
       				   .attr("r", 12)
-      				   .style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; });	
+      				   .style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; });
+      			
+      		var border = this.svg.append("rect")
+      						.attr("class", "border")
+      						.attr("x", 2)
+  							.attr("y", 0)
+  							.attr("height", 65)
+  							.attr("width", 116)
+  							.style("fill", "white") ;
+
+      		var legend = this.svg.append("g")
+  							 .attr("class", "legend")
+  							 .attr("x", 0)
+  							 .attr("y", 25)
+  							 .attr("height", 100)
+   							 .attr("width", 100);
+  
+  			legend.selectAll('circle')
+      			  .data([0,1])
+      			  .enter()
+      			  .append("circle")
+      			  .attr("cx", 18)
+     	 		  .attr("cy", function(d, i){ return (i *  30) + 15;})
+      			  .attr("r", 8)
+      			  .style("fill", function(d) { 
+         							if (d === 0) return "blue"; else return "green";
+      							  });	
+      
+   			legend.selectAll('text')
+   				  .data([0,1])
+   				  .enter()
+   				  .append("text")
+  				  .attr("x", 32)
+  				  .attr("y", function(d, i){ return (i *  30) + 18;})
+  				  .text(function(d) { if (d === 0) return "hosts"; else return "switches"; });
 
 			function tick() {
 				
@@ -164,11 +198,12 @@ define([
 				node.append("text")
     				.attr("x", 12)
     				.attr("dy", ".35em")
+    				.attr("id", "nodeLabels")
     				.text(function(d) { if (d.attributes.id === undefined) return d.attributes['ipv4'][0] ; else return d.attributes.id; });
 				this.toggleCount++;	
 			}
 			else {
-				var labels = this.svg.selectAll("text");
+				var labels = this.svg.selectAll("#nodeLabels");
 				labels.remove();	
 				this.toggleCount++;
 			}
