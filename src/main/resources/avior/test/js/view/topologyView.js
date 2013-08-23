@@ -15,6 +15,7 @@ define([
 		
 		events: {
 			"click #showLabels": "toggleLabels",
+			"click #doneButton": "scaleOut",
 			"change #nodeList": "nodeSelect",
 		},
 		
@@ -78,12 +79,6 @@ define([
 			this.svg = d3.select(".inner").append("svg")
     			.attr("width", width)
     			.attr("height", height);
-    		    		
-			this.svg.append("rect")
-    			    .attr("class", "background")
-   	 				.attr("width", width)
-    				.attr("height", height);
-    				//.on("click", this.clicked);
     		
 			$(window).bind('resize', function () { 
 				height = window.innerHeight;
@@ -197,7 +192,7 @@ define([
 		showLegend: function() {
 			var border = this.svg.append("rect")
       						.attr("class", "border")
-      						.attr("x", 2)
+      						.attr("x", 45)
   							.attr("y", 0)
   							.attr("height", 65)
   							.attr("width", 116)
@@ -205,7 +200,7 @@ define([
 
       		var legend = this.svg.append("g")
   							 .attr("class", "legend")
-  							 .attr("x", 0)
+  							 .attr("x", 45)
   							 .attr("y", 25)
   							 .attr("height", 100)
    							 .attr("width", 100);
@@ -214,7 +209,7 @@ define([
       			  .data([0,1])
       			  .enter()
       			  .append("circle")
-      			  .attr("cx", 18)
+      			  .attr("cx", 59)
      	 		  .attr("cy", function(d, i){ return (i *  30) + 15;})
       			  .attr("r", 8)
       			  .style("fill", function(d) { 
@@ -225,17 +220,59 @@ define([
    				  .data([0,1])
    				  .enter()
    				  .append("text")
-  				  .attr("x", 32)
+  				  .attr("x", 83)
   				  .attr("y", function(d, i){ return (i *  30) + 18;})
   				  .text(function(d) { if (d === 0) return "hosts"; else return "switches"; });
 		},
 		
+		// On node selection, scale screen and translate graph to have selected node centered,
+		// then unregister listener until next node is selected. When done button is clicked
+		// the scale returns to normal(1). Legend does not change sizes upon rescaling/translating.
 		nodeSelect: function (e) {
+			var height = window.innerHeight;
+			var width = window.innerWidth-45;
 			var nodeID = $(e.currentTarget).val();
 			var nodeData = this.switches.get(nodeID);
-				console.log(nodeData.px);
-				console.log(nodeData.py);
-		},		
+			var k = 4;
+			var x = nodeData.px;
+			var y = nodeData.py;
+			
+			//call this event on node selection...
+			this.svg.call(d3.behavior.zoom().on("zoom", rescale));
+			var self = this;
+
+			function rescale() {
+				$(function() { $("#doneDiv").show(); });
+				//var trans2 = [];
+				//trans2.push(10);
+				//trans2.push(0);
+				//console.log(trans2);
+        		var trans = d3.event.translate;
+        		var scale = d3.event.scale;
+        		//var scale = 1.64;
+        		console.log(scale);
+
+        		self.svg.attr("transform",
+            		"translate(" + trans + ")"
+                		+ " scale(" + scale + ")");
+                self.svg.call(d3.behavior.zoom().on("zoom", null));
+    		}
+		},
+		
+		scaleOut: function () {
+			$(function() { $("#doneDiv").hide(); });
+			this.svg.call(d3.behavior.zoom().on("zoom", rescale));
+			function rescale() {
+				var trans = d3.event.translate;
+        		var scale = 0.607;
+        		self.svg.attr("transform",
+            			"translate(" + trans + ")"
+                			+ " scale(" + scale + ")");
+                console.log(scale);
+            	self.svg.call(d3.behavior.zoom().on("zoom", null));
+            }
+		},
+				
 	});
 	return TopologyView;
 }); 

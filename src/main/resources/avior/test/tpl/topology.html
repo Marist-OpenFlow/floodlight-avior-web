@@ -6,8 +6,13 @@
 		<% _.each(coll, function(i) { %>  <option><%= i.dpid || i['ipv4'][0] %></option> <% }); %>
 	</select>
 </div>
+
+<div id="doneDiv" style="display:none">
+	<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+		<p id="doneButton" data-role="button" data-icon="gear" data-theme="b" style="float:right">Done</p>
+	</div>
+</div>
+
 <div class="outer">
-    <div class="inner">
-        
-    </div>
+    <div class="inner"></div>
 </div>
