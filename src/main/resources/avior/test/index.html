@@ -16,6 +16,7 @@
 
 	<!-- JS for D3 -->
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script src="http://d3js.org/topojson.v1.min.js"></script>
 	<!-- JS for D3 -->
 
 	<!-- CSS & JS for Top Menu Effects -->	
@@ -94,17 +95,23 @@ svg {
 }
 
 .legend {
-            padding: 5px;
-            font: 10px sans-serif;
-            background: yellow;
-            box-shadow: 2px 2px 1px #888;
-        }
-        .border {
+    padding: 5px;
+    font: 10px sans-serif;
+    background: yellow;
+    box-shadow: 2px 2px 1px #888;
+ }
+        
+.border {
   font: 10px sans-serif;
   stroke: #999;
   stroke-width: 0.5px;
   stroke-opacity: 1.0;
   pointer-events: none;
+}
+
+.background {
+  fill: none;
+  pointer-events: all;
 }
   
 	</style>

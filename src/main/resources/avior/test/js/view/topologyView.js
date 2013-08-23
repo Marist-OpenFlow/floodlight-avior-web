@@ -14,7 +14,8 @@ define([
 		template: _.template(topologyTpl),
 		
 		events: {
-			"click #showLabels": "toggleLabels"
+			"click #showLabels": "toggleLabels",
+			"change #nodeList": "nodeSelect",
 		},
 		
 		// accepts an array of switch dpids and hosts
@@ -27,20 +28,21 @@ define([
 			this.hosts = h;
 			_.forEach(h.models, function(item) {
 				if (item.attributes.attachmentPoint.length != 0)
+					item.set("id", item.get("ipv4"));
 					this.switches.push(item);
 					//console.log(JSON.stringify(item.attributes.attachmentPoint));
 			}, this);
 			//console.log(JSON.stringify(this.switches));
 			//console.log(this.hosts);
-			console.log(window.innerHeight);
-			console.log(window.innerWidth);
+			//console.log(window.innerHeight);
+			//console.log(window.innerWidth);
 		},
 		
 		//render the topology model using d3.js
 		render: function() {
 			var self = this;
 			this.switchLinks;
-			this.$el.append(this.template).trigger('create');
+			this.$el.append(this.template({coll: this.switches.toJSON()})).trigger('create');
 			var topology = new TopologyCollection({model: Topology});
 			topology.fetch().complete(function () {
 				this.switchLinks = topology;
@@ -56,6 +58,14 @@ define([
 			var height = window.innerHeight;
 			var width = window.innerWidth-45;
 			
+			
+			var projection = d3.geo.albersUsa()
+    				           	   .scale(1070)
+    					   	       .translate([width / 2, height / 2]);
+    
+			var path = d3.geo.path()
+     				         .projection(projection);
+			
 			var force = d3.layout.force()
     			.size([width, height])
     			.charge(-400)
@@ -68,7 +78,13 @@ define([
 			this.svg = d3.select(".inner").append("svg")
     			.attr("width", width)
     			.attr("height", height);
-    
+    		    		
+			this.svg.append("rect")
+    			    .attr("class", "background")
+   	 				.attr("width", width)
+    				.attr("height", height);
+    				//.on("click", this.clicked);
+    		
 			$(window).bind('resize', function () { 
 				height = window.innerHeight;
 				width = window.innerWidth-45;
@@ -89,10 +105,10 @@ define([
     			
     			// Get the source and target nodes
     			var sourceNode = self.switches.filter(function(n) {
-    												  	return n.id === e.attributes['src-switch']; 
+    												  	return n.attributes.dpid === e.attributes['src-switch']; 
     												  })[0],
         		targetNode = self.switches.filter(function(n) {
-    											  		return n.id === e.attributes['dst-switch']; 
+    											  		return n.attributes.dpid === e.attributes['dst-switch']; 
     											 })[0];
 	
     			// Add the edge to the array
@@ -100,14 +116,14 @@ define([
 			}, this);
 			
 			_.forEach(this.hosts.models, function(e) { 
-    			console.log(JSON.stringify(e));
+    			//console.log(JSON.stringify(e));
     			// Get the source and target nodes
     			if (e.attributes.attachmentPoint.length > 0) {
-    			var sourceNode = self.switches.filter(function(n) { 
-    													return e.attributes.attachmentPoint[0].switchDPID ===  n.id; 
+    			var sourceNode = self.switches.filter(function(n) {
+    													return e.attributes.attachmentPoint[0].switchDPID ===  n.attributes.dpid; 
     												  })[0],
         		targetNode = self.switches.filter(function(n) { 
-    											  		return n.id === e.attributes.attachmentPoint[0].switchDPID; 
+    											  		return n.attributes.dpid === e.attributes.attachmentPoint[0].switchDPID; 
     											  })[0];
 
     			// Add the edge to the array
@@ -117,7 +133,7 @@ define([
    		 		}
 			}, this);
 			
-			console.log((edges.length));
+			//console.log((edges.length));
   			force
       			.nodes(this.switches.models)
       			.links(edges)
@@ -130,11 +146,12 @@ define([
    			node = node.data(this.switches.models)
    					   .enter().append("g")
    					   .attr("class", "node")
+   					   .attr("id", function(d) { if (d.attributes.dpid === undefined) return d.attributes['ipv4'][0]; else return d.attributes.dpid; })
       				   .call(drag);
       			
       		node.append("circle")
       				   .attr("r", 12)
-      				   .style("fill", function(d) { if (d.attributes.id === undefined) return "blue"; else return "green"; });
+      				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return "blue"; else return "green"; });
       			
       		this.showLegend();
 
@@ -211,6 +228,13 @@ define([
   				  .attr("x", 32)
   				  .attr("y", function(d, i){ return (i *  30) + 18;})
   				  .text(function(d) { if (d === 0) return "hosts"; else return "switches"; });
+		},
+		
+		nodeSelect: function (e) {
+			var nodeID = $(e.currentTarget).val();
+			var nodeData = this.switches.get(nodeID);
+				console.log(nodeData.px);
+				console.log(nodeData.py);
 		},		
 	});
 	return TopologyView;

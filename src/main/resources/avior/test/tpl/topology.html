@@ -1,6 +1,10 @@
 <h3> Network Topology </h3>
 <div data-role="controlgroup" data-type="horizontal" data-mini="true">
 	<p id="showLabels" data-role="button" data-icon="gear" data-theme="b">Show Labels</p>
+	<select name="nodeList" id="nodeList" data-icon="search" data-theme="b">
+		<option value="nodeList">Local View</option>
+		<% _.each(coll, function(i) { %>  <option><%= i.dpid || i['ipv4'][0] %></option> <% }); %>
+	</select>
 </div>
 <div class="outer">
     <div class="inner">
