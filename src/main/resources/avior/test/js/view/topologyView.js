@@ -28,9 +28,10 @@ define([
 			this.switches = s;
 			this.hosts = h;
 			_.forEach(h.models, function(item) {
-				if (item.attributes.attachmentPoint.length != 0)
+				if (item.attributes.attachmentPoint.length != 0){
 					item.set("id", item.get("ipv4"));
 					this.switches.push(item);
+				}
 					//console.log(JSON.stringify(item.attributes.attachmentPoint));
 			}, this);
 			//console.log(JSON.stringify(this.switches));
@@ -127,13 +128,15 @@ define([
    		 		edges.push({source: sourceNode, target: targetNode});
    		 		}
 			}, this);
-			
+			console.log(this.switches.models);
 			//console.log((edges.length));
   			force
       			.nodes(this.switches.models)
       			.links(edges)
       			.start();
-
+			 
+			console.log(this.switches.models); 
+			 
   			link = link.data(edges)
     				   .enter().append("line")
       				   .attr("class", "link");
@@ -148,6 +151,7 @@ define([
       				   .attr("r", 12)
       				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return "blue"; else return "green"; });
       			
+      		
       		this.showLegend();
 
 			function tick() {
@@ -248,8 +252,8 @@ define([
 				//trans2.push(0);
 				//console.log(trans2);
         		var trans = d3.event.translate;
-        		var scale = d3.event.scale;
-        		//var scale = 1.64;
+        		//var scale = d3.event.scale;
+        		var scale = 1.64;
         		console.log(scale);
 
         		self.svg.attr("transform",
@@ -260,17 +264,14 @@ define([
 		},
 		
 		scaleOut: function () {
-			$(function() { $("#doneDiv").hide(); });
+			$(function() { $("#doneDiv").show(); });
 			this.svg.call(d3.behavior.zoom().on("zoom", rescale));
-			function rescale() {
-				var trans = d3.event.translate;
-        		var scale = 0.607;
-        		self.svg.attr("transform",
-            			"translate(" + trans + ")"
-                			+ " scale(" + scale + ")");
-                console.log(scale);
-            	self.svg.call(d3.behavior.zoom().on("zoom", null));
-            }
+			var trans = d3.event.translate;
+        	var scale = 1;
+        	self.svg.attr("transform",
+            		"translate(" + trans + ")"
+                		+ " scale(" + scale + ")");
+            self.svg.call(d3.behavior.zoom().on("zoom", null));
 		},
 				
 	});
