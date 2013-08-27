@@ -59,14 +59,8 @@ define([
 			var self = this;
 			var height = window.innerHeight;
 			var width = window.innerWidth-45;
-			
-			
-			var projection = d3.geo.albersUsa()
-    				           	   .scale(1070)
-    					   	       .translate([width / 2, height / 2]);
-    
-			var path = d3.geo.path()
-     				         .projection(projection);
+			console.log(height);
+			console.log(width);
 			
 			var force = d3.layout.force()
     			.size([width, height])
@@ -80,6 +74,9 @@ define([
 			this.svg = d3.select(".inner").append("svg")
     			.attr("width", width)
     			.attr("height", height);
+    			//.style("position", "absolute")
+    			//.style("left", "100px")
+    			//.style("top", "400px");
     		
 			$(window).bind('resize', function () { 
 				height = window.innerHeight;
@@ -194,6 +191,14 @@ define([
 		},
 		
 		showLegend: function() {
+			var testCenter = this.svg.append("rect")
+      						.attr("class", "border")
+      						.attr("x", window.innerWidth/2 - (window.innerHeight*0.05))
+  							.attr("y", (window.innerHeight/2) - (window.innerHeight*0.150))
+  							.attr("height", 30)
+  							.attr("width", 30)
+  							.style("fill", "red") ;
+			
 			var border = this.svg.append("rect")
       						.attr("class", "border")
       						.attr("x", 45)
@@ -251,6 +256,10 @@ define([
 			//call this event on node selection...
 			this.svg.call(d3.behavior.zoom().on("zoom", rescale));
 			var self = this;
+			this.node = this.svg.selectAll("g").filter(function(d, i) { return i===nodeData.index; });
+			console.log(this.node);
+			this.node.style("stroke", "black")
+				.style("stroke-width", 2.0);
 
 			function rescale() {
 				$(function() { $("#doneDiv").show(); });
@@ -266,12 +275,19 @@ define([
         		self.svg.attr("transform",
             		"translate(" + trans + ")"
                 		+ " scale(" + scale + ")");
+                
+                var scale = 1.5;
+                self.svg.attr("transform",
+                	"scale(" + scale + ")");
+            			
                 self.svg.call(d3.behavior.zoom().on("zoom", null));
     		}
 		},
 		
 		scaleOut: function () {
             this.svg.call(d3.behavior.zoom().on("zoom", rescale));
+            this.node.style("stroke", "#fff")
+				.style("stroke-width", 1.5);
 			var self = this;
             function rescale() {
 				$(function() { $("#doneDiv").hide(); });
