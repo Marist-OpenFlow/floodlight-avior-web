@@ -238,13 +238,15 @@ define([
 			var nodeID = $(e.currentTarget).val();
 			var nodeData = this.switches.get(nodeID);
 			var k = 4;
-			var x = nodeData.px;
-			var y = nodeData.py;
+			this.x = nodeData.px;
+			this.y = nodeData.py;
 			console.log(nodeID);
 			console.log(nodeData);
 			console.log("hi");
-			console.log(x);
-			console.log(y);
+			//console.log(height/2);
+			//console.log(width/2);
+			//console.log(this.y);
+			//console.log(this.x);
 			
 			//call this event on node selection...
 			this.svg.call(d3.behavior.zoom().on("zoom", rescale));
@@ -253,13 +255,13 @@ define([
 			function rescale() {
 				$(function() { $("#doneDiv").show(); });
 				var trans = [];
-				trans.push(0);
-				trans.push(0);
-				//console.log(trans2);
-        		//var trans = d3.event.translate;
-        		//var scale = d3.event.scale;
-        		var scale = 1.5;
-        		console.log(scale);
+				console.log((width/2)-self.x);
+				console.log((height/2)-self.y);
+				trans.push((width/2)-self.x);
+				trans.push((height/2)-self.y);
+        		//var scale = 1.5;
+        		var scale = 1;
+        		//console.log(scale);
 
         		self.svg.attr("transform",
             		"translate(" + trans + ")"
@@ -276,9 +278,6 @@ define([
 				var trans = [];
 				trans.push(0);
 				trans.push(0);
-				//console.log(trans2);
-        		//var trans = d3.event.translate;
-        		//var scale = d3.event.scale;
         		var scale = 1;
         		console.log(scale);
 
