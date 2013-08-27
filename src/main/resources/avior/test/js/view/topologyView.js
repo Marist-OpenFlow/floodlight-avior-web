@@ -240,6 +240,11 @@ define([
 			var k = 4;
 			var x = nodeData.px;
 			var y = nodeData.py;
+			console.log(nodeID);
+			console.log(nodeData);
+			console.log("hi");
+			console.log(x);
+			console.log(y);
 			
 			//call this event on node selection...
 			this.svg.call(d3.behavior.zoom().on("zoom", rescale));
@@ -247,11 +252,11 @@ define([
 
 			function rescale() {
 				$(function() { $("#doneDiv").show(); });
-				//var trans2 = [];
-				//trans2.push(10);
-				//trans2.push(0);
+				var trans = [];
+				trans.push(0);
+				trans.push(0);
 				//console.log(trans2);
-        		var trans = d3.event.translate;
+        		//var trans = d3.event.translate;
         		//var scale = d3.event.scale;
         		var scale = 1.5;
         		console.log(scale);
@@ -268,11 +273,11 @@ define([
 			var self = this;
             function rescale() {
 				$(function() { $("#doneDiv").hide(); });
-				//var trans2 = [];
-				//trans2.push(10);
-				//trans2.push(0);
+				var trans = [];
+				trans.push(0);
+				trans.push(0);
 				//console.log(trans2);
-        		var trans = d3.event.translate;
+        		//var trans = d3.event.translate;
         		//var scale = d3.event.scale;
         		var scale = 1;
         		console.log(scale);
