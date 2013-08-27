@@ -253,7 +253,7 @@ define([
 				//console.log(trans2);
         		var trans = d3.event.translate;
         		//var scale = d3.event.scale;
-        		var scale = 1.64;
+        		var scale = 1.5;
         		console.log(scale);
 
         		self.svg.attr("transform",
@@ -264,14 +264,24 @@ define([
 		},
 		
 		scaleOut: function () {
-			$(function() { $("#doneDiv").show(); });
-			this.svg.call(d3.behavior.zoom().on("zoom", rescale));
-			var trans = d3.event.translate;
-        	var scale = 1;
-        	self.svg.attr("transform",
+            this.svg.call(d3.behavior.zoom().on("zoom", rescale));
+			var self = this;
+            function rescale() {
+				$(function() { $("#doneDiv").hide(); });
+				//var trans2 = [];
+				//trans2.push(10);
+				//trans2.push(0);
+				//console.log(trans2);
+        		var trans = d3.event.translate;
+        		//var scale = d3.event.scale;
+        		var scale = 1;
+        		console.log(scale);
+
+        		self.svg.attr("transform",
             		"translate(" + trans + ")"
                 		+ " scale(" + scale + ")");
-            self.svg.call(d3.behavior.zoom().on("zoom", null));
+                self.svg.call(d3.behavior.zoom().on("zoom", null));
+    		}
 		},
 				
 	});
