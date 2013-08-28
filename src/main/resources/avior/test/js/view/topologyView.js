@@ -243,8 +243,11 @@ define([
 			this.y = nodeData.py;
 			var self = this;
 			
+			var allNodes = this.svg.selectAll("g");
+			allNodes.style("stroke", "#fff")
+				    .style("stroke-width", 1.5);
+				    
 			this.node = this.svg.selectAll("g").filter(function(d, i) { return i===nodeData.index; });
-			
 			this.node.style("stroke", "black")
 				.style("stroke-width", 2.5);
 
