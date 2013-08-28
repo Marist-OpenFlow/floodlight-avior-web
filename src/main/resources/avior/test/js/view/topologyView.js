@@ -192,7 +192,7 @@ define([
 		showLegend: function() {
 			legendSvg = d3.select("#legendDiv").append("svg")
     			.attr("width", 200)
-    			.attr("height", 95);
+    			.attr("height", window.innerHeight*.15);
 			
 			console.log(window.innerWidth);
 			
@@ -216,7 +216,7 @@ define([
       			  .enter()
       			  .append("circle")
       			  .attr("cx", 59)
-     	 		  .attr("cy", function(d, i){ return (i *  30) + window.innerHeight*.08;})
+     	 		  .attr("cy", function(d, i){ return (i *  30) + window.innerHeight*.07;})
       			  .attr("r", 8)
       			  .style("fill", function(d) { 
          							if (d === 0) return "blue"; else return "green";
@@ -227,7 +227,7 @@ define([
    				  .enter()
    				  .append("text")
   				  .attr("x", 83)
-  				  .attr("y", function(d, i){ return (i *  30) + window.innerHeight*.087;})
+  				  .attr("y", function(d, i){ return (i *  30) + window.innerHeight*.075;})
   				  .text(function(d) { if (d === 0) return "hosts"; else return "switches"; });
 		},
 		
@@ -239,69 +239,37 @@ define([
 			var width = window.innerWidth-45;
 			var nodeID = $(e.currentTarget).val();
 			var nodeData = this.switches.get(nodeID);
-			var k = 4;
 			this.x = nodeData.px;
 			this.y = nodeData.py;
-			console.log(nodeID);
-			console.log(nodeData);
-			console.log("hi");
-			//console.log(height/2);
-			//console.log(width/2);
-			//console.log(this.y);
-			//console.log(this.x);
-			
-			//call this event on node selection...
-			this.svg.call(d3.behavior.zoom().on("zoom", rescale));
 			var self = this;
+			
 			this.node = this.svg.selectAll("g").filter(function(d, i) { return i===nodeData.index; });
-			console.log(this.node);
+			
 			this.node.style("stroke", "black")
 				.style("stroke-width", 2.5);
 
-			var a = d3.behavior.zoom();
-			a.event(this.svg.selectAll("g"));
-
-			function rescale() {
-				console.log(this);
-				$(function() { $("#doneDiv").show(); });
-				var trans = [];
-				//console.log((width/2)-self.x);
-				//console.log((height/2)-self.y);
-				trans.push((width/2)-self.x);
-				trans.push(((height/2)-self.y) - ((height/2) * .50));
-				//trans.push(self.x);
-				//trans.push(self.y);
-        		var scale = 1.5;
-        		//var scale = 1;
-        		//console.log(scale);
-
-        		self.svg.attr("transform",
+			var trans = [];
+			trans.push((width/2)-self.x);
+			trans.push(((height/2)-self.y) - ((height/2) * .50));
+			
+			this.svg.attr("transform",
             		"translate(" + trans + ")");
-                		//+ " scale(" + scale + ")");
-          
-            			
-                self.svg.call(d3.behavior.zoom().on("zoom", null));
-    		}
+			
+			$(function() { $("#doneDiv").show(); });
 		},
 		
 		scaleOut: function () {
-            this.svg.call(d3.behavior.zoom().on("zoom", rescale));
             this.node.style("stroke", "#fff")
 				.style("stroke-width", 1.5);
-			var self = this;
-            function rescale() {
-				$(function() { $("#doneDiv").hide(); });
-				var trans = [];
-				trans.push(0);
-				trans.push(0);
-        		var scale = 1;
-        		console.log(scale);
-
-        		self.svg.attr("transform",
-            		"translate(" + trans + ")"
-                		+ " scale(" + scale + ")");
-                self.svg.call(d3.behavior.zoom().on("zoom", null));
-    		}
+				
+			var trans = [];
+			trans.push(0);
+			trans.push(0);
+			
+			this.svg.attr("transform",
+            		"translate(" + trans + ")");
+            		
+            $(function() { $("#doneDiv").hide(); });
 		},
 				
 	});
