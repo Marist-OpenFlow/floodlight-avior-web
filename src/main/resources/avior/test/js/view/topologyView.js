@@ -82,25 +82,15 @@ define([
     			.append("g")
     			.call(d3.behavior.zoom().on("zoom", rescale))
     			.append("g");
-    			
-    		//this.svg.call(d3.behavior.zoom().on("zoom", null));
     		
-    		var self = this;
-            function rescale() {
-            	console.log("rescale");
-        		//self.svg.call(d3.behavior.zoom().on("zoom", null));
-    		}
+            function rescale() {}
     		
 			$(window).bind('resize', function () { 
 				height = window.innerHeight;
 				width = window.innerWidth-45;
     			$(".mainSVG").attr("height", height);
     			$(".mainSVG").attr("width", width);
-    			//alert("hi");
     			d3.select("#legendDiv").style("float", function() {if (window.innerWidth > 350) return "right"; else return "left";});
-				//console.log(window.innerHeight);
-				//console.log(window.innerWidth);
-				//console.log($("svg"));
 			});
 
 			var link = this.svg.selectAll(".link"),
@@ -123,8 +113,7 @@ define([
    		 		edges.push({source: sourceNode, target: targetNode});
 			}, this);
 			
-			_.forEach(this.hosts.models, function(e) { 
-    			//console.log(JSON.stringify(e));
+			_.forEach(this.hosts.models, function(e) {
     			// Get the source and target nodes
     			if (e.attributes.attachmentPoint.length > 0) {
     			var sourceNode = self.switches.filter(function(n) {
@@ -140,8 +129,6 @@ define([
    		 		edges.push({source: sourceNode, target: targetNode});
    		 		}
 			}, this);
-			console.log(this.switches.models);
-			//console.log((edges.length));
   			force
       			.nodes(this.switches.models)
       			.links(edges)
@@ -242,9 +229,6 @@ define([
   				  .text(function(d) { if (d === 0) return "hosts"; else return "switches"; });
 		},
 		
-		// On node selection, scale screen and translate graph to have selected node centered,
-		// then unregister listener until next node is selected. When done button is clicked
-		// the scale returns to normal(1). Legend does not change sizes upon rescaling/translating.
 		nodeSelect: function (e) {
 			var height = window.innerHeight;
 			var width = window.innerWidth-45;
@@ -265,12 +249,9 @@ define([
 			var trans = [];
 			trans.push((width/2)-self.x);
 			trans.push(((height/2)-self.y) - ((height/2) * .50));
-			//trans.push(-(height/2) + 10);
 			
 			this.svg.attr("transform",
             		"translate(" + trans + ")");
-            
-            //this.svg.call(d3.behavior.zoom().on("zoom", null));
             
 			$(function() { $("#doneDiv").show(); });
 		},
