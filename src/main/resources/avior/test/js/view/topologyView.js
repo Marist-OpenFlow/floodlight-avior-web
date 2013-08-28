@@ -237,6 +237,7 @@ define([
 			this.x = nodeData.px;
 			this.y = nodeData.py;
 			var self = this;
+			//alert(this.x);
 			
 			var allNodes = this.svg.selectAll("g");
 			allNodes.style("stroke", "#fff")
