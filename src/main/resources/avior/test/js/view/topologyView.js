@@ -45,6 +45,7 @@ define([
 			var self = this;
 			this.switchLinks;
 			this.$el.append(this.template({coll: this.switches.toJSON()})).trigger('create');
+			this.showLegend();
 			var topology = new TopologyCollection({model: Topology});
 			topology.fetch().complete(function () {
 				this.switchLinks = topology;
@@ -73,7 +74,8 @@ define([
 
 			this.svg = d3.select(".inner").append("svg")
     			.attr("width", width)
-    			.attr("height", height);
+    			.attr("height", height)
+    			.attr("class", "mainSVG");
     			//.style("position", "absolute")
     			//.style("left", "100px")
     			//.style("top", "400px");
@@ -81,8 +83,8 @@ define([
 			$(window).bind('resize', function () { 
 				height = window.innerHeight;
 				width = window.innerWidth-45;
-    			$("svg").attr("height", height);
-    			$("svg").attr("width", width);
+    			$(".mainSVG").attr("height", height);
+    			$(".mainSVG").attr("width", width);
 				//console.log(window.innerHeight);
 				//console.log(window.innerWidth);
 				//console.log($("svg"));
@@ -147,9 +149,6 @@ define([
       		node.append("circle")
       				   .attr("r", 12)
       				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return "blue"; else return "green"; });
-      			
-      		
-      		this.showLegend();
 
 			function tick() {
 				
@@ -191,23 +190,21 @@ define([
 		},
 		
 		showLegend: function() {
-			var testCenter = this.svg.append("rect")
-      						.attr("class", "border")
-      						.attr("x", window.innerWidth/2 - (window.innerHeight*0.05))
-  							.attr("y", (window.innerHeight/2) - (window.innerHeight*0.150))
-  							.attr("height", 30)
-  							.attr("width", 30)
-  							.style("fill", "red") ;
+			legendSvg = d3.select("#legendDiv").append("svg")
+    			.attr("width", 200)
+    			.attr("height", 95);
 			
-			var border = this.svg.append("rect")
+			console.log(window.innerWidth);
+			
+			var border = legendSvg.append("rect")
       						.attr("class", "border")
-      						.attr("x", 45)
-  							.attr("y", 0)
+      						.attr("x", 42)
+  							.attr("y", window.innerHeight*.05)
   							.attr("height", 65)
   							.attr("width", 116)
   							.style("fill", "white") ;
 
-      		var legend = this.svg.append("g")
+      		var legend = legendSvg.append("g")
   							 .attr("class", "legend")
   							 .attr("x", 45)
   							 .attr("y", 25)
@@ -219,7 +216,7 @@ define([
       			  .enter()
       			  .append("circle")
       			  .attr("cx", 59)
-     	 		  .attr("cy", function(d, i){ return (i *  30) + 15;})
+     	 		  .attr("cy", function(d, i){ return (i *  30) + window.innerHeight*.08;})
       			  .attr("r", 8)
       			  .style("fill", function(d) { 
          							if (d === 0) return "blue"; else return "green";
@@ -230,7 +227,7 @@ define([
    				  .enter()
    				  .append("text")
   				  .attr("x", 83)
-  				  .attr("y", function(d, i){ return (i *  30) + 18;})
+  				  .attr("y", function(d, i){ return (i *  30) + window.innerHeight*.087;})
   				  .text(function(d) { if (d === 0) return "hosts"; else return "switches"; });
 		},
 		
@@ -259,26 +256,29 @@ define([
 			this.node = this.svg.selectAll("g").filter(function(d, i) { return i===nodeData.index; });
 			console.log(this.node);
 			this.node.style("stroke", "black")
-				.style("stroke-width", 2.0);
+				.style("stroke-width", 2.5);
+
+			var a = d3.behavior.zoom();
+			a.event(this.svg.selectAll("g"));
 
 			function rescale() {
+				console.log(this);
 				$(function() { $("#doneDiv").show(); });
 				var trans = [];
-				console.log((width/2)-self.x);
-				console.log((height/2)-self.y);
+				//console.log((width/2)-self.x);
+				//console.log((height/2)-self.y);
 				trans.push((width/2)-self.x);
-				trans.push((height/2)-self.y);
-        		//var scale = 1.5;
-        		var scale = 1;
+				trans.push(((height/2)-self.y) - ((height/2) * .50));
+				//trans.push(self.x);
+				//trans.push(self.y);
+        		var scale = 1.5;
+        		//var scale = 1;
         		//console.log(scale);
 
         		self.svg.attr("transform",
-            		"translate(" + trans + ")"
-                		+ " scale(" + scale + ")");
-                
-                var scale = 1.5;
-                self.svg.attr("transform",
-                	"scale(" + scale + ")");
+            		"translate(" + trans + ")");
+                		//+ " scale(" + scale + ")");
+          
             			
                 self.svg.call(d3.behavior.zoom().on("zoom", null));
     		}
