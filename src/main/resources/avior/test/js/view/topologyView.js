@@ -38,6 +38,7 @@ define([
 			//console.log(this.hosts);
 			//console.log(window.innerHeight);
 			//console.log(window.innerWidth);
+			//alert(window.innerWidth + " testing scale with with multiple g's and immediate changes");
 		},
 		
 		//render the topology model using d3.js
@@ -45,6 +46,7 @@ define([
 			var self = this;
 			this.switchLinks;
 			this.$el.append(this.template({coll: this.switches.toJSON()})).trigger('create');
+			
 			this.showLegend();
 			var topology = new TopologyCollection({model: Topology});
 			topology.fetch().complete(function () {
@@ -75,16 +77,27 @@ define([
 			this.svg = d3.select(".inner").append("svg")
     			.attr("width", width)
     			.attr("height", height)
-    			.attr("class", "mainSVG");
-    			//.style("position", "absolute")
-    			//.style("left", "100px")
-    			//.style("top", "400px");
+    			.attr("class", "mainSVG")
+    			.attr("pointer-events", "all")
+    			.append("g")
+    			.call(d3.behavior.zoom().on("zoom", rescale))
+    			.append("g");
+    			
+    		//this.svg.call(d3.behavior.zoom().on("zoom", null));
+    		
+    		var self = this;
+            function rescale() {
+            	console.log("rescale");
+        		//self.svg.call(d3.behavior.zoom().on("zoom", null));
+    		}
     		
 			$(window).bind('resize', function () { 
 				height = window.innerHeight;
 				width = window.innerWidth-45;
     			$(".mainSVG").attr("height", height);
     			$(".mainSVG").attr("width", width);
+    			//alert("hi");
+    			d3.select("#legendDiv").style("float", function() {if (window.innerWidth > 350) return "right"; else return "left";});
 				//console.log(window.innerHeight);
 				//console.log(window.innerWidth);
 				//console.log($("svg"));
@@ -170,9 +183,6 @@ define([
 		},
 		
 		toggleLabels: function (e) {
-		
-		
-    
 			var node = this.svg.selectAll(".node");
 			if (this.toggleCount % 2 === 0) {
 				node.append("text")
@@ -191,17 +201,18 @@ define([
 		
 		showLegend: function() {
 			legendSvg = d3.select("#legendDiv").append("svg")
-    			.attr("width", 200)
-    			.attr("height", window.innerHeight*.15);
+    			.attr("width", 115)
+    			.attr("height", window.innerHeight*.15)
+    			.style("float", function() {if (window.innerWidth > 350) return "right"; else return "left";});
 			
 			console.log(window.innerWidth);
 			
 			var border = legendSvg.append("rect")
       						.attr("class", "border")
-      						.attr("x", 42)
-  							.attr("y", window.innerHeight*.05)
-  							.attr("height", 65)
-  							.attr("width", 116)
+      						.attr("x", 5)
+  							.attr("y", 0)
+  							.attr("height", 61)
+  							.attr("width", 110)
   							.style("fill", "white") ;
 
       		var legend = legendSvg.append("g")
@@ -215,8 +226,8 @@ define([
       			  .data([0,1])
       			  .enter()
       			  .append("circle")
-      			  .attr("cx", 59)
-     	 		  .attr("cy", function(d, i){ return (i *  30) + window.innerHeight*.07;})
+      			  .attr("cx", 23)
+     	 		  .attr("cy", function(d, i){ return (i *  30) + 15;})
       			  .attr("r", 8)
       			  .style("fill", function(d) { 
          							if (d === 0) return "blue"; else return "green";
@@ -226,8 +237,8 @@ define([
    				  .data([0,1])
    				  .enter()
    				  .append("text")
-  				  .attr("x", 83)
-  				  .attr("y", function(d, i){ return (i *  30) + window.innerHeight*.075;})
+  				  .attr("x", 45)
+  				  .attr("y", function(d, i){ return (i *  30) + 18})
   				  .text(function(d) { if (d === 0) return "hosts"; else return "switches"; });
 		},
 		
@@ -254,10 +265,13 @@ define([
 			var trans = [];
 			trans.push((width/2)-self.x);
 			trans.push(((height/2)-self.y) - ((height/2) * .50));
+			//trans.push(-(height/2) + 10);
 			
 			this.svg.attr("transform",
             		"translate(" + trans + ")");
-			
+            
+            //this.svg.call(d3.behavior.zoom().on("zoom", null));
+            
 			$(function() { $("#doneDiv").show(); });
 		},
 		
