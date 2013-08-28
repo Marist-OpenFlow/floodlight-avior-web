@@ -189,17 +189,17 @@ define([
 		showLegend: function() {
 			legendSvg = d3.select("#legendDiv").append("svg")
     			.attr("width", 115)
-    			.attr("height", window.innerHeight*.15)
+    			.attr("height", 65)
     			.style("float", function() {if (window.innerWidth > 350) return "right"; else return "left";});
 			
 			console.log(window.innerWidth);
 			
 			var border = legendSvg.append("rect")
       						.attr("class", "border")
-      						.attr("x", 5)
+      						.attr("x", 3)
   							.attr("y", 0)
   							.attr("height", 61)
-  							.attr("width", 110)
+  							.attr("width", 100)
   							.style("fill", "white") ;
 
       		var legend = legendSvg.append("g")
@@ -213,7 +213,7 @@ define([
       			  .data([0,1])
       			  .enter()
       			  .append("circle")
-      			  .attr("cx", 23)
+      			  .attr("cx", 20)
      	 		  .attr("cy", function(d, i){ return (i *  30) + 15;})
       			  .attr("r", 8)
       			  .style("fill", function(d) { 
@@ -224,8 +224,8 @@ define([
    				  .data([0,1])
    				  .enter()
    				  .append("text")
-  				  .attr("x", 45)
-  				  .attr("y", function(d, i){ return (i *  30) + 18})
+  				  .attr("x", 39)
+  				  .attr("y", function(d, i){ return (i *  30) + 19})
   				  .text(function(d) { if (d === 0) return "hosts"; else return "switches"; });
 		},
 		
