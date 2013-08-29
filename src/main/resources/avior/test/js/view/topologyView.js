@@ -90,7 +90,16 @@ define([
 				width = window.innerWidth-45;
     			$(".mainSVG").attr("height", height);
     			$(".mainSVG").attr("width", width);
-    			d3.select("#legendDiv").style("float", function() {if (window.innerWidth > 350) return "right"; else return "left";});
+    			d3.select("#legendDiv").style("float", function() {
+    														if (window.innerWidth > 350){
+    															$(function() { $(".leftLegend").hide(); $(".rightLegend").show(); }); 
+    															return "right"; 
+    														}
+    														else{
+    															$(function() { $(".rightLegend").hide(); $(".leftLegend").show(); });
+    															return "left";
+    														}
+    													});
 			});
 
 			var link = this.svg.selectAll(".link"),
@@ -154,22 +163,25 @@ define([
 			var self = this;
 			
 			function end() {
+				self.shiftAmount = 0;
+    			Array.min = function( array ){
+        			return Math.min.apply( Math, array );
+    			};
+
 				console.log("force ended");
 				var outOfBounds = [];
+				
 				_.forEach(self.switches.models, function(item) {
-  					//console.log((item.px));
   					if (item.px < 0)
   						outOfBounds.push(item.px);
-  					//console.log(document.getElementById(item.id).attributes.style);
 				}, this);
+				
 				if (outOfBounds.length > 0){
-					outOfBounds.sort();
-					var shiftAmount = (outOfBounds[0] * -1) + 12;
+					self.shiftAmount = (Array.min(outOfBounds) * -1) + 15;
 					self.svg.attr("transform",
-            			"translate(" + shiftAmount + ",0)");
+            			"translate(" + self.shiftAmount + ",0)");
             	}
-            		
-				//alert(outOfBounds[0]);
+            	
 				force.on("end", null);
 			}
 
@@ -193,6 +205,7 @@ define([
 		},
 		
 		toggleLabels: function (e) {
+			//alert(window.innerWidth);
 			var node = this.svg.selectAll(".node");
 			if (this.toggleCount % 2 === 0) {
 				node.append("text")
@@ -210,12 +223,20 @@ define([
 		},
 		
 		showLegend: function() {
-			legendSvg = d3.select("#legendDiv").append("svg")
+			legendSvg = d3.selectAll("#legendDiv").append("svg")
     			.attr("width", 115)
-    			.attr("height", 65)
-    			.style("float", function() {if (window.innerWidth > 350) return "right"; else return "left";});
-			
-			//console.log(window.innerWidth);
+    			.attr("height", 65);
+    		
+    		d3.select("#legendDiv").style("float", function() {
+    														if (window.innerWidth > 350){
+    															$(function() { $(".rightLegend").show(); }); 
+    															return "right"; 
+    														}
+    														else{
+    															$(function() { $(".leftLegend").show(); });
+    															return "left";
+    														}
+    													});
 			
 			var border = legendSvg.append("rect")
       						.attr("class", "border")
@@ -289,7 +310,7 @@ define([
 			trans.push(0);
 			
 			this.svg.attr("transform",
-            		"translate(" + trans + ")");
+            		"translate(" + this.shiftAmount + ",0)");
             		
             $(function() { $("#doneDiv").hide(); });
 		},
