@@ -62,8 +62,8 @@ define([
 			var self = this;
 			var height = window.innerHeight;
 			var width = window.innerWidth-45;
-			console.log(height);
-			console.log(width);
+			//console.log(height);
+			//console.log(width);
 			
 			var force = d3.layout.force()
     			.size([width, height])
@@ -132,9 +132,10 @@ define([
   			force
       			.nodes(this.switches.models)
       			.links(edges)
+      			.on("end", end)
       			.start();
 			 
-			console.log(this.switches.models); 
+			//console.log(this.switches.models); 
 			 
   			link = link.data(edges)
     				   .enter().append("line")
@@ -149,6 +150,28 @@ define([
       		node.append("circle")
       				   .attr("r", 12)
       				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return "blue"; else return "green"; });
+
+			var self = this;
+			
+			function end() {
+				console.log("force ended");
+				var outOfBounds = [];
+				_.forEach(self.switches.models, function(item) {
+  					//console.log((item.px));
+  					if (item.px < 0)
+  						outOfBounds.push(item.px);
+  					//console.log(document.getElementById(item.id).attributes.style);
+				}, this);
+				if (outOfBounds.length > 0){
+					outOfBounds.sort();
+					var shiftAmount = (outOfBounds[0] * -1) + 12;
+					self.svg.attr("transform",
+            			"translate(" + shiftAmount + ",0)");
+            	}
+            		
+				//alert(outOfBounds[0]);
+				force.on("end", null);
+			}
 
 			function tick() {
 				
@@ -192,7 +215,7 @@ define([
     			.attr("height", 65)
     			.style("float", function() {if (window.innerWidth > 350) return "right"; else return "left";});
 			
-			console.log(window.innerWidth);
+			//console.log(window.innerWidth);
 			
 			var border = legendSvg.append("rect")
       						.attr("class", "border")
@@ -237,7 +260,7 @@ define([
 			this.x = nodeData.px;
 			this.y = nodeData.py;
 			var self = this;
-			//alert(this.x);
+			//alert(width);
 			
 			var allNodes = this.svg.selectAll("g");
 			allNodes.style("stroke", "#fff")
