@@ -140,7 +140,7 @@ define([
   			force
       			.nodes(this.switches.models)
       			.links(edges)
-      			.size(graphCenter)
+      			.size(graphCenter) 
       			.on("end", end)
       			.start();
 			 
