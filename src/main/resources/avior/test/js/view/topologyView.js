@@ -68,7 +68,7 @@ define([
 
 			var drag = force.drag()
     			.on("dragstart", dragstart);
-
+    			
 			this.svg = d3.select(".inner").append("svg")
     			.attr("width", width)
     			.attr("height", height)
@@ -95,6 +95,22 @@ define([
     															return "left";
     														}
     													});
+    			force.size([width+45, height/1.5]).start();
+    			console.log("blue");					
+    			console.log(self.dynamicWindowSize);
+    			console.log("blue");
+    			//d3.select(".inner").style("width:"+window.innerWidth+"px; height:"+window.innerHeight+"px;");
+    			
+    			
+    			if (self.dynamicWindowSize > window.innerWidth)
+            		d3.select(".inner").style("width", self.dynamicWindowSize + "px");
+            	else 
+            		d3.select(".inner").style("width", window.innerWidth-45 + "px");
+            		
+            	if (self.dynamicWindowSize > window.innerHeight)
+            		d3.select(".inner").style("height", self.dynamicWindowSize + "px");
+            	else
+            		d3.select(".inner").style("height", window.innerHeight + "px");
 			});
 
 			var link = this.svg.selectAll(".link"),
@@ -166,14 +182,26 @@ define([
 			
 			function end() {
 				self.shiftAmount = 0;
+				var pxList = [];
+				var pyList = [];
     			Array.min = function( array ){
         			return Math.min.apply( Math, array );
     			};
+    			
+    			Array.max = function( array ){
+        			return Math.max.apply( Math, array );
+    			};
+    			
+    			function sortNumber(a,b) {
+    				return a - b;
+				}
 
 				console.log("force ended");
 				var outOfBounds = [];
 				
 				_.forEach(self.switches.models, function(item) {
+					pxList.push(Math.round(item.px));
+					pyList.push(Math.round(item.py));
   					if (item.px < 0)
   						outOfBounds.push(item.px);
 				}, this);
@@ -185,7 +213,47 @@ define([
             	}
             	
             	// dynamically set inner window size base on network graph size
-            	d3.select(".inner").style("width", "2920px");
+            	console.log(pxList.sort(sortNumber));
+            	console.log(pyList.sort(sortNumber));
+            	
+            	var xHigh1 = pxList[pxList.length - 1];
+            	var xHigh2 = pxList[pxList.length - 2];
+            	var xLow1 = pxList[0];
+            	var xLow2 = pxList[1];
+            	
+            	console.log(xHigh1 + "," + xHigh2 + "," + xLow1 + "," + xLow2);
+            	
+            	var yHigh1 = pyList[pxList.length - 1];
+            	var yHigh2 = pyList[pxList.length - 2];
+            	var yLow1 = pyList[0];
+            	var yLow2 = pyList[1];
+            	
+            	console.log(yHigh1 + "," + yHigh2 + "," + yLow1 + "," + yLow2);
+            	
+            	var dynamicHeightx = Math.max( Math.abs(xHigh1 - xHigh2), Math.abs(xLow1 - xLow2) );
+            	var dynamicWidth1x = Math.max( Math.abs(xLow2 - xHigh1), Math.abs(xLow2 - xHigh2) );
+            	var dynamicWidth2x = Math.max( Math.abs(xLow1 - xHigh1), Math.abs(xLow1 - xHigh2) );
+            	var dynamicWidthx = Math.max( dynamicWidth1x, dynamicWidth2x );
+            	
+            	var dynamicHeighty = Math.max( Math.abs(yHigh1 - yHigh2), Math.abs(yLow1 - yLow2) );
+            	var dynamicWidth1y = Math.max( Math.abs(yLow2 - yHigh1), Math.abs(yLow2 - yHigh2) );
+            	var dynamicWidth2y = Math.max( Math.abs(yLow1 - yHigh1), Math.abs(yLow1 - yHigh2) );
+            	var dynamicWidthy = Math.max( dynamicWidth1y, dynamicWidth2y );
+            	
+            	console.log(dynamicWidthx + "," + dynamicHeightx);
+            	console.log(dynamicWidthy + "," + dynamicHeighty);
+            	
+            	var dynamicWidth = Math.max( dynamicWidthx, dynamicWidthy );
+            	var dynamicHeight = Math.max( dynamicHeightx, dynamicHeighty ); 
+            	self.dynamicWindowSize = Math.max( dynamicWidth, dynamicHeight ) * 2;
+            	
+            	console.log(dynamicWidth + "," + dynamicHeight);
+  				
+  				if (self.dynamicWindowSize > window.innerWidth)
+            		d3.select(".inner").style("width", self.dynamicWindowSize + "px");
+            		
+            	if (self.dynamicWindowSize > window.innerHeight)
+            		d3.select(".inner").style("height", self.dynamicWindowSize + "px");
             	
 				force.on("end", null);
 			}
