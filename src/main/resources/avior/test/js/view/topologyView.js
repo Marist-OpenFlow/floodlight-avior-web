@@ -22,23 +22,18 @@ define([
 		// accepts an array of switch dpids and hosts
 		// connected to the controller
 		initialize: function(s, h) {
-			//console.log(s);
-			//console.log(h);
 			this.toggleCount = 0;
 			this.switches = s;
 			this.hosts = h;
+			
 			_.forEach(h.models, function(item) {
 				if (item.attributes.attachmentPoint.length != 0){
 					item.set("id", item.get("ipv4"));
 					this.switches.push(item);
 				}
-					//console.log(JSON.stringify(item.attributes.attachmentPoint));
 			}, this);
-			//console.log(JSON.stringify(this.switches));
-			//console.log(this.hosts);
-			//console.log(window.innerHeight);
-			//console.log(window.innerWidth);
-			//alert(window.innerWidth + " testing scale with with multiple g's and immediate changes");
+			
+			console.log(this.switches.length);
 		},
 		
 		//render the topology model using d3.js
@@ -67,7 +62,7 @@ define([
 			
 			var force = d3.layout.force()
     			.size([width, height])
-    			.charge(-400)
+    			.charge(-600)
     			.linkDistance(40)
     			.on("tick", tick);
 
@@ -138,9 +133,14 @@ define([
    		 		edges.push({source: sourceNode, target: targetNode});
    		 		}
 			}, this);
+			
+			var graphCenter = [];
+			graphCenter.push(width-45);
+			graphCenter.push(height / 1.5);
   			force
       			.nodes(this.switches.models)
       			.links(edges)
+      			.size(graphCenter)
       			.on("end", end)
       			.start();
 			 
@@ -161,6 +161,8 @@ define([
       				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return "blue"; else return "green"; });
 
 			var self = this;
+			
+			//console.log(force.links());
 			
 			function end() {
 				self.shiftAmount = 0;
