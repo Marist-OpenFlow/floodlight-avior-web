@@ -62,8 +62,8 @@ define([
 			
 			var force = d3.layout.force()
     			.size([width, height])
-    			.charge(-600)
-    			.linkDistance(40)
+    			.charge(-700)
+    			.linkDistance(60)
     			.on("tick", tick);
 
 			var drag = force.drag()
@@ -184,12 +184,15 @@ define([
             			"translate(" + self.shiftAmount + ",0)");
             	}
             	
+            	// dynamically set inner window size base on network graph size
+            	d3.select(".inner").style("width", "2920px");
+            	
 				force.on("end", null);
 			}
 
 			function tick() {
 				
-  				link.attr("x1", function(d) { return d.source.x; })
+  				link.attr("x1", function(d) { console.log(d.source.x); return d.source.x; })
       			.attr("y1", function(d) { return d.source.y; })
       			.attr("x2", function(d) { return d.target.x; })
       			.attr("y2", function(d) { return d.target.y; });
