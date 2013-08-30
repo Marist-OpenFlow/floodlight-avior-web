@@ -181,7 +181,8 @@ define([
 			//console.log(force.links());
 			
 			function end() {
-				self.shiftAmount = 0;
+				self.shiftAmountx = 0;
+				self.shiftAmounty = 0;
 				var pxList = [];
 				var pyList = [];
     			Array.min = function( array ){
@@ -197,20 +198,28 @@ define([
 				}
 
 				console.log("force ended");
-				var outOfBounds = [];
+				var outOfBoundsx = [];
+				var outOfBoundsy = [];
 				
 				_.forEach(self.switches.models, function(item) {
 					pxList.push(Math.round(item.px));
 					pyList.push(Math.round(item.py));
   					if (item.px < 0)
-  						outOfBounds.push(item.px);
+  						outOfBoundsx.push(item.px);
+  					if (item.py < 0)
+  						outOfBoundsy.push(item.py);
 				}, this);
 				
-				if (outOfBounds.length > 0){
-					self.shiftAmount = (Array.min(outOfBounds) * -1) + 15;
-					self.svg.attr("transform",
-            			"translate(" + self.shiftAmount + ",0)");
+				if (outOfBoundsx.length > 0){
+					self.shiftAmountx = (Array.min(outOfBoundsx) * -1) + 15;
             	}
+            	
+            	if (outOfBoundsy.length > 0){
+					self.shiftAmounty = (Array.min(outOfBoundsy) * -1) + 15;
+            	}
+            	
+            	self.svg.attr("transform",
+            			"translate(" + self.shiftAmountx + "," + self.shiftAmounty + ")");
             	
             	// dynamically set inner window size base on network graph size
             	console.log(pxList.sort(sortNumber));
@@ -365,7 +374,7 @@ define([
 				.style("stroke-width", 2.5);
 
 			var trans = [];
-			trans.push(((width/2)-self.x) - ((width/2) * .50));
+			trans.push(((width/2)-self.x));
 			trans.push(((height/2)-self.y) - ((height/2) * .80));
 			
 			this.svg.attr("transform",
