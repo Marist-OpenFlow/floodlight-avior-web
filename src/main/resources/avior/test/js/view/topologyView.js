@@ -245,7 +245,7 @@ define([
             	
             	var dynamicWidth = Math.max( dynamicWidthx, dynamicWidthy );
             	var dynamicHeight = Math.max( dynamicHeightx, dynamicHeighty ); 
-            	self.dynamicWindowSize = Math.max( dynamicWidth, dynamicHeight ) * 2;
+            	self.dynamicWindowSize = Math.max( dynamicWidth, dynamicHeight ) * 3;
             	
             	console.log(dynamicWidth + "," + dynamicHeight);
   				
@@ -365,11 +365,12 @@ define([
 				.style("stroke-width", 2.5);
 
 			var trans = [];
-			trans.push((width/2)-self.x);
-			trans.push(((height/2)-self.y) - ((height/2) * .50));
+			trans.push(((width/2)-self.x) - ((width/2) * .50));
+			trans.push(((height/2)-self.y) - ((height/2) * .80));
 			
 			this.svg.attr("transform",
-            		"translate(" + trans + ")");
+            		"translate(" + trans + ")"
+            			+ " scale(" + 1.5 + ")");
             
 			$(function() { $("#doneDiv").show(); });
 		},
