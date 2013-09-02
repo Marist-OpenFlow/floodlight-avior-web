@@ -374,12 +374,17 @@ define([
 				.style("stroke-width", 2.5);
 
 			var trans = [];
-			trans.push(((width/2)-self.x));
-			trans.push(((height/2)-self.y) - ((height/2) * .80));
+			trans.push(((width/2)-(self.x*1.5)));
+			trans.push(((height/2)-(self.y*1.5)) - ((height/2) * .80));
+			//trans.push( 0 );
+			//trans.push( ((height/4)-(self.y*1.5)));
 			
 			this.svg.attr("transform",
             		"translate(" + trans + ")"
             			+ " scale(" + 1.5 + ")");
+            			
+           /* this.svg.attr("transform",
+            		"translate(" + trans + ")"); */
             
 			$(function() { $("#doneDiv").show(); });
 		},
