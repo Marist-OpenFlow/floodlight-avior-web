@@ -269,7 +269,7 @@ define([
 
 			function tick() {
 				
-  				link.attr("x1", function(d) { console.log(d.source.x); return d.source.x; })
+  				link.attr("x1", function(d) { return d.source.x; })
       			.attr("y1", function(d) { return d.source.y; })
       			.attr("x2", function(d) { return d.target.x; })
       			.attr("y2", function(d) { return d.target.y; });
@@ -372,19 +372,20 @@ define([
 			this.node = this.svg.selectAll("g").filter(function(d, i) { return i===nodeData.index; });
 			this.node.style("stroke", "black")
 				.style("stroke-width", 2.5);
+			console.log(nodeData);
+			//var nodesToHide = [];
+			//var linksToHide = this.svg.selectAll(".link").filter(function(d, i) { if (d.source.px !== self.x) nodesToHide.push(d.target.px); if (d.target.px !== self.x) nodesToHide.push(d.source.px); return d.source.px === self.x || d.target.px === self.x || d.source.py === self.y || d.target.py === self.y; });
+			//console.log(nodesToHide);
+			//console.log(linksToHide);
+			//this.node.style("opacity", 0);
 
 			var trans = [];
-			trans.push(((width/2)-(self.x*1.5)));
-			trans.push(((height/2)-(self.y*1.5)) - ((height/2) * .80));
-			//trans.push( 0 );
-			//trans.push( ((height/4)-(self.y*1.5)));
+			trans.push(((width/2)-(self.x*1.5)) - 18);
+			trans.push(((height/2)-(self.y*1.5)) - ((height/2) * .68));
 			
 			this.svg.attr("transform",
             		"translate(" + trans + ")"
             			+ " scale(" + 1.5 + ")");
-            			
-           /* this.svg.attr("transform",
-            		"translate(" + trans + ")"); */
             
 			$(function() { $("#doneDiv").show(); });
 		},
