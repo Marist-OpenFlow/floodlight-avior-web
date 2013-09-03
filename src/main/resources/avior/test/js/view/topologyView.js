@@ -372,12 +372,33 @@ define([
 			this.node = this.svg.selectAll("g").filter(function(d, i) { return i===nodeData.index; });
 			this.node.style("stroke", "black")
 				.style("stroke-width", 2.5);
-			console.log(nodeData);
-			//var nodesToHide = [];
-			//var linksToHide = this.svg.selectAll(".link").filter(function(d, i) { if (d.source.px !== self.x) nodesToHide.push(d.target.px); if (d.target.px !== self.x) nodesToHide.push(d.source.px); return d.source.px === self.x || d.target.px === self.x || d.source.py === self.y || d.target.py === self.y; });
+			//console.log(nodeData);
+			var nodesToHide = [];
+			var linksToHide = this.svg.selectAll(".link").filter(function(d, i) { if (d.source.px === self.x) nodesToHide.push(d.target.px); if (d.target.px === self.x) nodesToHide.push(d.source.px); return d.source.px === self.x || d.target.px === self.x || d.source.py === self.y || d.target.py === self.y; });
+			//var linksToHide = this.svg.selectAll(".link").filter(function(d, i) { if (d.source.px !== self.x && d.target.px !== self.x) nodesToHide.push(d.source.px); return d.source.px !== self.x && d.target.px !== self.x; });
+			nodesToHide.push(self.x);
 			//console.log(nodesToHide);
 			//console.log(linksToHide);
-			//this.node.style("opacity", 0);
+			var hiddenNode = this.svg.selectAll(".node")
+							     .style("opacity", function(d,i) {
+							     							//console.log(d.px);
+							     							var found = false;
+							     						 _.forEach(nodesToHide, function(item) {
+							     						 		if (d.px === item)
+							     						 			found = true;
+        												 }, this);
+        												 if (!found)
+        												 	return 0;
+							     				    });
+							     				    
+			var hiddenLink = this.svg.selectAll(".link")
+							     .style("opacity", function(d,i) {
+							     							console.log(self.x);
+							     							if (d.source.px === self.x || d.target.px === self.x)
+        												 		return 1;
+        												 	else
+        												 		return 0;
+							     				    });
 
 			var trans = [];
 			trans.push(((width/2)-(self.x*1.5)) - 18);
@@ -391,6 +412,12 @@ define([
 		},
 		
 		scaleOut: function () {
+			var allNodes = this.svg.selectAll(".node")
+								   .style("opacity", 1);
+								   
+			var allLinks = this.svg.selectAll(".link")
+								   .style("opacity", 1);
+			
             this.node.style("stroke", "#fff")
 				.style("stroke-width", 1.5);
 				
