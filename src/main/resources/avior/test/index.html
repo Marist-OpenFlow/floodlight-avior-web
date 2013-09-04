@@ -114,6 +114,22 @@ text {
   fill: none;
   pointer-events: all;
 }
+
+.aviorHeader {
+  position:relative;
+}
+
+.headerIMG {
+  margin:auto;
+  position:absolute;
+  top:0;bottom:0;
+  left:0;right:0;
+}
+
+.headerIMG {
+  max-height:100%;
+  max-width: 100%;
+}
   
 	</style>
 </head> 
@@ -128,8 +144,8 @@ text {
 <!-- Header -->
 	<header>
 
-	<div data-role="header" data-theme="f" >
-	<h1><img src="img/avior_logo_alt_trans.png"  height="32" width="95"> </h1>
+	<div class="aviorHeader" data-role="header" data-theme="f" style="max-height: 40px;">
+	<h1><img class="headerIMG" src="img/avior_logo_alt_trans.png"  height="32" width="95" style="vertical-align: top;"> </h1>
 	<!--<h1>Avior</h1>-->
 	<a id="leftpanel3" href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse" style="display: none;">Main Menu</a>
 	<a id="rightpanel3" href="#rightpanel3" data-icon="info" data-iconpos="notext" data-rel="dialog" data-transition="fade" style="display: none;">Menu-Right</a>
