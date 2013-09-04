@@ -5,9 +5,8 @@ define([
 	"marionette",
 	"floodlight/topologyFl",
 	"model/topology",
-	"text!template/topology.html",
-	"text!template/switchHeading.html",
-], function($, _, Backbone, Marionette, TopologyCollection, Topology, topologyTpl, switchHeading){
+	"text!template/topology.html"
+], function($, _, Backbone, Marionette, TopologyCollection, Topology, topologyTpl){
 	var TopologyView = Backbone.Marionette.ItemView.extend({
 		el: $('#content'),
 		
@@ -22,21 +21,21 @@ define([
 		// accepts an array of switch dpids and hosts
 		// connected to the controller
 		initialize: function(s, h) {
+			this.shiftAmountx = 0;
+			this.shiftAmounty = 0;
 			this.toggleCount = 0;
 			this.switches = s;
 			this.hosts = h;
 			
-			_.forEach(h.models, function(item) {
+			_.forEach(this.hosts.models, function(item) {
 				if (item.attributes.attachmentPoint.length != 0){
 					item.set("id", item.get("ipv4"));
 					this.switches.push(item);
 				}
 			}, this);
-			
-			console.log(this.switches.length);
 		},
 		
-		//render the topology model using d3.js
+		//render the legend and network topology using d3.js
 		render: function() {
 			var self = this;
 			this.switchLinks;
@@ -44,29 +43,28 @@ define([
 			
 			this.showLegend();
 			var topology = new TopologyCollection({model: Topology});
+			
 			topology.fetch().complete(function () {
 				this.switchLinks = topology;
 				self.showTopo(topology);
         	}, this);
-			//console.log(JSON.stringify(topology));
 			
         	return this;
 		},
 		
+		//
 		showTopo: function(switchLinks) {
 			var self = this;
 			var height = window.innerHeight;
 			var width = window.innerWidth-45;
-			//console.log(height);
-			//console.log(width);
 			
-			var force = d3.layout.force()
+			this.force = d3.layout.force()
     			.size([width, height])
     			.charge(-700)
     			.linkDistance(60)
     			.on("tick", tick);
 
-			var drag = force.drag()
+			var drag = this.force.drag()
     			.on("dragstart", dragstart);
     			
 			this.svg = d3.select(".inner").append("svg")
@@ -80,11 +78,14 @@ define([
     		
             function rescale() {}
     		
+    		// On window resize, relocate legend and expand 
+    		// or contract screen scroll amount
 			$(window).bind('resize', function () { 
 				height = window.innerHeight;
 				width = window.innerWidth-45;
     			$(".mainSVG").attr("height", height);
     			$(".mainSVG").attr("width", width);
+    			
     			d3.select("#legendDiv").style("float", function() {
     														if (window.innerWidth > 350){
     															$(function() { $(".leftLegend").hide(); $(".rightLegend").show(); }); 
@@ -95,12 +96,8 @@ define([
     															return "left";
     														}
     													});
-    			force.size([width+45, height/1.5]).start();
-    			console.log("blue");					
-    			console.log(self.dynamicWindowSize);
-    			console.log("blue");
-    			//d3.select(".inner").style("width:"+window.innerWidth+"px; height:"+window.innerHeight+"px;");
-    			
+    													
+    			self.force.size([width+45, height/1.5]).start();
     			
     			if (self.dynamicWindowSize > window.innerWidth)
             		d3.select(".inner").style("width", self.dynamicWindowSize + "px");
@@ -118,7 +115,7 @@ define([
 			
 			var edges = [];
 				
-			// create source and target links based on dpid instead of index
+			// Create source and target links based on dpid instead of index
 			_.forEach(switchLinks.models, function(e) { 
     			
     			// Get the source and target nodes
@@ -133,15 +130,16 @@ define([
    		 		edges.push({source: sourceNode, target: targetNode});
 			}, this);
 			
+			// Create source and target links based on dpid instead of index
 			_.forEach(this.hosts.models, function(e) {
     			// Get the source and target nodes
     			if (e.attributes.attachmentPoint.length > 0) {
-    			var sourceNode = self.switches.filter(function(n) {
-    													return e.attributes.attachmentPoint[0].switchDPID ===  n.attributes.dpid; 
-    												  })[0],
-        		targetNode = self.switches.filter(function(n) { 
-    											  		return n.attributes.dpid === e.attributes.attachmentPoint[0].switchDPID; 
-    											  })[0];
+    				var sourceNode = self.switches.filter(function(n) {
+    														return e.attributes.attachmentPoint[0].switchDPID ===  n.attributes.dpid; 
+    												  	  })[0],
+        			targetNode = self.switches.filter(function(n) { 
+    											  			return n.attributes.dpid === e.attributes.attachmentPoint[0].switchDPID; 
+    											  	 	  })[0];
 
     			// Add the edge to the array
     			if (targetNode != undefined)
@@ -153,15 +151,14 @@ define([
 			var graphCenter = [];
 			graphCenter.push(width-45);
 			graphCenter.push(height / 1.5);
-  			force
+  			
+  			this.force
       			.nodes(this.switches.models)
       			.links(edges)
       			.size(graphCenter) 
       			.on("end", end)
       			.start();
-			 
-			//console.log(this.switches.models); 
-			 
+
   			link = link.data(edges)
     				   .enter().append("line")
       				   .attr("class", "link");
@@ -177,8 +174,6 @@ define([
       				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return "blue"; else return "green"; });
 
 			var self = this;
-			
-			//console.log(force.links());
 			
 			function end() {
 				self.shiftAmountx = 0;
@@ -222,22 +217,15 @@ define([
             			"translate(" + self.shiftAmountx + "," + self.shiftAmounty + ")");
             	
             	// dynamically set inner window size base on network graph size
-            	console.log(pxList.sort(sortNumber));
-            	console.log(pyList.sort(sortNumber));
-            	
             	var xHigh1 = pxList[pxList.length - 1];
             	var xHigh2 = pxList[pxList.length - 2];
             	var xLow1 = pxList[0];
             	var xLow2 = pxList[1];
             	
-            	console.log(xHigh1 + "," + xHigh2 + "," + xLow1 + "," + xLow2);
-            	
             	var yHigh1 = pyList[pxList.length - 1];
             	var yHigh2 = pyList[pxList.length - 2];
             	var yLow1 = pyList[0];
             	var yLow2 = pyList[1];
-            	
-            	console.log(yHigh1 + "," + yHigh2 + "," + yLow1 + "," + yLow2);
             	
             	var dynamicHeightx = Math.max( Math.abs(xHigh1 - xHigh2), Math.abs(xLow1 - xLow2) );
             	var dynamicWidth1x = Math.max( Math.abs(xLow2 - xHigh1), Math.abs(xLow2 - xHigh2) );
@@ -249,14 +237,9 @@ define([
             	var dynamicWidth2y = Math.max( Math.abs(yLow1 - yHigh1), Math.abs(yLow1 - yHigh2) );
             	var dynamicWidthy = Math.max( dynamicWidth1y, dynamicWidth2y );
             	
-            	console.log(dynamicWidthx + "," + dynamicHeightx);
-            	console.log(dynamicWidthy + "," + dynamicHeighty);
-            	
             	var dynamicWidth = Math.max( dynamicWidthx, dynamicWidthy );
             	var dynamicHeight = Math.max( dynamicHeightx, dynamicHeighty ); 
             	self.dynamicWindowSize = Math.max( dynamicWidth, dynamicHeight ) * 3;
-            	
-            	console.log(dynamicWidth + "," + dynamicHeight);
   				
   				if (self.dynamicWindowSize > window.innerWidth)
             		d3.select(".inner").style("width", self.dynamicWindowSize + "px");
@@ -264,19 +247,16 @@ define([
             	if (self.dynamicWindowSize > window.innerHeight)
             		d3.select(".inner").style("height", self.dynamicWindowSize + "px");
             	
-				force.on("end", null);
+				self.force.on("end", null);
 			}
 
 			function tick() {
-				
   				link.attr("x1", function(d) { return d.source.x; })
-      			.attr("y1", function(d) { return d.source.y; })
-      			.attr("x2", function(d) { return d.target.x; })
-      			.attr("y2", function(d) { return d.target.y; });
-
-  				//node.attr("cx", function(d) { return d.x = Math.max(12, Math.min(width - 12, d.x)); })
-      		    	//.attr("cy", function(d) { return d.y = Math.max(12, Math.min(height - 12, d.y)); });
-      		    	node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+      				.attr("y1", function(d) { return d.source.y; })
+      				.attr("x2", function(d) { return d.target.x; })
+      				.attr("y2", function(d) { return d.target.y; });
+      			
+      		    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 			}	
 
 			function dragstart(d) {
@@ -287,7 +267,6 @@ define([
 		},
 		
 		toggleLabels: function (e) {
-			//alert(window.innerWidth);
 			var node = this.svg.selectAll(".node");
 			if (this.toggleCount % 2 === 0) {
 				node.append("text")
@@ -363,7 +342,6 @@ define([
 			this.x = nodeData.px;
 			this.y = nodeData.py;
 			var self = this;
-			//alert(width);
 			
 			var allNodes = this.svg.selectAll("g");
 			allNodes.style("stroke", "#fff")
@@ -372,28 +350,23 @@ define([
 			this.node = this.svg.selectAll("g").filter(function(d, i) { return i===nodeData.index; });
 			this.node.style("stroke", "black")
 				.style("stroke-width", 2.5);
-			//console.log(nodeData);
 			var nodesToHide = [];
 			var linksToHide = this.svg.selectAll(".link").filter(function(d, i) { if (d.source.px === self.x) nodesToHide.push(d.target.px); if (d.target.px === self.x) nodesToHide.push(d.source.px); return d.source.px === self.x || d.target.px === self.x || d.source.py === self.y || d.target.py === self.y; });
-			//var linksToHide = this.svg.selectAll(".link").filter(function(d, i) { if (d.source.px !== self.x && d.target.px !== self.x) nodesToHide.push(d.source.px); return d.source.px !== self.x && d.target.px !== self.x; });
+			
 			nodesToHide.push(self.x);
-			//console.log(nodesToHide);
-			//console.log(linksToHide);
 			var hiddenNode = this.svg.selectAll(".node")
 							     .style("opacity", function(d,i) {
-							     							//console.log(d.px);
-							     							var found = false;
+							     						 var found = false;
 							     						 _.forEach(nodesToHide, function(item) {
-							     						 		if (d.px === item)
-							     						 			found = true;
+							     						 	if (d.px === item)
+							     						 		found = true;
         												 }, this);
         												 if (!found)
         												 	return 0;
 							     				    });
 							     				    
 			var hiddenLink = this.svg.selectAll(".link")
-							     .style("opacity", function(d,i) {
-							     							console.log(self.x);
+							         .style("opacity", function(d,i) {
 							     							if (d.source.px === self.x || d.target.px === self.x)
         												 		return 1;
         												 	else
@@ -402,16 +375,23 @@ define([
 
 			var trans = [];
 			trans.push(((width/2)-(self.x*1.5)) - 18);
-			trans.push(((height/2)-(self.y*1.5)) - ((height/2) * .68));
+			trans.push(((height/2)-(self.y*1.5)) - ((height/2) * .55));
 			
 			this.svg.attr("transform",
             		"translate(" + trans + ")"
             			+ " scale(" + 1.5 + ")");
+            			
+            this.force.size([width+45, height/1.5])
+    				  .charge(-400)
+    			      .linkDistance(40)
+    			      .start();
             
 			$(function() { $("#doneDiv").show(); });
 		},
 		
 		scaleOut: function () {
+			var height = window.innerHeight;
+			var width = window.innerWidth-45;
 			var allNodes = this.svg.selectAll(".node")
 								   .style("opacity", 1);
 								   
@@ -426,7 +406,12 @@ define([
 			trans.push(0);
 			
 			this.svg.attr("transform",
-            		"translate(" + this.shiftAmount + ",0)");
+            		"translate(" + this.shiftAmountx + "," + this.shiftAmounty + ")");
+            		
+            this.force.size([width+45, height/1.5])
+    				  .charge(-700)
+    			      .linkDistance(60)
+    			      .start();
             		
             $(function() { $("#doneDiv").hide(); });
 		},
