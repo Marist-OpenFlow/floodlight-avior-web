@@ -1,9 +1,0 @@
-<tr>
-	<td> <%= dpid %> </td>
-	<td> <%= inetAddress %> </td>
-	<td> <%= description.manufacturer %> </td>
-	<td> <%= description.hardware %> </td>
-	<td> <% _.each(ports, function(i) { %>  <dd><%= i.name %></dd> <% }); %> </td>
-	<td> <% _.each(ports, function(i) { %>  <dd><%= i.portNumber %></dd> <% }); %> </td>
-	<td> <%= new Date(connectedSince).toLocaleString() %> </td>
-</tr>

@@ -16,7 +16,7 @@ define([
 				$.mobile.linkBindingEnabled = false;
     			$.mobile.hashListeningEnabled = false;
     			
-    			window.location.href = "/avior/test/index.html#login";
+    			window.location.href = "/avior/index.html#login";
     			
     			var self = this;
 				$('#content').append(this.template).trigger('create');
@@ -30,7 +30,7 @@ define([
 				document.getElementById("leftpanel3").style.display='block';
 				var router = new Router(); 
 				Backbone.history.start();
-				window.location.href = "/avior/test/index.html#home";
+				window.location.href = "/avior/index.html#home";
 			}
 			else {
 				$('#content').empty();
