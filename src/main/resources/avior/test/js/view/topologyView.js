@@ -52,7 +52,7 @@ define([
         	return this;
 		},
 		
-		//
+		// Create and display the network graph
 		showTopo: function(switchLinks) {
 			var self = this;
 			var height = window.innerHeight;
@@ -175,6 +175,9 @@ define([
 
 			var self = this;
 			
+			// At the end of the layout simulation, move nodes laying
+			// outside of the svg element inside of it and set the size of
+			// the scrollable window based on the graph size
 			function end() {
 				self.shiftAmountx = 0;
 				self.shiftAmounty = 0;
@@ -249,7 +252,8 @@ define([
             	
 				self.force.on("end", null);
 			}
-
+			
+			// Runs the force layout simulation one step
 			function tick() {
   				link.attr("x1", function(d) { return d.source.x; })
       				.attr("y1", function(d) { return d.source.y; })
@@ -258,7 +262,8 @@ define([
       			
       		    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 			}	
-
+			
+			// Allows for a sticky force directed graph
 			function dragstart(d) {
   				d.fixed = true;
   				d3.select(this).classed("fixed", true);
@@ -266,6 +271,8 @@ define([
         		
 		},
 		
+		// On clicking the show label button, display 
+		// or remove labels next to each node in the graph
 		toggleLabels: function (e) {
 			var node = this.svg.selectAll(".node");
 			if (this.toggleCount % 2 === 0) {
@@ -283,6 +290,9 @@ define([
 			}
 		},
 		
+		// Create a new svg element and append a rectangle,
+		// group element, circles and text to represent the
+		// graph legend
 		showLegend: function() {
 			legendSvg = d3.selectAll("#legendDiv").append("svg")
     			.attr("width", 115)
@@ -334,6 +344,10 @@ define([
   				  .text(function(d) { if (d === 0) return "hosts"; else return "switches"; });
 		},
 		
+		// On selecting a node to view locally, highlight the selected
+		// node, hide nodes and links not connected to the selected node,
+		// zoom in on the selected node, alter graph force attributes and
+		// display the done button 
 		nodeSelect: function (e) {
 			var height = window.innerHeight;
 			var width = window.innerWidth-45;
@@ -389,6 +403,8 @@ define([
 			$(function() { $("#doneDiv").show(); });
 		},
 		
+		// On clicking done in local topology view, return to intial
+		// layout of graph and hide the done button
 		scaleOut: function () {
 			var height = window.innerHeight;
 			var width = window.innerWidth-45;
