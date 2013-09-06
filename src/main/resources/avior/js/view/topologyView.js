@@ -39,7 +39,7 @@ define([
 					item.set("id", item.get("mac"));
 					console.log(item.get("id"));
 					if (item.attributes.ipv4.length === 0) {
-						item.set("ipv4", " ");
+						item.set("ipv4", "ip not found");
 					}
 					this.switches.push(item);
 				//}
@@ -155,7 +155,7 @@ define([
 			// WHEN WORKING ON MINI UNCOMMENT IF STATEMENT!!
 			_.forEach(this.hosts.models, function(e) {
     			// Get the source and target nodes
-    			if (e.attributes.ipv4.length > 0 && e.attributes.ipv4 !== " ") {
+    			//if (e.attributes.ipv4.length > 0 && e.attributes.ipv4 !== "ip not found") {
     				var sourceNode = self.switches.filter(function(n) {
     														return e.attributes.attachmentPoint[0].switchDPID ===  n.attributes.dpid; 
     												  	  })[0],
@@ -167,7 +167,7 @@ define([
     			if (targetNode != undefined)
     				targetNode = e;
    		 		edges.push({source: sourceNode, target: targetNode});
-   		 		}
+   		 		//}
 			}, this);
 			
 			console.log("EDGES");
@@ -308,8 +308,8 @@ define([
     				.attr("dy", ".35em")
     				.attr("id", "nodeLabels")
     				.text(function(d) { if (d.attributes.id.length < 23) 
-    										if(d.attributes['ipv4'][0] === undefined) 
-    											return d.attributes['mac'][0]; 
+    										if(d.attributes['ipv4'] === "ip not found") 
+    											return d.attributes['ipv4'] + "/" + d.attributes['mac'][0]; 
     										else return d.attributes['ipv4'][0] + "/" + d.attributes['mac'][0]; 
     									else return d.attributes.id; });
 				this.toggleCount++;	

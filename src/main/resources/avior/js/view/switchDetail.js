@@ -7,7 +7,7 @@ define([
 	"floodlight/switchStatisticsFl",
 	"view/switchSummary", // should rename this, maybe SwitchSummary?
 	"collection/switchCollection",
-	"model/description",
+	"floodlight/descriptionFl",
 	"collection/portCollection",
 	"floodlight/portFl",
 	"model/port",
@@ -47,6 +47,10 @@ define([
 			this.subnets = new Array;
 			this.collection = new SwitchCollection();
 			this.collection.fetch();
+			description = new Description();
+			description.fetch().complete(function () {
+				//console.log(JSON.stringify(description.get("00:00:00:00:00:00:00:03")));
+				}, this);
 			features = new Features();
 			features.fetch();
 			this.switchStats = new SwitchStats();
@@ -80,8 +84,10 @@ define([
 			//switch details appending...move to specific 
 			//functions for description, ports, flows
 			_.forEach(self.collection.models, function(item) {
+				//console.log("ITEM");
+				//console.log(item);
 				var dp = item.get("dpid");	
-				this.displayDesc(dp, item);
+				//this.displayDesc(dp, item);
 				this.displayPorts(dp, item);
     	 		this.displayFlows(dp, item);		
 			}, this);		
@@ -92,12 +98,17 @@ define([
 		setCollection: function () {
 			var self = this;
 			_.forEach(this.collection.models, function(item) {
+						
 						var dp = item.get("dpid");
+						item.set("description", features.get(dp));
 						item.set("features", features.get(dp));
 						item.set("switchStatistics", self.switchStats.get(dp));
 						item.set("id", item.get("dpid"));
   						//self.renderSwitch(item, switchList);
+  						console.log((item));
 					}, this);
+					
+			//console.log(JSON.stringify(description.get("00:00:00:00:00:00:00:03")));
 		},
 		
 		//display the dpid list
@@ -126,7 +137,8 @@ define([
 			$(y).append(this.template4(oneSwitch.toJSON())).trigger('create');
 			var ports = new PortCollection();
 			var portArray = oneSwitch.get("ports");
-			//console.log(portArray.length);
+			//console.log("PORT ARRAY");
+			//console.log(portArray);
 			var portStatArray = new PortStatistics(dpid);
 					
 			
@@ -135,6 +147,8 @@ define([
 			portStatArray.fetch().complete(function () {
 				var numPorts = 0;
 				_.forEach(portArray, function(item) {
+					//console.log("PORT STAT ARRAY");
+					//console.log(portStatArray);
 					var p = new Port(item);
 					p.set("portStatistics", portStatArray.get(dpid)[numPorts]);
         			ports.add(p);
