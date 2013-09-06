@@ -21,22 +21,37 @@ define([
 		// accepts an array of switch dpids and hosts
 		// connected to the controller
 		initialize: function(s, h) {
+			//console.log("INITIALIZE TEST!!");
 			this.shiftAmountx = 0;
 			this.shiftAmounty = 0;
 			this.toggleCount = 0;
 			this.switches = s;
 			this.hosts = h;
-			
+			console.log("SWITCHES");
+			console.log(this.switches);
+			console.log("HOSTS");
+			console.log(this.hosts);
 			_.forEach(this.hosts.models, function(item) {
-				if (item.attributes.attachmentPoint.length != 0){
-					item.set("id", item.get("ipv4"));
+				//if (item.attributes.ipv4.length != 0) {
+					console.log(item.attributes.ipv4.length);
+					console.log("count");
+					console.log(item.get("mac"));
+					item.set("id", item.get("mac"));
+					console.log(item.get("id"));
+					if (item.attributes.ipv4.length === 0) {
+						item.set("ipv4", " ");
+					}
 					this.switches.push(item);
-				}
+				//}
 			}, this);
+			
+			console.log("SWITCHES");
+			console.log(this.switches);
 		},
 		
 		//render the legend and network topology using d3.js
 		render: function() {
+			//console.log("test");
 			var self = this;
 			this.switchLinks;
 			this.$el.append(this.template({coll: this.switches.toJSON()})).trigger('create');
@@ -46,6 +61,8 @@ define([
 			
 			topology.fetch().complete(function () {
 				this.switchLinks = topology;
+				console.log("LINKS");
+				console.log(topology);
 				self.showTopo(topology);
         	}, this);
 			
@@ -119,6 +136,8 @@ define([
 			_.forEach(switchLinks.models, function(e) { 
     			
     			// Get the source and target nodes
+    			if (e.attributes['src-switch'] !== e.attributes['dst-switch']){
+    			console.log(JSON.stringify(e));
     			var sourceNode = self.switches.filter(function(n) {
     												  	return n.attributes.dpid === e.attributes['src-switch']; 
     												  })[0],
@@ -128,12 +147,15 @@ define([
 	
     			// Add the edge to the array
    		 		edges.push({source: sourceNode, target: targetNode});
+   		 		}
+   		 		
 			}, this);
 			
 			// Create source and target links based on dpid instead of index
+			// WHEN WORKING ON MINI UNCOMMENT IF STATEMENT!!
 			_.forEach(this.hosts.models, function(e) {
     			// Get the source and target nodes
-    			if (e.attributes.attachmentPoint.length > 0) {
+    			if (e.attributes.ipv4.length > 0 && e.attributes.ipv4 !== " ") {
     				var sourceNode = self.switches.filter(function(n) {
     														return e.attributes.attachmentPoint[0].switchDPID ===  n.attributes.dpid; 
     												  	  })[0],
@@ -148,9 +170,13 @@ define([
    		 		}
 			}, this);
 			
+			console.log("EDGES");
+			console.log(edges);
+			console.log("after edges");
 			var graphCenter = [];
 			graphCenter.push(width-45);
 			graphCenter.push(height / 1.5);
+  			console.log("before force");
   			
   			this.force
       			.nodes(this.switches.models)
@@ -158,20 +184,21 @@ define([
       			.size(graphCenter) 
       			.on("end", end)
       			.start();
-
+      			
+			console.log("after force");
   			link = link.data(edges)
     				   .enter().append("line")
       				   .attr("class", "link");
-
+			console.log("after links");
    			node = node.data(this.switches.models)
    					   .enter().append("g")
    					   .attr("class", "node")
    					   .attr("id", function(d) { if (d.attributes.dpid === undefined) return d.attributes['ipv4'][0]; else return d.attributes.dpid; })
       				   .call(drag);
-      			
+      		console.log("after nodes");
       		node.append("circle")
       				   .attr("r", 12)
-      				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return "blue"; else return "green"; });
+      				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return "grey"; else return "blue"; });
 
 			var self = this;
 			
@@ -280,7 +307,11 @@ define([
     				.attr("x", 12)
     				.attr("dy", ".35em")
     				.attr("id", "nodeLabels")
-    				.text(function(d) { if (d.attributes.id === undefined) return d.attributes['ipv4'][0] ; else return d.attributes.id; });
+    				.text(function(d) { if (d.attributes.id.length < 23) 
+    										if(d.attributes['ipv4'][0] === undefined) 
+    											return d.attributes['mac'][0]; 
+    										else return d.attributes['ipv4'][0] + "/" + d.attributes['mac'][0]; 
+    									else return d.attributes.id; });
 				this.toggleCount++;	
 			}
 			else {
@@ -332,7 +363,7 @@ define([
      	 		  .attr("cy", function(d, i){ return (i *  30) + 15;})
       			  .attr("r", 8)
       			  .style("fill", function(d) { 
-         							if (d === 0) return "blue"; else return "green";
+         							if (d === 0) return "grey"; else return "blue";
       							  });	
       
    			legend.selectAll('text')
@@ -352,6 +383,7 @@ define([
 			var height = window.innerHeight;
 			var width = window.innerWidth-45;
 			var nodeID = $(e.currentTarget).val();
+			console.log(nodeID);
 			var nodeData = this.switches.get(nodeID);
 			this.x = nodeData.px;
 			this.y = nodeData.py;

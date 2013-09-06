@@ -5,7 +5,7 @@
 	<p id="showLabels" data-role="button" data-icon="false" data-theme="b">Show Labels</p>
 	<select name="nodeList" id="nodeList" data-icon="false" data-theme="b" style="width: 100px;">
 		<option value="nodeList">Local View</option>
-		<% _.each(coll, function(i) { %>  <option><%= i.dpid || i['ipv4'][0] %></option> <% }); %>
+		<% _.each(coll, function(i) { %>  <option><%= i.dpid || i['mac'][0] %></option> <% }); %>
 	</select>
 	</div>
 	

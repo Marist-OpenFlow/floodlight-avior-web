@@ -206,11 +206,11 @@ define([
         },
         
         ADVAlancheRoute: function () {
-        	$('#content').empty();
+        	//$('#content').empty();
         	// Clears out any previous intervals
-			clearInterval(this.interval);
-			
-			$('#content').append("ADVAlanche Coming Soon!");
+			//clearInterval(this.interval);
+			//console.log("advalanche.cs.marist.edu");
+			//$('#content').append("ADVAlanche Coming Soon!");
         },
 
          qosRoute: function() {
