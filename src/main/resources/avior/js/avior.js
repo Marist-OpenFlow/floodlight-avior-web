@@ -26,7 +26,7 @@ define([
 		validate: function() {
 			var self = this;
 			if ( $("#Lusername").val() === "" && $("#Lpassword").val() === "" ){
-				document.getElementById("rightpanel3").style.display='block';
+				//document.getElementById("rightpanel3").style.display='block';
 				document.getElementById("leftpanel3").style.display='block';
 				var router = new Router(); 
 				Backbone.history.start();
