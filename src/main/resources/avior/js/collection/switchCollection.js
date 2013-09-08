@@ -6,7 +6,10 @@ define([
         /* Structure to hold switch models */
         var SwitchCollection = Backbone.Collection.extend({
                 url: Util.missingCtlrErr,
-                model: Switch
+                model: Switch,
+                comparator: function(switch){
+                        return switch.get("dpid");
+                },
         });
         return SwitchCollection;
 });
