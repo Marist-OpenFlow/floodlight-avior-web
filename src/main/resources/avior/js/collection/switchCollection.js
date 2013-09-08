@@ -7,8 +7,8 @@ define([
         var SwitchCollection = Backbone.Collection.extend({
                 url: Util.missingCtlrErr,
                 model: Switch,
-                comparator: function(switch){
-                        return switch.get("dpid");
+                comparator: function(sw){
+                        return sw.get("dpid");
                 },
         });
         return SwitchCollection;
