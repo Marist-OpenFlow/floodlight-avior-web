@@ -1,10 +1,11 @@
 <tr id="portStats">
+	<td> no data </td>
 	<td> <%= name  %> </td>
 	<td> <%= portNumber %> </td>
-	<td> <%= portStatistics.receivePackets %> </td>
-	<td> <%= portStatistics.transmitPackets %> </td>
-	<td> <%= portStatistics.receiveBytes %> </td>
-	<td> <%= portStatistics.transmitBytes %> </td>
-	<td> <%= portStatistics.receiveDropped + portStatistics.transmitDropped %> </td>
-	<td> <%= portStatistics.receiveErrors + portStatistics.transmitErrors + portStatistics.receiveFrameErrors + portStatistics.receiveOverrunErrors + portStatistics.receiveCRCErrors %> </td>
+	<td> <% if (portStatistics === null){ %> no data <% }else{ %><%= portStatistics.receivePackets %><% } %> </td>
+	<td> <% if (portStatistics === null){ %> no data <% }else{ %><%= portStatistics.transmitPackets %><%} %> </td>
+	<td> <% if (portStatistics === null){ %> no data <% }else{ %><%= portStatistics.receiveBytes %><%} %> </td>
+	<td> <% if (portStatistics === null){ %> no data <% }else{ %><%= portStatistics.transmitBytes %><%} %> </td>
+	<td> <% if (portStatistics === null){ %> no data <% }else{ %><%= portStatistics.receiveDropped + portStatistics.transmitDropped %><%} %> </td>
+	<td> <% if (portStatistics === null){ %> no data <% }else{ %><%= portStatistics.receiveErrors + portStatistics.transmitErrors + portStatistics.receiveFrameErrors + portStatistics.receiveOverrunErrors + portStatistics.receiveCRCErrors %><%} %> </td>
 </tr>

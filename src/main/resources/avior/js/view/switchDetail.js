@@ -155,11 +155,10 @@ define([
         		}, this);
 			
 			
-			console.log(JSON.stringify(oneSwitch.get("features")));
+			//console.log(JSON.stringify(oneSwitch.get("features")));
 			
 			
 			if (optical === false){
-			
 			
 			portStatArray.fetch().complete(function () {
 				var numPorts = 0;
@@ -174,11 +173,26 @@ define([
      					
      					
         		_.forEach(ports.models, function(item) {
+        			console.log(JSON.stringify(item));
         			var z = document.getElementById("portTable" + dpid);
 					$(z).append(self.template5(item.toJSON())).trigger('create');
         		}, this);
         		oneSwitch.set("portModel", ports);
+        		//console.log(JSON.stringify(oneSwitch));
+        		//console.log(JSON.stringify(oneSwitch.get("features").ports));
         	});
+        	
+        	}
+        	
+        	else{
+        		
+        		console.log(JSON.stringify(oneSwitch.get("features").ports));
+				_.forEach(oneSwitch.get("features").ports, function(item) {
+					console.log(item);
+					item["portStatistics"] = null;
+        			var z = document.getElementById("portTable" + dpid);
+					$(z).append(self.template5(item)).trigger('create');
+        		}, this);   		
         	
         	}
 		},
@@ -215,7 +229,7 @@ define([
 		//updates this.collection, features and switchStats
 		//with the latest switch info from server
 		refresh: function(){
-			features.fetch();
+			this.features.fetch();
 			this.collection.fetch();
 			this.switchStats.fetch();
 		},
