@@ -43,8 +43,9 @@ define([
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
 		initialize: function(item){
-			console.log("HELLO");
+			//console.log("HELLO");
 			var self = this;
+			this.syncCount = 0;
 			this.opticalVendors = ["ADVA Optical Networking"];
 			this.collapsed = true;
 			this.subnets = new Array;
@@ -56,7 +57,9 @@ define([
 			this.features.fetch();
 			this.switchStats = new SwitchStats();
 			this.switchStats.fetch();	
-			this.listenTo(this.features, "sync", this.setCollection);
+			this.listenTo(this.features, "sync", this.syncComplete);
+			this.listenTo(this.description, "sync", this.syncComplete);
+			this.listenTo(this.switchStats, "sync", this.syncComplete);
 		},
 		
 		events: {
@@ -65,10 +68,18 @@ define([
 			"click #removeFlo": "deleteFlow",
 		},
 		
+		syncComplete: function() {
+			//console.log("HELLO");
+			this.syncCount += 1;
+			
+			if (this.syncCount === 3)
+				this.setCollection();
+		},
+		
 		//render the heading and table template, 
 		//then render each model in this.collection
 		render: function() {
-		    
+		    //console.log("in render");
 		    // hack to turn template HTML into object without yet adding it to document
 		    var switchList = $('<div/>').html(this.template1).contents();
 			var self = this;
@@ -97,9 +108,10 @@ define([
 		
 		//set the attribute of this.collection
 		setCollection: function () {
+			//console.log("HELLO");
 			var self = this;
 			_.forEach(this.collection.models, function(item) {
-						
+						//console.log(self.features);
 						var dp = item.get("dpid");
 						item.set("description", self.description.get(dp));
 						item.set("features", self.features.get(dp));
@@ -173,23 +185,23 @@ define([
      					
      					
         		_.forEach(ports.models, function(item) {
-        			console.log(JSON.stringify(item));
+        			//console.log(JSON.stringify(item));
         			var z = document.getElementById("portTable" + dpid);
 					$(z).append(self.template5(item.toJSON())).trigger('create');
         		}, this);
         		oneSwitch.set("portModel", ports);
         		//console.log(JSON.stringify(item));
-        		console.log(JSON.stringify(oneSwitch));
+        		//console.log(JSON.stringify(oneSwitch));
         		//console.log(JSON.stringify(oneSwitch.get("features").ports));
         	});
         	
         	}
         	
         	else{
-        		
+        		//console.log(JSON.stringify(oneSwitch));
         		console.log(JSON.stringify(oneSwitch.get("features").ports));
 				_.forEach(oneSwitch.get("features").ports, function(item) {
-					console.log(item);
+					//console.log(item);
 					item["portStatistics"] = null;
         			var z = document.getElementById("portTable" + dpid);
 					$(z).append(self.template5(item)).trigger('create');

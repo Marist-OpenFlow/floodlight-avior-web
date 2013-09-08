@@ -132,13 +132,22 @@ define([
 		switchRoute: function() {
 			$('#content').empty();
 			// Clears out any previous intervals
+			var syncCount = 0;
 			clearInterval(this.interval);
 			
 			var switchDetail = new SwitchDetail({model: new Switch});
 			switchDetail.delegateEvents(switchDetail.events);
 			this.switchCollection = switchDetail.collection;
-			switchDetail.listenTo(switchDetail.features, "sync", switchDetail.render);
-	
+			switchDetail.listenTo(switchDetail.features, "sync", syncComplete);
+			switchDetail.listenTo(switchDetail.switchStats, "sync", syncComplete);
+			switchDetail.listenTo(switchDetail.description, "sync", syncComplete);
+			
+			function syncComplete() {
+  				syncCount += 1;
+  				
+  				if (syncCount == 3)
+					switchDetail.render();
+			}
 		},
 		
 		staticFlowRoute: function() {
