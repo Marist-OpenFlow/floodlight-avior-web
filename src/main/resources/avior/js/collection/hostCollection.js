@@ -7,6 +7,9 @@
 	var HostCollection = Backbone.Collection.extend({
 		model: Host,
 		url: Util.missingCtlrErr,
+                comparator: function(hst){
+                        return hst.get("ipv4");
+                },
 	});
 	return HostCollection;
 });
