@@ -178,7 +178,8 @@ define([
 					$(z).append(self.template5(item.toJSON())).trigger('create');
         		}, this);
         		oneSwitch.set("portModel", ports);
-        		//console.log(JSON.stringify(oneSwitch));
+        		//console.log(JSON.stringify(item));
+        		console.log(JSON.stringify(oneSwitch));
         		//console.log(JSON.stringify(oneSwitch.get("features").ports));
         	});
         	

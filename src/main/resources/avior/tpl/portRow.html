@@ -1,5 +1,5 @@
 <tr id="portStats">
-	<td> no data </td>
+	<td> <% var s = [state]; if (s == 0 || s == 512) { %> UP <% }else{%> DOWN <% } %>  </td>
 	<td> <%= name  %> </td>
 	<td> <%= portNumber %> </td>
 	<td> <% if (portStatistics === null){ %> no data <% }else{ %><%= portStatistics.receivePackets %><% } %> </td>
