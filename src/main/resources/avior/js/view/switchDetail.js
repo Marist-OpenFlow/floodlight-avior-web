@@ -3,6 +3,7 @@ define([
 	"underscore",
 	"backbone",
 	"marionette",
+	//"floodlight/optiocalPortsFl",
 	"floodlight/featuresFl",
 	"floodlight/switchStatisticsFl",
 	"view/switchSummary", // should rename this, maybe SwitchSummary?
@@ -42,20 +43,20 @@ define([
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
 		initialize: function(item){
+			console.log("HELLO");
 			var self = this;
+			this.opticalVendors = ["ADVA Optical Networking"];
 			this.collapsed = true;
 			this.subnets = new Array;
 			this.collection = new SwitchCollection();
 			this.collection.fetch();
-			description = new Description();
-			description.fetch().complete(function () {
-				//console.log(JSON.stringify(description.get("00:00:00:00:00:00:00:03")));
-				}, this);
-			features = new Features();
-			features.fetch();
+			this.description = new Description();
+			this.description.fetch();
+			this.features = new Features();
+			this.features.fetch();
 			this.switchStats = new SwitchStats();
 			this.switchStats.fetch();	
-			this.listenTo(this.switchStats, "sync", this.setCollection);
+			this.listenTo(this.features, "sync", this.setCollection);
 		},
 		
 		events: {
@@ -87,7 +88,7 @@ define([
 				//console.log("ITEM");
 				//console.log(item);
 				var dp = item.get("dpid");	
-				//this.displayDesc(dp, item);
+				this.displayDesc(dp, item);
 				this.displayPorts(dp, item);
     	 		this.displayFlows(dp, item);		
 			}, this);		
@@ -100,12 +101,12 @@ define([
 			_.forEach(this.collection.models, function(item) {
 						
 						var dp = item.get("dpid");
-						item.set("description", features.get(dp));
-						item.set("features", features.get(dp));
+						item.set("description", self.description.get(dp));
+						item.set("features", self.features.get(dp));
 						item.set("switchStatistics", self.switchStats.get(dp));
 						item.set("id", item.get("dpid"));
   						//self.renderSwitch(item, switchList);
-  						console.log((item));
+  						//console.log((item));
 					}, this);
 					
 			//console.log(JSON.stringify(description.get("00:00:00:00:00:00:00:03")));
@@ -123,10 +124,12 @@ define([
 		//attach switch description info to page
 		displayDesc: function(dpid, oneSwitch){
 			var x = document.getElementById("my" + dpid);
-			var desc = new Description(oneSwitch.get("description"));
-			desc.set("dpid", dpid);
-			desc.set("connectedSince", oneSwitch.get("connectedSince"));	
-			$(x).append(this.template3(desc.toJSON())).trigger('create');
+			var desc = this.description.get(dpid);
+			this.manufacturer = desc[0]["manufacturerDescription"];
+			desc[0]["dpid"] = dpid;
+			desc[0]["connectedSince"] = oneSwitch.get("connectedSince");
+			//console.log(JSON.stringify(desc));	
+			$(x).append(this.template3(desc[0])).trigger('create');
 		},
 		
 		//attach port info to page
@@ -144,6 +147,20 @@ define([
 			
 			//get port statistics, append as a submodel to port model
 			//and append port model to port collection
+			var optical = false;
+			//console.log(this.manufacturer);
+			_.forEach(this.opticalVendors, function(item) {
+				if (item === self.manufacturer)
+					optical = true;
+        		}, this);
+			
+			
+			console.log(JSON.stringify(oneSwitch.get("features")));
+			
+			
+			if (optical === false){
+			
+			
 			portStatArray.fetch().complete(function () {
 				var numPorts = 0;
 				_.forEach(portArray, function(item) {
@@ -162,6 +179,8 @@ define([
         		}, this);
         		oneSwitch.set("portModel", ports);
         	});
+        	
+        	}
 		},
 		
 		//attach flow info to page

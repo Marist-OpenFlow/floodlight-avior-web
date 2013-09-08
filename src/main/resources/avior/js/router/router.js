@@ -137,7 +137,7 @@ define([
 			var switchDetail = new SwitchDetail({model: new Switch});
 			switchDetail.delegateEvents(switchDetail.events);
 			this.switchCollection = switchDetail.collection;
-			switchDetail.listenTo(switchDetail.switchStats, "sync", switchDetail.render);
+			switchDetail.listenTo(switchDetail.features, "sync", switchDetail.render);
 	
 		},
 		
