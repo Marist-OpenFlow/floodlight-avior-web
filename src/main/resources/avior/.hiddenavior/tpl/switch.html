@@ -1,0 +1,18 @@
+<h2>Switch Details</h2>
+<dl>
+	<dt>IP Address</dt>
+	<dd><%= inetAddress %></dd>
+	<dt>Vendor</dt>
+	<dd><%= description.manufacturer %></dd>
+	<dt>Hardware Type</dt>
+	<dd><%= description.hardware %></dd>
+	<dt>Port Name</dt>
+	<dd><%= ports[0].name %></dd>
+	<dt>Port Number</dt>
+	<dd><%= ports[0].portNumber %></dd>
+	<dt>Connected Since</dt>
+	<dd><%= connectedSince %></dd>
+	<dt>DPID></dt>
+	<dd><%= dpid %></dd>
+<dl>
+<button id="loadswtch">Refresh</button>

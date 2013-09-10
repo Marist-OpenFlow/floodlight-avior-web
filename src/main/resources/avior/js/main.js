@@ -3,15 +3,14 @@
  */
 require.config({
 	paths: {
-		jquery: "lib/jquery.min",
-		jquerymob: "lib/jquery.mobile.min",
+		jquery: "lib/jquery",
+		jquerymob: "lib/jquery.mobile",
 		responsiveTables: "lib/responsive-tables",
-		underscore: "lib/lodash.min",
-		backbone: "lib/backbone.min",
-		marionette: "lib/backbone.marionette.min",
+		underscore: "lib/lodash",
+		backbone: "lib/backbone",
+		marionette: "lib/backbone.marionette",
 		template: "../tpl",
-		openflow: "openflow/ofp",
-                jqm: "junaid.js/jqm-docs",
+		openflow: "openflow/ofp"
 	},
     shim: {
         "backbone" : {
@@ -27,7 +26,6 @@ require.config({
 
 require([
 	"avior",
-        "jqm",
 ], function(Avior){
 	Avior.initialize();
 });
