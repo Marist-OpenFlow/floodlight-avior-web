@@ -14,6 +14,11 @@ define([
 			this.height = window.innerHeight * .865;
 			document.getElementById('content').style.height = this.height+"px";
 			
+			$(window).bind('resize', function () { 
+				height = window.innerHeight * .865;
+				document.getElementById('content').style.height = this.height+"px";
+			});
+			
 			$('#logout').click(function() {
 								 localStorage.loggedIn = false;
 								 window.location.href = "/avior/index.html#login";
