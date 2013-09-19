@@ -14,11 +14,23 @@ define([
 			this.height = window.innerHeight * .865;
 			document.getElementById('content').style.height = this.height+"px";
 			
+			$('#logout').click(function() {
+								 localStorage.loggedIn = false;
+								 window.location.href = "/avior/index.html#login";
+								 document.getElementById("leftpanel3").style.display='none';
+								 document.getElementById("logout").style.display='none';
+								 $('#content').empty();
+								 $('#content').append(this.template).trigger('create');
+							  });
+			
+			//localStorage.timeout = new Date().getTime() + 60*60*1000;
+			
 			if(typeof(Storage)!=="undefined") {
-				
+				console.log(localStorage.loggedIn);
 				if (localStorage.timeout == undefined){
 					localStorage.timeout = new Date().getTime() + 60*60*1000;
 				}
+				console.log(new Date().getTime());
 				console.log(localStorage.timeout);
 				if(new Date().getTime() > localStorage.timeout) {
   					alert("Session has expired");
@@ -34,6 +46,7 @@ define([
     				var self = this;
 				
 					document.getElementById("leftpanel3").style.display='block';
+					document.getElementById("logout").style.display='block';
 					var router = new Router();
 					Backbone.history.start();
   				}
@@ -50,9 +63,6 @@ define([
     				var self = this;
 					$('#content').append(this.template).trigger('create');
 					$('#userLogin').click(function() {self.validate();});
-				
-					document.getElementById("leftpanel3").style.display='block';
-					//var router = new Router();
   				}
   				
   			}
@@ -65,6 +75,7 @@ define([
 			var self = this;
 			if ( $("#Lusername").val() === "" && $("#Lpassword").val() === "" ){
 				document.getElementById("leftpanel3").style.display='block';
+				document.getElementById("logout").style.display='block';
 				var router = new Router(); 
 				Backbone.history.start();
 				window.location.href = "/avior/index.html#home";
