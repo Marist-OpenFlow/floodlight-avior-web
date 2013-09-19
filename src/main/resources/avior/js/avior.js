@@ -11,31 +11,70 @@ define([
 		template: _.template(loginTpl),
 
 		initialize: function(){
-				$(document).bind('pageinit');
-				$(function() { $("#some-div").show(); });
-				$.mobile.linkBindingEnabled = false;
-    			$.mobile.hashListeningEnabled = false;
+			this.height = window.innerHeight * .865;
+			document.getElementById('content').style.height = this.height+"px";
+			
+			if(typeof(Storage)!=="undefined") {
+				
+				if (localStorage.timeout == undefined){
+					localStorage.timeout = new Date().getTime() + 60*60*1000;
+				}
+				console.log(localStorage.timeout);
+				if(new Date().getTime() > localStorage.timeout) {
+  					alert("Session has expired");
+  					localStorage.loggedIn = false;
+				}
+  				
+  				if (localStorage.loggedIn == "true") {
+  					$(document).bind('pageinit');
+					$(function() { $("#some-div").show(); });
+					$.mobile.linkBindingEnabled = false;
+    				$.mobile.hashListeningEnabled = false;
     			
-    			window.location.href = "/avior/index.html#login";
+    				var self = this;
+				
+					document.getElementById("leftpanel3").style.display='block';
+					var router = new Router();
+					Backbone.history.start();
+  				}
+  				
+  				else {
+  					localStorage.timeout = new Date().getTime() + 60*60*1000;
+  					$(document).bind('pageinit');
+					$(function() { $("#some-div").show(); });
+					$.mobile.linkBindingEnabled = false;
+    				$.mobile.hashListeningEnabled = false;
     			
-    			var self = this;
-				$('#content').append(this.template).trigger('create');
-				$('#userLogin').click(function() {self.validate();});
+    				window.location.href = "/avior/index.html#login";
+    			
+    				var self = this;
+					$('#content').append(this.template).trigger('create');
+					$('#userLogin').click(function() {self.validate();});
+				
+					document.getElementById("leftpanel3").style.display='block';
+					//var router = new Router();
+  				}
+  				
+  			}
+			else {
+  				document.getElementById("content").innerHTML = "Sorry, your browser does not support web storage...";
+  			}
 		},
 		
 		validate: function() {
 			var self = this;
 			if ( $("#Lusername").val() === "" && $("#Lpassword").val() === "" ){
-				//document.getElementById("rightpanel3").style.display='block';
 				document.getElementById("leftpanel3").style.display='block';
 				var router = new Router(); 
 				Backbone.history.start();
 				window.location.href = "/avior/index.html#home";
+				localStorage.loggedIn = true;
 			}
 			else {
 				$('#content').empty();
 				$('#content').append(this.template).trigger('create');
 				$('#userLogin').click(function() {self.validate();});
+				localStorage.loggedIn = true;
 			}
 		},
 	};

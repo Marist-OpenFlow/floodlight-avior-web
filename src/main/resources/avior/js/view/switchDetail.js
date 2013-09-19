@@ -43,6 +43,9 @@ define([
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
 		initialize: function(item){
+			//localStorage.loggedIn = false;
+			//console.log(Backbone.history.length);
+			//console.log( $( "#content" ).data( "loggedIn" ));
 			//console.log("HELLO");
 			var self = this;
 			this.syncCount = 0;
@@ -60,6 +63,7 @@ define([
 			this.listenTo(this.features, "sync", this.syncComplete);
 			this.listenTo(this.description, "sync", this.syncComplete);
 			this.listenTo(this.switchStats, "sync", this.syncComplete);
+			//this.switchList = $('<div/>').html(this.template1).contents();
 		},
 		
 		events: {
