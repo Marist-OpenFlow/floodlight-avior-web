@@ -220,14 +220,40 @@ define([
 		displayFlows: function(dpid, oneSwitch){
 			var self = this;
 			var flows = new FlowCollection(dpid);
+			var flowDpid = dpid;
+			
 			flows.fetch().complete(function () {
-				//console.log(flows.length);
-				
-
+					//move outside of flows.fetch?
+					//match flows listed to flows from FL rest api flow call
+					//flows that match to be typed as static
+					//flows that do not match to be typed as dynamic
+					//static flows listed at the top or bottom of flow table grouped together
+					var sf = new FlowMod("listAll");
+					sf.fetch().complete(function () {
+    	  				console.log(sf.attributes[flowDpid]);
+    	  				if (sf.attributes[flowDpid] != undefined){
+    	  					var stringed = JSON.stringify(sf.attributes[flowDpid]);
+    	  					if (stringed == "{}"){
+    	  						console.log("empty object");
+    	  						console.log(stringed);
+    	  					}
+    	  					else{
+    	  						console.log("object has flows");
+    	  						console.log(stringed);
+    	  						for(var key in sf.attributes[flowDpid]){
+    	  							console.log("FLOW NAME: " + key);
+    	  							console.log(sf.attributes[flowDpid][key]);
+    	  						}	
+    	  					}
+    	  				}
+    	  				
+    	 			});
+					
+					//console.log(JSON.stringify(sf));
+					
         			var x = document.getElementById("my" + dpid);    	
 					$(x).append(self.template8(oneSwitch.toJSON())).trigger('create');
         			var z = document.getElementById("flowCount" + dpid);
-					
 				_.forEach(flows.models, function(item) {
 					if (item != null){
 						$(z).remove();

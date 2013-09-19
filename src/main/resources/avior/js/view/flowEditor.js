@@ -20,6 +20,7 @@ define([
 			//console.log(this.collection);
 			if (display)
 				this.render();
+			//this.listStaticFlows();
 		},
 		
 		events: {
@@ -209,7 +210,7 @@ define([
 							 	this.vlanid, this.vlanpriority, this.tosbits, this.wildcards,
 							 	this.priority, this.active];
 
-				var addFlow = new FlowMod("null");
+				var addFlow = new FlowMod("one");
 				addFlow.save({
 					'switch':$('#dpid').val(),
 					'ingress-port':this.ingressport,
@@ -263,7 +264,7 @@ define([
 		},
 		
 		deleteFlow: function () {
-			var x = new FlowMod("null");
+			var x = new FlowMod("one");
 			x.destroy({data: { name: this.name }});
 		},
 		
@@ -289,9 +290,12 @@ define([
 			$('#flowEdTable').append(this.template2(c.toJSON())).trigger('create');
 		},
 		
-		listStaticFlowNames: function() {
-			
-		},
+		/*listStaticFlows: function() {
+			var x = new FlowMod("listAll");
+			x.fetch().complete(function () {
+    	  		console.log(JSON.stringify(x));
+    	 	});
+		},*/
 		
 	});
 	return FlowEdView;

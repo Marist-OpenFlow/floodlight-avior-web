@@ -72,7 +72,7 @@ define([
   				
   			}
 			else {
-  				document.getElementById("content").innerHTML = "Sorry, your browser does not support web storage...";
+  				document.getElementById("content").innerHTML = "Sorry, your browser does not support HTML5...";
   			}
 		},
 		
