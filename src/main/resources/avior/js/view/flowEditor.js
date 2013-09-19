@@ -35,6 +35,7 @@ define([
 		
 		render: function() {
 			//$('#container2').remove();
+			$('#content').empty();
 			this.$el.html(this.template1({coll: this.collection.toJSON()})).trigger('create');
 		},
 		

@@ -21,39 +21,36 @@ define([
 		// accepts an array of switch dpids and hosts
 		// connected to the controller
 		initialize: function(s, h) {
-			//console.log("INITIALIZE TEST!!");
+			console.log("initialize");
 			this.shiftAmountx = 0;
 			this.shiftAmounty = 0;
 			this.toggleCount = 0;
 			this.switches = s;
 			this.hosts = h;
-			console.log("SWITCHES");
-			console.log(this.switches);
-			console.log("HOSTS");
-			console.log(this.hosts);
+			_.forEach(s.models, function(item) {
+				//item.set("id", item.dpid);
+			}, this);
 			_.forEach(this.hosts.models, function(item) {
-				//if (item.attributes.ipv4.length != 0) {
-					console.log(item.attributes.ipv4.length);
-					console.log("count");
-					console.log(item.get("mac"));
-					item.set("id", item.get("mac"));
-					console.log(item.get("id"));
+				var mac = item.get("mac")[0];
+				//console.log("HOST IDS");
+				//console.log(mac);
+				item.set("id", mac);
+				//console.log("ITEMS AFTER SETTING HOST ID");
+				//console.log(JSON.stringify(item));
+				
 					if (item.attributes.ipv4.length === 0) {
 						item.set("ipv4", "ip not found");
 					}
 					this.switches.push(item);
-				//}
 			}, this);
-			
-			console.log("SWITCHES");
-			console.log(this.switches);
 		},
 		
 		//render the legend and network topology using d3.js
 		render: function() {
-			//console.log("test");
+			//console.log("render");
 			var self = this;
 			this.switchLinks;
+			$('#content').empty();
 			this.$el.append(this.template({coll: this.switches.toJSON()})).trigger('create');
 			
 			this.showLegend();
@@ -61,11 +58,14 @@ define([
 			
 			topology.fetch().complete(function () {
 				this.switchLinks = topology;
-				console.log("LINKS");
-				console.log(topology);
+				//console.log("LINKS");
+				//console.log(topology);
 				self.showTopo(topology);
         	}, this);
-			
+			console.log(JSON.stringify(this.switches));
+			_.forEach(this.switches.models, function(item) {
+				//console.log(item.id);
+			}, this);
         	return this;
 		},
 		
@@ -137,7 +137,7 @@ define([
     			
     			// Get the source and target nodes
     			if (e.attributes['src-switch'] !== e.attributes['dst-switch']){
-    			console.log(JSON.stringify(e));
+    			//console.log(JSON.stringify(e));
     			var sourceNode = self.switches.filter(function(n) {
     												  	return n.attributes.dpid === e.attributes['src-switch']; 
     												  })[0],
@@ -170,13 +170,13 @@ define([
    		 		//}
 			}, this);
 			
-			console.log("EDGES");
-			console.log(edges);
-			console.log("after edges");
+			//console.log("EDGES");
+			//console.log(edges);
+			//console.log("after edges");
 			var graphCenter = [];
 			graphCenter.push(width-45);
 			graphCenter.push(height / 1.5);
-  			console.log("before force");
+  			//console.log("before force");
   			
   			this.force
       			.nodes(this.switches.models)
@@ -185,17 +185,17 @@ define([
       			.on("end", end)
       			.start();
       			
-			console.log("after force");
+			//console.log("after force");
   			link = link.data(edges)
     				   .enter().append("line")
       				   .attr("class", "link");
-			console.log("after links");
+			//console.log("after links");
    			node = node.data(this.switches.models)
    					   .enter().append("g")
    					   .attr("class", "node")
-   					   .attr("id", function(d) { if (d.attributes.dpid === undefined) return d.attributes['ipv4'][0]; else return d.attributes.dpid; })
+   					   .attr("id", function(d) { if (d.attributes.dpid === undefined) return d.attributes['mac'][0]; else return d.attributes.dpid; })
       				   .call(drag);
-      		console.log("after nodes");
+      		//console.log("after nodes");
       		node.append("circle")
       				   .attr("r", 12)
       				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return "grey"; else return "blue"; });
@@ -222,7 +222,7 @@ define([
     				return a - b;
 				}
 
-				console.log("force ended");
+				//console.log("force ended");
 				var outOfBoundsx = [];
 				var outOfBoundsy = [];
 				
@@ -307,7 +307,7 @@ define([
     				.attr("x", 12)
     				.attr("dy", ".35em")
     				.attr("id", "nodeLabels")
-    				.text(function(d) { if (d.attributes.id.length < 23) 
+    				.text(function(d) {if (d.attributes.id === undefined || d.attributes.id.length < 23) 
     										if(d.attributes['ipv4'] === "ip not found") 
     											return d.attributes['ipv4'] + "/" + d.attributes['mac'][0]; 
     										else return d.attributes['ipv4'][0] + "/" + d.attributes['mac'][0]; 
@@ -383,8 +383,9 @@ define([
 			var height = window.innerHeight;
 			var width = window.innerWidth-45;
 			var nodeID = $(e.currentTarget).val();
-			console.log(nodeID);
+			//console.log(nodeID);
 			var nodeData = this.switches.get(nodeID);
+			//console.log(nodeData);
 			this.x = nodeData.px;
 			this.y = nodeData.py;
 			var self = this;

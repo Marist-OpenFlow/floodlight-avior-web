@@ -151,9 +151,9 @@ define([
 			var y = document.getElementById("container" + dpid);
 			$(y).append(this.template4(oneSwitch.toJSON())).trigger('create');
 			var ports = new PortCollection();
-			var portArray = oneSwitch.get("ports");
+			var portArray = oneSwitch.get("features").ports;
 			//console.log("PORT ARRAY");
-			//console.log(portArray);
+			//console.log(JSON.stringify(oneSwitch.get("features")));
 			var portStatArray = new PortStatistics(dpid);
 					
 			
@@ -176,16 +176,18 @@ define([
 				var numPorts = 0;
 				_.forEach(portArray, function(item) {
 					//console.log("PORT STAT ARRAY");
-					//console.log(portStatArray);
+					     //console.log(JSON.stringify(portStatArray));
 					var p = new Port(item);
 					p.set("portStatistics", portStatArray.get(dpid)[numPorts]);
+					     //console.log(JSON.stringify(oneSwitch));
+					     //console.log(JSON.stringify(p));
         			ports.add(p);
         			numPorts += 1;
         		}, this);
      					
      					
         		_.forEach(ports.models, function(item) {
-        			//console.log(JSON.stringify(item));
+        			     console.log(JSON.stringify(item));
         			var z = document.getElementById("portTable" + dpid);
 					$(z).append(self.template5(item.toJSON())).trigger('create');
         		}, this);
