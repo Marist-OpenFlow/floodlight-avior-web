@@ -13,6 +13,9 @@ define([
 		template2: _.template(portSelect),
 
 		initialize: function(collec, display){
+			this.toggleCount = 0;
+			console.log(window.innerHeight);
+			console.log(window.outerHeight);
 			this.nameList = new Object;
 			this.textFields = new Array;
 			this.j = 0;
@@ -21,6 +24,7 @@ define([
 			if (display)
 				this.render();
 			//this.listStaticFlows();
+			
 		},
 		
 		events: {
@@ -28,7 +32,6 @@ define([
 			"click #removeFlow": "deleteFlow",
 			"click #removeFlows": "deleteFlows",
 			"click #removeSwFlows": "deleteSwFlows",
-			"click #advanced": "advanced",
 			"change input": "validate",
 			"change select": "validate",
 			"change #dpid": "showPorts",

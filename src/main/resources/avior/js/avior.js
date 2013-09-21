@@ -11,13 +11,15 @@ define([
 		template: _.template(loginTpl),
 
 		initialize: function(){
-			this.height = window.innerHeight * .865;
-			document.getElementById('content').style.height = this.height+"px";
+			//console.log(window.innerHeight);
+			//console.log(window.outerHeight);
+			/*this.height = window.innerHeight * .811;
+			//document.getElementById('content').style.height = this.height+"px";
 			
 			$(window).bind('resize', function () { 
-				height = window.innerHeight * .865;
-				document.getElementById('content').style.height = this.height+"px";
-			});
+				height = window.innerHeight * .811;
+				//document.getElementById('content').style.height = this.height+"px";
+			});*/
 			
 			$('#logout').click(function() {
 								 localStorage.loggedIn = false;
@@ -31,12 +33,12 @@ define([
 			//localStorage.timeout = new Date().getTime() + 60*60*1000;
 			
 			if(typeof(Storage)!=="undefined") {
-				console.log(localStorage.loggedIn);
+				//console.log(localStorage.loggedIn);
 				if (localStorage.timeout == undefined){
 					localStorage.timeout = new Date().getTime() + 60*60*1000;
 				}
-				console.log(new Date().getTime());
-				console.log(localStorage.timeout);
+				//console.log(new Date().getTime());
+				//console.log(localStorage.timeout);
 				if(new Date().getTime() > localStorage.timeout) {
   					alert("Session has expired");
   					localStorage.loggedIn = false;

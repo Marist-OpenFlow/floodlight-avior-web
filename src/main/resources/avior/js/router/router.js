@@ -135,7 +135,7 @@ define([
 		
 		switchRoute: function() {
 			$('#content').empty();
-			$('#content').prepend('<img class="innerPageLoader" src="img/ajax-loader.gif" />');
+			$('#content').append('<img class="innerPageLoader" src="img/ajax-loader.gif" />');
 			
 			// Clears out any previous intervals
 			var syncCount = 0;
@@ -192,14 +192,14 @@ define([
 			
 			var self = this;
 			if (this.hostCollection === undefined){
-				console.log("no host collection");
+				//console.log("no host collection");
 				this.hostview = new HostView({collection: new Host});
 				this.hostview.delegateEvents(this.hostview.events);
 				this.hostCollection = this.hostview.collection;
 			}
 			
 			if (this.switchCollection === undefined){
-				console.log("no switch collection");
+				//console.log("no switch collection");
 				var switchDetail = new SwitchDetail({model: new Switch});
 				switchDetail.delegateEvents(switchDetail.events);
 																		
@@ -225,7 +225,7 @@ define([
 			}
 			
 			function syncComplete() {
-				console.log("sync complete");
+				//console.log("sync complete");
   					syncCount += 1;
   				
   					if (syncCount == 3)
@@ -233,7 +233,7 @@ define([
 			}
 			
 			function renderSwitches() {
-					console.log("renderSwitches");
+					//console.log("renderSwitches");
   					self.switchCollection = switchDetail.collection;
 					//create graph nodes based on switch and host data
 					self.topology = new TopologyView(self.switchCollection, self.hostCollection);											

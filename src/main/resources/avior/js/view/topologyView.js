@@ -21,7 +21,7 @@ define([
 		// accepts an array of switch dpids and hosts
 		// connected to the controller
 		initialize: function(s, h) {
-			console.log("initialize");
+			//console.log("initialize");
 			this.shiftAmountx = 0;
 			this.shiftAmounty = 0;
 			this.toggleCount = 0;
@@ -62,7 +62,7 @@ define([
 				//console.log(topology);
 				self.showTopo(topology);
         	}, this);
-			console.log(JSON.stringify(this.switches));
+			//console.log(JSON.stringify(this.switches));
 			_.forEach(this.switches.models, function(item) {
 				//console.log(item.id);
 			}, this);
@@ -134,7 +134,8 @@ define([
 				
 			// Create source and target links based on dpid instead of index
 			_.forEach(switchLinks.models, function(e) { 
-    			
+    			console.log(e);
+    			console.log(JSON.stringify(e));
     			// Get the source and target nodes
     			if (e.attributes['src-switch'] !== e.attributes['dst-switch']){
     			//console.log(JSON.stringify(e));
@@ -153,25 +154,37 @@ define([
 			
 			// Create source and target links based on dpid instead of index
 			// WHEN WORKING ON MINI UNCOMMENT IF STATEMENT!!
+			// THIS IS BECAUSE MININET RETURNS HOSTS THAT DO NOT HAVE AN IP 
+			// ADDRESS WHICH THEN ALSO DO NOT HAVE ATTACHMENT POINTS
 			_.forEach(this.hosts.models, function(e) {
+				//console.log(e);
+				//console.log(JSON.stringify(e));
     			// Get the source and target nodes
+    			// UNCOMMENT THIS IF STATEMENT WHEN USING MININET!!
     			//if (e.attributes.ipv4.length > 0 && e.attributes.ipv4 !== "ip not found") {
     				var sourceNode = self.switches.filter(function(n) {
-    														return e.attributes.attachmentPoint[0].switchDPID ===  n.attributes.dpid; 
+    														if (e.attributes.attachmentPoint[0] != undefined)
+    															return e.attributes.attachmentPoint[0].switchDPID ===  n.attributes.dpid; 
     												  	  })[0],
         			targetNode = self.switches.filter(function(n) { 
-    											  			return n.attributes.dpid === e.attributes.attachmentPoint[0].switchDPID; 
+        													if (e.attributes.attachmentPoint[0] != undefined)
+    											  				return n.attributes.dpid === e.attributes.attachmentPoint[0].switchDPID; 
     											  	 	  })[0];
 
     			// Add the edge to the array
-    			if (targetNode != undefined)
+    			console.log(sourceNode);
+    			console.log(targetNode);
+    			console.log(e);
+    			console.log("-----------------");
+    			if (targetNode != undefined){
     				targetNode = e;
-   		 		edges.push({source: sourceNode, target: targetNode});
+   		 			edges.push({source: sourceNode, target: targetNode});
+   		 		}
    		 		//}
 			}, this);
 			
-			//console.log("EDGES");
-			//console.log(edges);
+			console.log("EDGES");
+			console.log(edges);
 			//console.log("after edges");
 			var graphCenter = [];
 			graphCenter.push(width-45);
