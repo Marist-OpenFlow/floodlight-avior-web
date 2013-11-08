@@ -43,6 +43,9 @@ define([
 		// construct a new collection with switch info from server
 		// and render this collection upon sync with server 	
 		initialize: function(item){
+			//localStorage.loggedIn = false;
+			//console.log(Backbone.history.length);
+			//console.log( $( "#content" ).data( "loggedIn" ));
 			//console.log("HELLO");
 			var self = this;
 			this.syncCount = 0;
@@ -60,6 +63,7 @@ define([
 			this.listenTo(this.features, "sync", this.syncComplete);
 			this.listenTo(this.description, "sync", this.syncComplete);
 			this.listenTo(this.switchStats, "sync", this.syncComplete);
+			//this.switchList = $('<div/>').html(this.template1).contents();
 		},
 		
 		events: {
@@ -151,9 +155,9 @@ define([
 			var y = document.getElementById("container" + dpid);
 			$(y).append(this.template4(oneSwitch.toJSON())).trigger('create');
 			var ports = new PortCollection();
-			var portArray = oneSwitch.get("ports");
+			var portArray = oneSwitch.get("features").ports;
 			//console.log("PORT ARRAY");
-			//console.log(portArray);
+			//console.log(JSON.stringify(oneSwitch.get("features")));
 			var portStatArray = new PortStatistics(dpid);
 					
 			
@@ -176,16 +180,18 @@ define([
 				var numPorts = 0;
 				_.forEach(portArray, function(item) {
 					//console.log("PORT STAT ARRAY");
-					//console.log(portStatArray);
+					     //console.log(JSON.stringify(portStatArray));
 					var p = new Port(item);
 					p.set("portStatistics", portStatArray.get(dpid)[numPorts]);
+					     //console.log(JSON.stringify(oneSwitch));
+					     //console.log(JSON.stringify(p));
         			ports.add(p);
         			numPorts += 1;
         		}, this);
      					
      					
         		_.forEach(ports.models, function(item) {
-        			//console.log(JSON.stringify(item));
+        			     console.log(JSON.stringify(item));
         			var z = document.getElementById("portTable" + dpid);
 					$(z).append(self.template5(item.toJSON())).trigger('create');
         		}, this);
@@ -214,14 +220,40 @@ define([
 		displayFlows: function(dpid, oneSwitch){
 			var self = this;
 			var flows = new FlowCollection(dpid);
+			var flowDpid = dpid;
+			
 			flows.fetch().complete(function () {
-				//console.log(flows.length);
-				
-
+					//move outside of flows.fetch?
+					//match flows listed to flows from FL rest api flow call
+					//flows that match to be typed as static
+					//flows that do not match to be typed as dynamic
+					//static flows listed at the top or bottom of flow table grouped together
+					var sf = new FlowMod("listAll");
+					sf.fetch().complete(function () {
+    	  				console.log(sf.attributes[flowDpid]);
+    	  				if (sf.attributes[flowDpid] != undefined){
+    	  					var stringed = JSON.stringify(sf.attributes[flowDpid]);
+    	  					if (stringed == "{}"){
+    	  						console.log("empty object");
+    	  						console.log(stringed);
+    	  					}
+    	  					else{
+    	  						console.log("object has flows");
+    	  						console.log(stringed);
+    	  						for(var key in sf.attributes[flowDpid]){
+    	  							console.log("FLOW NAME: " + key);
+    	  							console.log(sf.attributes[flowDpid][key]);
+    	  						}	
+    	  					}
+    	  				}
+    	  				
+    	 			});
+					
+					//console.log(JSON.stringify(sf));
+					
         			var x = document.getElementById("my" + dpid);    	
 					$(x).append(self.template8(oneSwitch.toJSON())).trigger('create');
         			var z = document.getElementById("flowCount" + dpid);
-					
 				_.forEach(flows.models, function(item) {
 					if (item != null){
 						$(z).remove();

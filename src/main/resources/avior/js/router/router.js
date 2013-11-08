@@ -77,10 +77,12 @@ define([
         
         controllerRoute: function() {
 			$('#content').empty();
+			$('#content').prepend('<img class="innerPageLoader" src="img/ajax-loader.gif" />');
 			
 			// Clears out any previous intervals
 			clearInterval(this.interval);
 			
+			$('#content').empty();
 			$('#content').append(this.template).trigger('create');
 			
 		 	// Create views for controller aspects
@@ -113,6 +115,7 @@ define([
         
         hostRoute: function() {
 			$('#content').empty();
+			$('#content').append('<img class="innerPageLoader" src="img/ajax-loader.gif" />');
 			
 			// Clears out any previous intervals
 			clearInterval(this.interval);
@@ -126,11 +129,14 @@ define([
 			this.hostCollection = this.hostview.collection;
 			
 			// Link host to id tag
-			$('#content').append(this.hostview.render().el);
+			$('#content').empty();
+			$('#content').append(this.hostview.render().el).trigger('create');
         },
 		
 		switchRoute: function() {
 			$('#content').empty();
+			$('#content').append('<img class="innerPageLoader" src="img/ajax-loader.gif" />');
+			
 			// Clears out any previous intervals
 			var syncCount = 0;
 			clearInterval(this.interval);
@@ -152,6 +158,7 @@ define([
 		
 		staticFlowRoute: function() {
 			$('#content').empty();
+			$('#content').prepend('<img class="innerPageLoader" src="img/ajax-loader.gif" />');
 
 			// Clears out any previous intervals
 			clearInterval(this.interval);
@@ -167,6 +174,7 @@ define([
         
         firewallRoute: function() {
         	$('#content').empty();
+        	
         	// Clears out any previous intervals
 			clearInterval(this.interval);
 			
@@ -175,26 +183,29 @@ define([
         
         topologyRoute: function () {
         	$("#content").empty();
+        	$('#content').prepend('<img class="innerPageLoader" src="img/ajax-loader.gif" />');
+        	
+        	var syncCount = 0;
         	
         	// Clears out any previous intervals
 			clearInterval(this.interval);
 			
 			var self = this;
 			if (this.hostCollection === undefined){
+				//console.log("no host collection");
 				this.hostview = new HostView({collection: new Host});
 				this.hostview.delegateEvents(this.hostview.events);
 				this.hostCollection = this.hostview.collection;
 			}
 			
 			if (this.switchCollection === undefined){
+				//console.log("no switch collection");
 				var switchDetail = new SwitchDetail({model: new Switch});
 				switchDetail.delegateEvents(switchDetail.events);
-				switchDetail.listenTo(switchDetail.switchStats, "sync", function () {
-																			self.switchCollection = switchDetail.collection;
-																			//create graph nodes based on switch and host data
-																			self.topology = new TopologyView(self.switchCollection, self.hostCollection);											
-																			self.topology.render();
-																		});
+																		
+				switchDetail.listenTo(switchDetail.features, "sync", syncComplete);
+				switchDetail.listenTo(switchDetail.switchStats, "sync", syncComplete);
+				switchDetail.listenTo(switchDetail.description, "sync", syncComplete);
 			}
 			
 			else if(this.switchCollection.models.length > 0 && this.hostCollection.models.length > 0 && this.topology === undefined){
@@ -211,6 +222,22 @@ define([
 					this.topology = new TopologyView(self.switchCollection, self.hostCollection);
 					this.topology.render();
 				});
+			}
+			
+			function syncComplete() {
+				//console.log("sync complete");
+  					syncCount += 1;
+  				
+  					if (syncCount == 3)
+  						renderSwitches();
+			}
+			
+			function renderSwitches() {
+					//console.log("renderSwitches");
+  					self.switchCollection = switchDetail.collection;
+					//create graph nodes based on switch and host data
+					self.topology = new TopologyView(self.switchCollection, self.hostCollection);											
+					self.topology.render();
 			}
         },
         

@@ -3,9 +3,13 @@ define([
 ], function(FlowMod){
 	/* Floodlight specific URL for pushing and deleting flows */
 	FlowMod.prototype.urlRoot = function () {
-		if (this.dpid === "null"){
+		if (this.dpid === "one"){
 			this.unset(this.dpid);
 			return "/wm/staticflowentrypusher/json";
+		}
+		else if (this.dpid === "listAll"){
+			this.unset(this.dpid);
+			return "/wm/staticflowentrypusher/list/all/json";
 		}
 		else
 			return "/wm/staticflowentrypusher/clear/" + this.dpid + "/json";

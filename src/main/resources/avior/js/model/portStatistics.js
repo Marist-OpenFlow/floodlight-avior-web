@@ -6,6 +6,9 @@ define([
 	/* Structure to hold port statistics */
 	var PortStatistics = Backbone.Model.extend({
 		urlRoot: Util.missingCtlrErr,
+		comparator: function(model){
+    		return(model.get("portNumber"));
+  		}
 	});
 	return PortStatistics;
 }); 

@@ -13,6 +13,9 @@ define([
 		template2: _.template(portSelect),
 
 		initialize: function(collec, display){
+			this.toggleCount = 0;
+			console.log(window.innerHeight);
+			console.log(window.outerHeight);
 			this.nameList = new Object;
 			this.textFields = new Array;
 			this.j = 0;
@@ -20,6 +23,8 @@ define([
 			//console.log(this.collection);
 			if (display)
 				this.render();
+			//this.listStaticFlows();
+			
 		},
 		
 		events: {
@@ -27,7 +32,6 @@ define([
 			"click #removeFlow": "deleteFlow",
 			"click #removeFlows": "deleteFlows",
 			"click #removeSwFlows": "deleteSwFlows",
-			"click #advanced": "advanced",
 			"change input": "validate",
 			"change select": "validate",
 			"change #dpid": "showPorts",
@@ -35,6 +39,7 @@ define([
 		
 		render: function() {
 			//$('#container2').remove();
+			$('#content').empty();
 			this.$el.html(this.template1({coll: this.collection.toJSON()})).trigger('create');
 		},
 		
@@ -208,7 +213,7 @@ define([
 							 	this.vlanid, this.vlanpriority, this.tosbits, this.wildcards,
 							 	this.priority, this.active];
 
-				var addFlow = new FlowMod("null");
+				var addFlow = new FlowMod("one");
 				addFlow.save({
 					'switch':$('#dpid').val(),
 					'ingress-port':this.ingressport,
@@ -262,7 +267,7 @@ define([
 		},
 		
 		deleteFlow: function () {
-			var x = new FlowMod("null");
+			var x = new FlowMod("one");
 			x.destroy({data: { name: this.name }});
 		},
 		
@@ -288,9 +293,12 @@ define([
 			$('#flowEdTable').append(this.template2(c.toJSON())).trigger('create');
 		},
 		
-		listStaticFlowNames: function() {
-			
-		},
+		/*listStaticFlows: function() {
+			var x = new FlowMod("listAll");
+			x.fetch().complete(function () {
+    	  		console.log(JSON.stringify(x));
+    	 	});
+		},*/
 		
 	});
 	return FlowEdView;

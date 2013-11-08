@@ -1,7 +1,10 @@
 <!DOCTYPE html> 
 <html> 
 <head> 
-	<title>Avior</title> 
+	<title>Avior</title>
+	
+	<img class="loadingIMG" src="img/ajax-loader.gif" style="vertical-align: center; margin:auto; position:absolute; top:0;bottom:0; left:0;right:0;">
+	 
     <!-- Mobile View -->
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<!-- Mobile View -->
@@ -130,6 +133,16 @@ text {
   max-height:100%;
   max-width: 100%;
 }
+
+.innerPageLoader{
+  position:absolute;
+  vertical-align:center;
+  margin:auto;
+  top:40.5%; 
+  left:0;right:0;
+  //left:47.40%;
+  //top:45.35%;
+}
   
 	</style>
 </head> 
@@ -148,7 +161,7 @@ text {
 	<h1><img class="headerIMG" src="img/avior_logo_alt_trans.png"  height="40" width="120" style="vertical-align: top;"> </h1>
 	<!--<h1>Avior</h1>-->
 	<a id="leftpanel3" href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse" style="display: none;">Main Menu</a>
-	<!--<a id="rightpanel3" href="#rightpanel3" data-icon="info" data-iconpos="notext" data-rel="dialog" data-transition="fade" style="display: none;">Menu-Right</a>-->
+	<a id="logout" href="index.html" data-icon="gear" style="display: none;">Log Out</a>
 	</div>
 	</header>
 <!-- /Header -->
@@ -157,9 +170,10 @@ text {
 	<div id="content" class="responsive" data-role="content"></div>
 
 <!-- Footer -->
-	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-theme="c" role="contentinfo" >
+	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-position="fixed" data-theme="c" role="contentinfo" >
 	<p>2013 Avior Version 2.0 </p>
 	<p>Designed & Developed at Marist College by Junaid Kapadia, Kevin Pietrow & Devin Young</p>
+	<p>Logo Designed by Andrew Evans </p>
 	</div>
 <!-- /Footer -->	
 
