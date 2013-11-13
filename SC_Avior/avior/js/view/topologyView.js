@@ -132,7 +132,12 @@ define([
 			                 {"src-switch":"00:00:00:00:00:00:00:03","src-port":131072,"dst-switch":"00:00:00:00:00:00:00:01","dst-port":196608,"type":"internal","direction":"bidirectional"}]);*/
 			                 
 			 /* switchLinks.add([{"src-switch":"00:00:00:00:00:00:00:01","src-port":65536,"dst-switch":"00:00:00:00:00:00:00:03","dst-port":131072,"type":"internal","direction":"unidirectional"},
-			  					{"src-switch":"00:00:00:00:00:00:00:01","src-port":131072,"dst-switch":"00:00:00:00:00:00:00:03","dst-port":65536,"type":"internal","direction":"bidirectional"}]);  */            
+			  					{"src-switch":"00:00:00:00:00:00:00:01","src-port":131072,"dst-switch":"00:00:00:00:00:00:00:03","dst-port":65536,"type":"internal","direction":"bidirectional"}]);  */
+			  					
+			 /* switchLinks.add([{"src-switch":"00:00:00:00:00:00:00:02","src-port":65536,"dst-switch":"00:00:00:00:00:00:00:03","dst-port":65536,"type":"internal","direction":"unidirectional"},
+			  					{"src-switch":"00:00:00:00:00:00:00:02","src-port":131072,"dst-switch":"00:00:00:00:00:00:00:03","dst-port":131072,"type":"internal","direction":"bidirectional"},
+			  					{"src-switch":"00:00:00:00:00:00:00:02","src-port":196608,"dst-switch":"00:00:00:00:00:00:00:03","dst-port":196608,"type":"internal","direction":"bidirectional"},
+			  					{"src-switch":"00:00:00:00:00:00:00:02","src-port":131072,"dst-switch":"00:00:00:00:00:00:00:03","dst-port":131072,"type":"internal","direction":"bidirectional"}]); */ 					            
 				
 			// Create source and target links based on dpid instead of index
 			_.forEach(switchLinks.models, function(e) {
@@ -348,7 +353,9 @@ define([
 			this.linkObj = {};
 			this.linkArray = [];
 			var self = this;
-			var curveFactor = 1;
+			var curveFactor1 = 1;
+			var curveFactor2 = 1;
+			var i = 0;
 			
 			// Runs the force layout simulation one step		
 			function tick() {
@@ -360,13 +367,32 @@ define([
   			    	if (($.inArray((JSON.stringify(linkObj)), self.linkArray)) == -1) {
   			    		d["seen"] = 1;
   			    		self.linkArray.push(JSON.stringify(linkObj));
-  			    		//console.log("add to list, curve stays the same");
+  			    		console.log("add to list, curve stays the same");
   			    	}
   			    	else if (($.inArray((JSON.stringify(linkObj)), self.linkArray)) > -1 && d.curve == 1 && d.seen == 0) {
-  			    		curveFactor += 0.7;
-  			    		d["curve"] = curveFactor;
-  			    		d["seen"] = 1;
-  			    		//console.log("increase curve");
+  						if ( i == 0) {
+  			    			var temp = d.source;
+  			    			d.source = d.target;
+  			    			d.target = temp;
+  			    			d["seen"] = 1;
+  			    			console.log("increase curve");
+  						}
+  						else if (i % 2 == 0) {
+  			    			var temp = d.source;
+  			    			d.source = d.target;
+  			    			d.target = temp;
+  			    			curveFactor1 += 0.65;
+  			    			d["curve"] = curveFactor1;
+  			    			d["seen"] = 1;
+  			    			console.log("increase curve");
+  			    		}
+  			    		else {
+  			    			curveFactor2 += 0.7;
+  			    			d["curve"] = curveFactor2;
+  			    			d["seen"] = 1;
+  			    			console.log("increase curve");
+  			    		}
+  			    		i++;
   			    	}
   			    	else {
   			    		//console.log("stays the same");
@@ -387,13 +413,28 @@ define([
   			    	if (($.inArray((JSON.stringify(linkObj)), self.linkArray)) == -1) {
   			    		d["seen"] = 1;
   			    		self.linkArray.push(JSON.stringify(linkObj));
-  			    		//console.log("add to list, curve stays the same");
   			    	}
   			    	else if (($.inArray((JSON.stringify(linkObj)), self.linkArray)) > -1 && d.curve == 1 && d.seen == 0) {
-  			    		curveFactor += 0.7;
-  			    		d["curve"] = curveFactor;
-  			    		d["seen"] = 1;
-  			    		//console.log("increase curve");
+  						if ( i == 0) {
+  			    			var temp = d.source;
+  			    			d.source = d.target;
+  			    			d.target = temp;
+  			    			d["seen"] = 1;
+  						}
+  						else if (i % 2 == 0) {
+  			    			var temp = d.source;
+  			    			d.source = d.target;
+  			    			d.target = temp;
+  			    			curveFactor1 += 0.65;
+  			    			d["curve"] = curveFactor1;
+  			    			d["seen"] = 1;
+  			    		}
+  			    		else {
+  			    			curveFactor2 += 0.7;
+  			    			d["curve"] = curveFactor2;
+  			    			d["seen"] = 1;
+  			    		}
+  			    		i++;
   			    	}
   			    	else {
   			    		//console.log("stays the same");
@@ -458,6 +499,8 @@ define([
           																					}
           																		}, this);
           																		
+          																		//console.log(this.sourceStats);
+          																		
           																	    if (this.targetStats != undefined){
           																			return '<u>Source</u>' + 
           						  	 													   '</br>Switch ID: ' + d.source.id + 
@@ -486,13 +529,14 @@ define([
           					       															'</br>Host: ' + d.target.id;
           																		}
         		                                                             } 
-        		                                                           });	
+        		                                                           });
         										
         		$('path').tipsy({ 
        	 			gravity: 'n', 
         			html: true, 
         			title: function() { return this.getAttribute('original-title'); },
       			});
+      			//d3.selectAll("path").attr("original-title", '');
         	}, this);
 		},
 		

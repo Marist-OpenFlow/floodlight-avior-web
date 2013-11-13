@@ -192,7 +192,25 @@ define([
 			clearInterval(this.interval);
 			
 			var self = this;
-			if (this.hostCollection === undefined){
+			
+				//TESTING 1 2 3		
+				
+				
+				this.hostview = new HostView({collection: new Host});
+				this.hostview.delegateEvents(this.hostview.events);
+				this.hostCollection = this.hostview.collection;
+				var switchDetail = new SwitchDetail({model: new Switch});
+				switchDetail.delegateEvents(switchDetail.events);
+																		
+				switchDetail.listenTo(switchDetail.features, "sync", syncComplete);
+				switchDetail.listenTo(switchDetail.switchStats, "sync", syncComplete);
+				switchDetail.listenTo(switchDetail.description, "sync", syncComplete);
+				
+				
+			
+			
+			
+			/*if (this.hostCollection === undefined){
 				//console.log("no host collection");
 				this.hostview = new HostView({collection: new Host});
 				this.hostview.delegateEvents(this.hostview.events);
@@ -207,15 +225,18 @@ define([
 				switchDetail.listenTo(switchDetail.features, "sync", syncComplete);
 				switchDetail.listenTo(switchDetail.switchStats, "sync", syncComplete);
 				switchDetail.listenTo(switchDetail.description, "sync", syncComplete);
+				console.log("if");
 			}
 			
 			else if(this.switchCollection.models.length > 0 && this.hostCollection.models.length > 0 && this.topology === undefined){
 				this.topology = new TopologyView(self.switchCollection, self.hostCollection);
 				this.topology.render();
+				console.log("else if 1");
 			}
 			 
 			else if (this.topology != undefined){
 				this.topology.render();
+				console.log("else if 2");
 			}
 			
 			else{
@@ -228,8 +249,9 @@ define([
 					this.interval = setInterval(function(){
 						self2.topology.displayTooltips();
 					}, 10000);
+					console.log("else");
 				});
-			}
+			}*/
 			
 			function syncComplete() {
 				//console.log("sync complete");
