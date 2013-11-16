@@ -267,9 +267,9 @@ define([
 					//create graph nodes based on switch and host data
 					self.topology = new TopologyView(self.switchCollection, self.hostCollection);											
 					self.topology.render();
-					this.interval = setInterval(function(){
+					/*this.interval = setInterval(function(){
 						self.topology.displayTooltips();
-					}, 10000);
+					}, 10000);*/
 			}
         },
         

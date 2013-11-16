@@ -38,6 +38,7 @@ define([
 			this.clearLabelCount2 = 0;
 			this.hostSelectedCount = 0;
 			this.switchLinks;
+			this.interval;
 			this.node1;
 			this.node2;
 			this.i = 0;
@@ -80,6 +81,10 @@ define([
 				self.switchLinks = topology;
 				self.showTopo(topology);
         	}, this);
+        	
+        	this.interval = setInterval(function(){
+						self.displayTooltips();
+					}, 5000);
         	
         	return this;
 		},
@@ -764,6 +769,7 @@ define([
 		},
 		
 		viewTrafficMode: function () {
+			clearInterval(this.interval);
 			d3.selectAll("path").attr("original-title", '');
 		
 			$(function() { $("#viewDiv").hide(); });
@@ -776,6 +782,7 @@ define([
 			
 			function test(d) { 
 				d3.selectAll(".aClass").remove();
+				d3.selectAll("circle").attr("original-title", '');
 				d3.selectAll("path.link").style("stroke", "#999")
 										 .style("stroke-width", "1.0px");
 				
@@ -935,6 +942,14 @@ define([
 									 .style("stroke-width", "1.0px");
 			
 			d3.selectAll(".aClass").remove();
+			
+			d3.selectAll("circle").attr("original-title", '');
+			
+			this.displayTooltips();
+			var self = this;
+			this.interval = setInterval(function(){
+						self.displayTooltips();
+					}, 5000);
 		},
 		
 		displayPath: function () {
@@ -1011,6 +1026,7 @@ define([
 					self.i = 0;
 					d3.selectAll(".aClass")
   								  .remove();
+  					d3.selectAll("circle").attr("original-title", '');
 					_.forEach(flowCollector.models, function(item) {
 						//console.log("tests");
 						//console.log(JSON.stringify(item));
@@ -1022,6 +1038,13 @@ define([
 								console.log(JSON.stringify(item));
 								self.i++;
 								var pathName = "Path " + self.i;
+								var desc = 'Switch IP: ' + item.attributes['srcIp'] + 
+          					      														   '</br>DestinationIP: ' + item.attributes['dstIp'] + 
+          					       															'</br>Source Port: ' + item.attributes['srcPort'] +
+          					       															'</br>Destination Port: ' + item.attributes['dstPort'] +
+          					       															'</br>Capacity: ' + item.attributes['capacity'] +
+          					       															'</br>Packet Rate: ' + item.attributes['packetRate'] +
+          					       															'</br>Bit Rate: ' +item.attributes['bitRate'];
   								self2.pathObj[pathName] = item.attributes.path;
   								console.log(self2.pathObj[pathName]);
 								d3.select(".flowPath")
@@ -1035,7 +1058,7 @@ define([
           					       															'</br>Bit Rate: ' +item.attributes['bitRate']; })
   								  .attr("class", "aClass")
   								  .html(node1IP + " port " + item.attributes.srcPort + " to " + node2IP + " port " + item.attributes.dstPort)
-  								  .on("click", function () {showLinks(node1MAC, node2MAC, self2.pathObj[pathName]); })
+  								  .on("click", function () {showLinks(node1MAC, node2MAC, self2.pathObj[pathName], desc); })
   								  .append("br");
 							}
 						}
@@ -1044,6 +1067,13 @@ define([
 								console.log(JSON.stringify(item));
 								self.i++;
 								var pathName = "Path " + self.i;
+								var desc = 'Switch IP: ' + item.attributes['srcIp'] + 
+          					      														   '</br>DestinationIP: ' + item.attributes['dstIp'] + 
+          					       															'</br>Source Port: ' + item.attributes['srcPort'] +
+          					       															'</br>Destination Port: ' + item.attributes['dstPort'] +
+          					       															'</br>Capacity: ' + item.attributes['capacity'] +
+          					       															'</br>Packet Rate: ' + item.attributes['packetRate'] +
+          					       															'</br>Bit Rate: ' +item.attributes['bitRate'];
   								self2.pathObj[pathName] = item.attributes.path;
   								console.log(self2.pathObj[pathName]);
 								d3.select(".flowPath")
@@ -1057,18 +1087,27 @@ define([
           					       															'</br>Bit Rate: ' +item.attributes['bitRate']; })
   								  .attr("class", "aClass")
   								  .html(node2IP + " port " + item.attributes.srcPort + " to " + node1IP + " port " + item.attributes.dstPort)
-  								  .on("click", function () {showLinks(node2MAC, node1MAC, self2.pathObj[pathName]); })
+  								  .on("click", function () { showLinks(node2MAC, node1MAC, self2.pathObj[pathName], desc); })
   								  .append("br");
 							}
 						}
 						
-						function showLinks(source, target, path) { 
-							console.log(document.getElementById(target));
-							/*document.getElementById(target).tipsy({ 
-       	 			gravity: 'n', 
-        			html: true, 
-        			title: function() { return "red"; },
-      			});*/
+						function showLinks(source, target, path, desc) { 
+							var t = (document.getElementById(target));
+							var pathSelected = document.getElementById(desc);
+							//d3.selectAll(pathSelected).attr("title", desc);
+							console.log(pathSelected);
+							console.log(t.firstChild);
+							$(t.firstChild).attr("original-title", desc);
+							$(t.firstChild).tipsy({ 
+       	 						gravity: 'n', 
+        						html: true,
+        						//trigger: 'manual',
+        						title: function() { return this.getAttribute('original-title'); },
+      						});
+      						
+      						//c.tipsy('show');
+      						
 							d3.selectAll("path.link").style("stroke", "#999")
 													 .style("stroke-width", "1.0px");
 							console.log(path); 
