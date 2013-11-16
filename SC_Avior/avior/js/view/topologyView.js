@@ -6,10 +6,12 @@ define([
 	"floodlight/topologyFl",
 	"model/topology",
 	"floodlight/portStatCollectorCollectionFl",
+	"floodlight/flowStatCollectorCollectionFl",
 	"model/portStatCollectorModel",
+	"model/flowStatCollectorModel",
 	"text!template/topology.html",
 	"text!template/portCollectortpl.html",
-], function($, _, Backbone, Marionette, TopologyCollection, Topology, PortStatCollectorCollection, PortStatCollectorModel, topologyTpl, portCollTpl){
+], function($, _, Backbone, Marionette, TopologyCollection, Topology, PortStatCollectorCollection, FlowStatCollectorCollection, PortStatCollectorModel, FlowStatCollectorModel, topologyTpl, portCollTpl){
 	var TopologyView = Backbone.Marionette.ItemView.extend({
 		el: $('#content'),
 		
@@ -20,6 +22,8 @@ define([
 			"click #showLabels": "toggleLabels",
 			"click #doneButton": "scaleOut",
 			"change #nodeList": "nodeSelect",
+			"click #viewTrafficButton": "viewTrafficMode",
+			"click #exitViewTrafficButton": "exitViewTrafficMode",
 		},
 		
 		// accepts an array of switch dpids and hosts
@@ -28,6 +32,16 @@ define([
 			this.shiftAmountx = 0;
 			this.shiftAmounty = 0;
 			this.toggleCount = 0;
+			this.toggleSwitchCount1 = 0;
+			this.toggleSwitchCount2 = 0;
+			this.clearLabelCount1 = 0;
+			this.clearLabelCount2 = 0;
+			this.hostSelectedCount = 0;
+			this.switchLinks;
+			this.node1;
+			this.node2;
+			this.i = 0;
+			this.ipToMac = {};
 			this.switches = s;
 			this.hosts = h;
 			//this.obj = {};
@@ -46,7 +60,6 @@ define([
 		//render the legend and network topology using d3.js
 		render: function() {
 			var self = this;
-			this.switchLinks;
 			
 			//clear the content div in order to display the topology
 			$('#content').empty();
@@ -54,14 +67,17 @@ define([
 			//append the header and buttons
 			this.$el.append(this.template({coll: this.switches.toJSON()})).trigger('create');
 			
+			//display view traffic mode button initially
+			$(function() { $("#viewDiv").show(); });
+			
 			//display the legend
 			this.showLegend();
 			
 			var topology = new TopologyCollection({model: Topology});
-			
+			var self = this;
 			//get topology data and render the network graph
 			topology.fetch().complete(function () {
-				this.switchLinks = topology;
+				self.switchLinks = topology;
 				self.showTopo(topology);
         	}, this);
         	
@@ -530,7 +546,7 @@ define([
           																		}
         		                                                             } 
         		                                                           });
-        										
+        									
         		$('path').tipsy({ 
        	 			gravity: 'n', 
         			html: true, 
@@ -544,17 +560,25 @@ define([
 		// or remove labels next to each node in the graph
 		toggleLabels: function (e) {
 			var node = this.svg.selectAll(".node");
+			var self = this;
 			if (this.toggleCount % 2 === 0) {
 				node.append("text")
     				.attr("x", 12)
     				.attr("dy", ".35em")
     				.attr("id", "nodeLabels")
-    				.text(function(d) {if (d.attributes.id === undefined || d.attributes.id.length < 23) 
-    										if(d.attributes['ipv4'] === "ip not found") 
-    											return d.attributes['ipv4'] + "/" + d.attributes['mac'][0]; 
-    										else return d.attributes['ipv4'][0] + "/" + d.attributes['mac'][0]; 
-    									else return d.attributes.id; });
+    				.text(function(d) {if (d.attributes.id === undefined || d.attributes.id.length < 23){ 
+    										if(d.attributes['ipv4'] === "ip not found"){
+    											return d.attributes['ipv4'] + "/" + d.attributes['mac'][0];
+    										} 
+    										else{
+    											return d.attributes['ipv4'][0] + "/" + d.attributes['mac'][0];
+    										}
+    									} 
+    									else 
+    										return d.attributes.id; 
+    						});
 				this.toggleCount++;	
+				//console.log(this.ipToMac);
 			}
 			else {
 				var labels = this.svg.selectAll("#nodeLabels");
@@ -737,6 +761,408 @@ define([
     			      .start();
             		
             $(function() { $("#doneDiv").hide(); });
+		},
+		
+		viewTrafficMode: function () {
+			d3.selectAll("path").attr("original-title", '');
+		
+			$(function() { $("#viewDiv").hide(); });
+			$(function() { $("#exitDiv").show(); });
+			
+			d3.selectAll(".node").on("click", test);
+			d3.selectAll(".node fixed").on("click", test);
+			
+			var self = this;
+			
+			function test(d) { 
+				d3.selectAll(".aClass").remove();
+				d3.selectAll("path.link").style("stroke", "#999")
+										 .style("stroke-width", "1.0px");
+				
+				var nodeData = self.switches.get(d.id);
+				this.node = self.svg.selectAll("g").filter(function(d, i) {  if(d != undefined && JSON.stringify(d.id).length < 25) { return d.id==nodeData.id; }});
+				
+				console.log(this.node[0][0]);
+				
+				if (this.node[0][0] != undefined){
+				if(self.hostSelectedCount == 0){
+					console.log("1");
+					self.node1 = this.node;
+					self.hostSelectedCount++;
+				}
+				else if(self.hostSelectedCount == 1 && self.node1 == undefined && this.node[0][0] !== self.node2[0][0]){
+					console.log("2");
+					self.node1 = this.node;
+					self.hostSelectedCount++;
+				}
+				
+				else if(self.hostSelectedCount == 1 && this.node[0][0] !== self.node1[0][0]){
+					console.log("4");
+					self.node2 = this.node;
+					self.hostSelectedCount++;
+				}
+				
+				else {
+					console.log("host select else");
+				}
+				
+				//console.log(self.node1);
+				//console.log(" ");
+				//console.log(self.node2);
+				
+				if(this.node[0][0] === self.node1[0][0]){
+					self.node1 = this.node;
+					var node = this.node;
+					//console.log("preaux1");
+					self.auxTraffic1(d, node);
+					if(self.hostSelectedCount == 2)
+						self.displayPath();
+				}
+				else if (this.node[0][0] === self.node2[0][0]){
+					self.node2 = this.node;
+					var node = this.node;
+					//console.log("preaux2");
+					self.auxTraffic2(d, node);
+					if(self.hostSelectedCount == 2)
+						self.displayPath();
+				}
+				else{
+					console.log("aux traffic select else");
+					if(self.hostSelectedCount == 2)
+						self.displayPath();
+				}
+				}
+			}
+		},
+		
+		auxTraffic1: function (d, node) {
+			console.log("aux1");
+			this.node = node;
+			this.clearLabelCount1++;  	 
+				if (this.clearLabelCount1 % 3 === 0) {
+					d3.selectAll("#node1").text(" ");
+					this.toggleSwitchCount = 0;
+					this.node.style("stroke", "#fff")
+				             .style("stroke-width", 1.5);
+				    this.node1 = undefined;
+				    this.hostSelectedCount--;
+				}   
+				else {	 
+				var node = this.svg.selectAll(".node");
+				if (this.toggleSwitchCount1 % 2 === 0) {
+					this.node.style("stroke", "black")
+				     	     .style("stroke-width", 2.5);
+					d3.selectAll("#node1").text(" ");
+					this.node.append("text")
+    					.attr("x", 12)
+    					.attr("dy", "1.55em")
+    					.attr("id", "node1")
+    					.text(function(d) { return " source"; });
+					this.toggleSwitchCount1++;	
+				}
+				else {
+    				d3.selectAll("#node1").text(" ");
+    				this.node.append("text")
+    					.attr("x", 12)
+    					.attr("dy", "1.55em")
+    					.attr("id", "node1")
+    					.text(function(d) { return " destination"; });
+					
+					this.toggleSwitchCount1++;
+				}
+				}
+		},
+		
+		auxTraffic2: function (d, node) {
+			console.log("aux2");
+			this.node = node;
+			this.clearLabelCount2++;  	 
+				if (this.clearLabelCount2 % 3 === 0) {
+					d3.selectAll("#node2").text(" ");
+					this.toggleSwitchCount2 = 0;
+					this.node.style("stroke", "#fff")
+				             .style("stroke-width", 1.5);
+				    this.node2 = undefined;
+				    this.hostSelectedCount--;
+				}   
+				else {	 
+				var node = this.svg.selectAll(".node");
+				if (this.toggleSwitchCount2 % 2 === 0) {
+					this.node.style("stroke", "black")
+				     	     .style("stroke-width", 2.5);
+					d3.selectAll("#node2").text(" ");
+					this.node.append("text")
+    					.attr("x", 12)
+    					.attr("dy", "1.55em")
+    					.attr("id", "node2")
+    					.text(function(d) { return " source"; });
+					this.toggleSwitchCount2++;	
+				}
+				else {
+    				d3.selectAll("#node2").text(" ");
+    				this.node.append("text")
+    					.attr("x", 12)
+    					.attr("dy", "1.55em")
+    					.attr("id", "node2")
+    					.text(function(d) { return " destination"; });
+					
+					this.toggleSwitchCount2++;
+				}
+				}
+		},
+		
+		exitViewTrafficMode: function () {
+			$(function() { $("#exitDiv").hide(); });
+			$(function() { $("#viewDiv").show(); });
+			
+			d3.selectAll(".node").on("click", null);
+			d3.selectAll(".node fixed").on("click", null);
+			
+			this.svg.selectAll(".node").style("stroke", "#fff")
+				                       .style("stroke-width", 1.5);
+			
+			d3.selectAll("#node1").text(" ");
+			d3.selectAll("#node2").text(" ");
+			this.node1 = undefined;
+			this.node2 = undefined;
+			this.hostSelectedCount = 0;
+			this.toggleSwitchCount1 = 0;
+			this.toggleSwitchCount2 = 0;
+			this.clearLabelCount1 = 0;
+			this.clearLabelCount2 = 0;
+			
+			d3.selectAll("path.link").style("stroke", "#999")
+									 .style("stroke-width", "1.0px");
+			
+			d3.selectAll(".aClass").remove();
+		},
+		
+		displayPath: function () {
+			console.log(this.node1.text());
+			console.log(this.node2.text());
+			console.log(this.node1);
+			//console.log("5");
+			//console.log(this.switchLinks);
+			var label1 = this.node1.text().trim();
+			var label2 = this.node2.text().trim();
+			var newLabel1 = label1;
+			var newLabel2 = label2;
+			
+			for (var i = label1.length; i >= 0; i--){
+				if (label1.charAt(i) == " ")
+					newLabel1 = label1.substring(i, label1.length).trim();
+			}
+			//console.log(newLabel1);
+			
+			for (var i = label2.length; i >= 0; i--){
+				if (label2.charAt(i) == " ")
+					newLabel2 = label2.substring(i, label2.length).trim();
+			}
+			//console.log(newLabel2);
+			
+			/*if (newLabel1 == "destination"){
+				$(this.node2[0]).tipsy({'original-title': ""}); 
+				$(this.node1[0]).tipsy({ 
+       	 			gravity: 'n', 
+        			html: true, 
+        			title: function() { console.log("blue"); return "blue"; },
+      			});
+			}
+			else if (newLabel2 == "destination") {
+				$(this.node1[0]).tipsy({'original-title': ""}); 
+				$(this.node2[0]).tipsy({ 
+       	 			gravity: 'n', 
+        			html: true, 
+        			title: function() { console.log("red"); return "red"; },
+      			});
+			}
+			else {
+			 	console.log("nothing");
+			}*/
+			
+			
+			//create a mapping of host ip's to mac's
+			var self = this;
+			_.forEach(this.hosts.models, function(item) {
+				if(item.attributes['ipv4'] === "ip not found"){
+    				var mac = item.attributes['mac'][0]; 
+    				self.ipToMac[mac] = item.attributes['ipv4'];
+    			} 
+    			else{
+    				var mac = item.attributes['mac'][0]; 
+    				self.ipToMac[mac] = item.attributes['ipv4'][0];
+    			}
+			}, this);
+			//console.log(this.ipToMac);
+			var node1MAC = this.node1.data()[0].id;
+			var node2MAC = this.node2.data()[0].id;
+			var node1IP = self.ipToMac[node1MAC];
+			var node2IP = self.ipToMac[node2MAC];
+			//console.log(node1IP);
+			//console.log(node2IP);
+			
+			this.pathObj = {};
+			
+			if ((newLabel1 == "source" && newLabel2 == "destination") || (newLabel1 == "destination" && newLabel2 == "source")){
+				var flowCollector = new FlowStatCollectorCollection({model: FlowStatCollectorModel});
+				flowCollector.fetch().complete(function () {
+					console.log("fetching flow stats");
+					var self2 = self;
+					self.i = 0;
+					d3.selectAll(".aClass")
+  								  .remove();
+					_.forEach(flowCollector.models, function(item) {
+						//console.log("tests");
+						//console.log(JSON.stringify(item));
+						//console.log(item.attributes.srcIp);
+						//console.log(item.attributes.dstIp);
+						
+						if (newLabel1 == "source"){
+							if (item.attributes.srcIp == node1IP && item.attributes.dstIp == node2IP){
+								console.log(JSON.stringify(item));
+								self.i++;
+								var pathName = "Path " + self.i;
+  								self2.pathObj[pathName] = item.attributes.path;
+  								console.log(self2.pathObj[pathName]);
+								d3.select(".flowPath")
+  								  .append("a")
+  								  .attr("id", function(d, i) { return 'Switch IP: ' + item.attributes['srcIp'] + 
+          					      														   '</br>DestinationIP: ' + item.attributes['dstIp'] + 
+          					       															'</br>Source Port: ' + item.attributes['srcPort'] +
+          					       															'</br>Destination Port: ' + item.attributes['dstPort'] +
+          					       															'</br>Capacity: ' + item.attributes['capacity'] +
+          					       															'</br>Packet Rate: ' + item.attributes['packetRate'] +
+          					       															'</br>Bit Rate: ' +item.attributes['bitRate']; })
+  								  .attr("class", "aClass")
+  								  .html(node1IP + " port " + item.attributes.srcPort + " to " + node2IP + " port " + item.attributes.dstPort)
+  								  .on("click", function () {showLinks(node1MAC, node2MAC, self2.pathObj[pathName]); })
+  								  .append("br");
+							}
+						}
+						else{
+							if (item.attributes.srcIp == node2IP && item.attributes.dstIp == node1IP){
+								console.log(JSON.stringify(item));
+								self.i++;
+								var pathName = "Path " + self.i;
+  								self2.pathObj[pathName] = item.attributes.path;
+  								console.log(self2.pathObj[pathName]);
+								d3.select(".flowPath")
+  								  .append("a")
+  								  .attr("id", function(d, i) { return 'Switch IP: ' + item.attributes['srcIp'] + 
+          					      														   '</br>DestinationIP: ' + item.attributes['dstIp'] + 
+          					       															'</br>Source Port: ' + item.attributes['srcPort'] +
+          					       															'</br>Destination Port: ' + item.attributes['dstPort'] +
+          					       															'</br>Capacity: ' + item.attributes['capacity'] +
+          					       															'</br>Packet Rate: ' + item.attributes['packetRate'] +
+          					       															'</br>Bit Rate: ' +item.attributes['bitRate']; })
+  								  .attr("class", "aClass")
+  								  .html(node2IP + " port " + item.attributes.srcPort + " to " + node1IP + " port " + item.attributes.dstPort)
+  								  .on("click", function () {showLinks(node2MAC, node1MAC, self2.pathObj[pathName]); })
+  								  .append("br");
+							}
+						}
+						
+						function showLinks(source, target, path) { 
+							console.log(document.getElementById(target));
+							/*document.getElementById(target).tipsy({ 
+       	 			gravity: 'n', 
+        			html: true, 
+        			title: function() { return "red"; },
+      			});*/
+							d3.selectAll("path.link").style("stroke", "#999")
+													 .style("stroke-width", "1.0px");
+							console.log(path); 
+							//console.log(d3.selectAll(".node")._data_);
+							/*_.forEach(d3.selectAll("path.link")[0], function(item) {
+								//console.log(d3.select(item).attr("original-title"));
+								console.log(item.attributes);
+							}, this);*/
+							var i = 0;
+							var finalPath = [];
+							var midLinksArray = [];
+							var testArray = [];
+							var testObj = {};
+							_.forEach(self2.switchLinks.models, function(item) {
+								var midLinks = {};
+								var testObj = {};
+								var src = item.attributes['src-switch'];
+								if ($.inArray(src, path) > -1){
+									var index = $.inArray(src, path);
+									console.log(index);
+									testObj[path[index]] = item.attributes['dst-switch'];
+									console.log(testObj);
+								}
+								midLinks[src] = item.attributes['dst-switch'];
+								midLinksArray[i] = midLinks;
+								testArray[i] = testObj;
+								i++;
+							}, this);
+							console.log(testArray);
+							
+							var al = d3.selectAll("path.link").filter(function(d) {
+								//console.log(i);
+								if(d.source != undefined){
+								console.log(d);
+								console.log(d.source.id);
+								console.log(d.target.id);
+								console.log(source);
+								console.log(target);
+								console.log(path[0]);
+								
+								if (d.target.id == source && d.source.id == path[0]){
+									console.log(true);
+									i++;
+								
+								}
+								var dst = d.target.id;
+								var src = d.source.id;
+								console.log(dst);
+								console.log(midLinksArray[0][dst]);
+								var testObj = {};
+								
+				
+								
+								
+								for (var j = 0; j < midLinksArray.length; j++){
+									for (var k = 0; k < path.length; k++){
+										//jkl
+									}
+								}
+								
+								var src = d.source.id;
+								var dst = d.target.id; 
+								
+								
+								if (dst == source && src == path[0])
+									return dst == source && src == path[0];
+									
+								else if (dst == target && src == path[path.length - 1])
+									return dst == target && src == path[path.length - 1];
+								
+								else{
+								for (var n = 0; n < testArray.length; n++) {
+									if (testArray[n][src] == d.target.id)
+										return true;
+								}
+								}
+								
+                				}
+                				
+            				});
+            				al.each(function() {
+                					d3.select(this).style("stroke", "#32cd32")
+                								   .style("stroke-width", "1.0px");
+                					//console.log(this);
+                					});
+                					
+            				console.log(al[0]);
+						}
+						
+					}, this);
+					console.log(self.pathObj);	
+				}, this);
+				
+			}
 		},
 				
 	});

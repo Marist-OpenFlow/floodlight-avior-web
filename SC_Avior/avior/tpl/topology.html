@@ -1,7 +1,9 @@
-
 <div style="width: 100%; overflow: hidden;">
     <div id="buttonGroup" style="width: window.innerWidth/2; float: left;" data-role="controlgroup" data-type="horizontal" data-mini="true">
-	<h3> Network Topology </h3>
+
+	
+	
+	<h3> Network Topology </h3> 
 	<p id="showLabels" data-role="button" data-icon="false" data-theme="b">Show Labels</p>
 	<select name="nodeList" id="nodeList" data-icon="false" data-theme="b" style="width: 100px;">
 		<option value="nodeList">Local View</option>
@@ -13,9 +15,22 @@
     														return window.innerWidth/2;
     													else 
     														return 0;};"></div>
+    
 </div>
 
 <div class="leftLegend" id="legendDiv" style="display:none;"></div>
+
+<div id="viewDiv" style="display:none">
+<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+		<p id="viewTrafficButton" data-role="button" data-icon="false" data-theme="b" style="float:left">View Traffic Mode</p>
+</div>
+</div>
+
+<div id="exitDiv" style="display:none">
+<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+		<p id="exitViewTrafficButton" data-role="button" data-icon="false" data-theme="b" style="float:left">Exit View Traffic Mode</p>
+</div>
+</div>
 
 <div id="doneDiv" style="display:none">
 	<div data-role="controlgroup" data-type="horizontal" data-mini="true">
@@ -23,6 +38,9 @@
 	</div>
 </div>
 
-<div class="outer">
+<div class="flowPath">
+</div>
+
+<div class="outer"> 
     <div class="inner"></div>
 </div>
