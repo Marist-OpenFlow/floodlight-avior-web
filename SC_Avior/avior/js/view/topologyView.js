@@ -37,6 +37,7 @@ define([
 			this.clearLabelCount1 = 0;
 			this.clearLabelCount2 = 0;
 			this.hostSelectedCount = 0;
+			this.edges = [];
 			this.switchLinks;
 			this.interval;
 			this.node1;
@@ -146,7 +147,7 @@ define([
 
     		var node = this.svg.selectAll(".node");
 			
-			var edges = [];
+			//var edges = [];
 				
 			//add double links for testing of multiple connections between nodes
 			/*switchLinks.add([{"src-switch":"00:00:00:00:00:00:00:02","src-port":131072,"dst-switch":"00:00:00:00:00:00:00:01","dst-port":196608,"type":"internal","direction":"bidirectional"},
@@ -173,9 +174,9 @@ define([
     											 })[0];
 	
     			// Add the edge to the array
-   		 		edges.push({source: sourceNode, sourcePort: e.attributes['src-port'], target: targetNode, targetPort: e.attributes['dst-port'], curve: 1, seen: 0, direction: e.attributes['direction']});
+   		 		this.edges.push({source: sourceNode, sourcePort: e.attributes['src-port'], target: targetNode, targetPort: e.attributes['dst-port'], curve: 1, seen: 0, direction: e.attributes['direction']});
    		 		}
-   		 		//console.log(edges);
+   		 		//console.log(this.edges);
 			}, this);
 			
 			// Create source and target links based on dpid instead of index
@@ -198,7 +199,7 @@ define([
     			// Add the edge to the array
     			if (targetNode != undefined){
     				targetNode = e;
-   		 			edges.push({source: sourceNode, sourcePort: e.attributes.attachmentPoint[0].port, target: targetNode, curve: 1, seen: 0, direction: 'bidirectional'});
+   		 			self.edges.push({source: sourceNode, sourcePort: e.attributes.attachmentPoint[0].port, target: targetNode, curve: 1, seen: 0, direction: 'bidirectional'});
    		 		}
    		 		//}
 			}, this);
@@ -209,7 +210,7 @@ define([
   			
   			this.force
       			.nodes(this.switches.models)
-      			.links(edges)
+      			.links(this.edges)
       			.size(graphCenter) 
       			.on("end", end)
       			.start();
@@ -242,7 +243,7 @@ define([
     							 .attr('d', 'M10,-5L0,0L10,5');
     
     		var visiblePath = this.svg.append("g").selectAll("path")
-    				   		   .data(edges)
+    				   		   .data(this.edges)
     				   		   .enter()
     				   		   .append("svg:path")
     				   		   .attr("class", "link")
@@ -264,7 +265,7 @@ define([
     		
     		//used to widen pointer-event area for displaying tooltips							
     		var invisiblePath = this.svg.append("g").selectAll("path")
-    				   		   .data(edges)
+    				   		   .data(this.edges)
     				   		   .enter()
     				   		   .append("svg:path")
     				   		   .attr("class", "link2")
@@ -473,6 +474,7 @@ define([
 			function dragstart(d) {
   				d.fixed = true;
   				d3.select(this).classed("fixed", true);
+  				console.log(d);
 			}									                    		      	                  		          	                  	  		
         		
 		},
@@ -490,6 +492,8 @@ define([
 					var key = item2.ofphysicalPort.portNumber;
 					if (!(key in this.obj))
 						this.obj[key] = value;
+					console.log(this.obj);
+					console.log(item2);
 				}, this);
 			}, this);
 			var self = this;
@@ -504,6 +508,7 @@ define([
 						portNumber += item.attributes.portId[i];
 					}
 					item.set("portNumber", self.obj[portNumber]);
+					console.log(item);
 					portNumber = "";
 				}, this);
         								
@@ -512,7 +517,13 @@ define([
           																		this.sourceStats;
           																		this.targetStats;
         		                                                             	_.forEach(collector.models, function(item) {
+        		                                                             				console.log(item);
+          																					console.log(item.attributes.portNumber);
+          																					console.log(d);
           																					if(item.attributes.switchId == d.source.id && item.attributes.portNumber == d.sourcePort){
+          																						console.log(item);
+          																						console.log(item.attributes.portNumber);
+          																						console.log(d);
           																						self.sourceStats = item;
           																					}
           																					if(item.attributes.switchId == d.target.id && item.attributes.portNumber == d.targetPort){
@@ -760,7 +771,12 @@ define([
 			this.svg.attr("transform",
             		"translate(" + this.shiftAmountx + "," + this.shiftAmounty + ")");
             		
+			//d3.selectAll(".node").data().fixed = false;
+			//d3.selectAll(".node").classed("fixed", false);       
+            		
             this.force.size([width+45, height/1.5])
+            		  .nodes(this.switches.models)
+      				  .links(this.edges)
     				  .charge(-700)
     			      .linkDistance(100)
     			      .start();
