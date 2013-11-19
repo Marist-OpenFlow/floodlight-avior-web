@@ -531,7 +531,7 @@ define([
           																					}
           																		}, this);
           																		
-          																		//console.log(this.sourceStats);
+          																		console.log(this.sourceStats);
           																		
           																	    if (this.targetStats != undefined){
           																			return '<u>Source</u>' + 
