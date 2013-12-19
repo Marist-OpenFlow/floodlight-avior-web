@@ -5,12 +5,16 @@ define([
 	"marionette",
 	"floodlight/topologyFl",
 	"model/topology",
-	"text!template/topology.html"
-], function($, _, Backbone, Marionette, TopologyCollection, Topology, topologyTpl){
+	"floodlight/portStatCollectorCollectionFl",
+	"model/portStatCollectorModel",
+	"text!template/topology.html",
+	"text!template/portCollectortpl.html",
+], function($, _, Backbone, Marionette, TopologyCollection, Topology, PortStatCollectorCollection, PortStatCollectorModel, topologyTpl, portCollTpl){
 	var TopologyView = Backbone.Marionette.ItemView.extend({
 		el: $('#content'),
 		
 		template: _.template(topologyTpl),
+		template2: _.template(portCollTpl),
 		
 		events: {
 			"click #showLabels": "toggleLabels",
@@ -21,51 +25,56 @@ define([
 		// accepts an array of switch dpids and hosts
 		// connected to the controller
 		initialize: function(s, h) {
-			console.log("init");
 			this.shiftAmountx = 0;
 			this.shiftAmounty = 0;
 			this.toggleCount = 0;
 			this.switches = s;
 			this.hosts = h;
-			_.forEach(s.models, function(item) {
-				//item.set("id", item.dpid);
-			}, this);
+			//this.obj = {};
+			var self = this;
+			
+			// SC specific..Get the mapping of longer port numbers to shorter ones
+			/*_.forEach(s.models, function(item) {
+				_.forEach(item.attributes.ports, function(item2) {
+					var value = item2.portNumber;
+					var key = item2.ofphysicalPort.portNumber;
+					if (!(key in this.obj))
+						this.obj[key] = value;
+				}, this);
+			}, this);*/
+			
 			_.forEach(this.hosts.models, function(item) {
 				var mac = item.get("mac")[0];
-				//console.log("HOST IDS");
-				//console.log(mac);
 				item.set("id", mac);
-				//console.log("ITEMS AFTER SETTING HOST ID");
-				//console.log(JSON.stringify(item));
-				
-					if (item.attributes.ipv4.length === 0) {
-						item.set("ipv4", "ip not found");
-					}
-					this.switches.push(item);
+				if (item.attributes.ipv4.length === 0) {
+					item.set("ipv4", "ip not found");
+				}
+				this.switches.push(item);
 			}, this);
 		},
 		
 		//render the legend and network topology using d3.js
 		render: function() {
-			//console.log("render");
 			var self = this;
 			this.switchLinks;
+			
+			//clear the content div in order to display the topology
 			$('#content').empty();
+			
+			//append the header and buttons
 			this.$el.append(this.template({coll: this.switches.toJSON()})).trigger('create');
 			
+			//display the legend
 			this.showLegend();
+			
 			var topology = new TopologyCollection({model: Topology});
 			
+			//get topology data and render the network graph
 			topology.fetch().complete(function () {
 				this.switchLinks = topology;
-				//console.log("LINKS");
-				//console.log(topology);
 				self.showTopo(topology);
         	}, this);
-			//console.log(JSON.stringify(this.switches));
-			_.forEach(this.switches.models, function(item) {
-				//console.log(item.id);
-			}, this);
+        	
         	return this;
 		},
 		
@@ -78,7 +87,7 @@ define([
 			this.force = d3.layout.force()
     			.size([width, height])
     			.charge(-700)
-    			.linkDistance(60)
+    			.linkDistance(70)
     			.on("tick", tick);
 
 			var drag = this.force.drag()
@@ -88,10 +97,7 @@ define([
     			.attr("width", width)
     			.attr("height", height)
     			.attr("class", "mainSVG")
-    			.attr("pointer-events", "all")
-    			.append("g")
-    			.call(d3.behavior.zoom().on("zoom", rescale))
-    			.append("g");
+    			.attr("pointer-events", "all");
     		
             function rescale() {}
     		
@@ -127,18 +133,19 @@ define([
             		d3.select(".inner").style("height", window.innerHeight + "px");
 			});
 
-			var link = this.svg.selectAll(".link"),
-    		node = this.svg.selectAll(".node");
+    		var node = this.svg.selectAll(".node");
 			
 			var edges = [];
 				
+			//add double links for testing of multiple connections between nodes
+			/*switchLinks.add([{"src-switch":"00:00:00:00:00:00:00:02","src-port":131072,"dst-switch":"00:00:00:00:00:00:00:01","dst-port":196608,"type":"internal","direction":"bidirectional"},
+			                 {"src-switch":"00:00:00:00:00:00:00:03","src-port":131072,"dst-switch":"00:00:00:00:00:00:00:01","dst-port":196608,"type":"internal","direction":"bidirectional"}]);*/
+				
 			// Create source and target links based on dpid instead of index
-			_.forEach(switchLinks.models, function(e) { 
-    			console.log(e);
-    			console.log(JSON.stringify(e));
+			_.forEach(switchLinks.models, function(e) {
     			// Get the source and target nodes
     			if (e.attributes['src-switch'] !== e.attributes['dst-switch']){
-    			//console.log(JSON.stringify(e));
+    			
     			var sourceNode = self.switches.filter(function(n) {
     												  	return n.attributes.dpid === e.attributes['src-switch']; 
     												  })[0],
@@ -147,7 +154,7 @@ define([
     											 })[0];
 	
     			// Add the edge to the array
-   		 		edges.push({source: sourceNode, target: targetNode});
+   		 		edges.push({source: sourceNode, sourcePort: e.attributes['src-port'], target: targetNode, targetPort: e.attributes['dst-port']});
    		 		}
    		 		
 			}, this);
@@ -157,8 +164,6 @@ define([
 			// THIS IS BECAUSE MININET RETURNS HOSTS THAT DO NOT HAVE AN IP 
 			// ADDRESS WHICH THEN ALSO DO NOT HAVE ATTACHMENT POINTS
 			_.forEach(this.hosts.models, function(e) {
-				//console.log(e);
-				//console.log(JSON.stringify(e));
     			// Get the source and target nodes
     			// UNCOMMENT THIS IF STATEMENT WHEN USING MININET!!
     			//if (e.attributes.ipv4.length > 0 && e.attributes.ipv4 !== "ip not found") {
@@ -172,25 +177,16 @@ define([
     											  	 	  })[0];
 
     			// Add the edge to the array
-    			console.log(sourceNode);
-    			console.log(targetNode);
-    			console.log(e);
-    			console.log("-----------------");
     			if (targetNode != undefined){
     				targetNode = e;
-   		 		edges.push({source: sourceNode, target: targetNode});
+   		 			edges.push({source: sourceNode, sourcePort: e.attributes.attachmentPoint[0].port, target: targetNode});
    		 		}
-   		 		
    		 		//}
 			}, this);
-			
-			console.log("EDGES");
-			console.log(edges);
-			//console.log("after edges");
+
 			var graphCenter = [];
 			graphCenter.push(width-45);
 			graphCenter.push(height / 1.5);
-  			//console.log("before force");
   			
   			this.force
       			.nodes(this.switches.models)
@@ -198,22 +194,44 @@ define([
       			.size(graphCenter) 
       			.on("end", end)
       			.start();
-      			
-			//console.log("after force");
-  			link = link.data(edges)
-    				   .enter().append("line")
-      				   .attr("class", "link");
-			//console.log("after links");
+			
+			//draw the triangle which represents the arrow for directed graph
+			this.svg.append("svg:defs").selectAll("marker")
+    						  	 .data([9])
+  								 .enter().append("svg:marker")
+    							 .attr("id", "Triangle")
+    							 .attr("viewBox", "0 -5 10 10")
+   	 							 .attr("refX", 27)
+    							 .attr("refY", -1.8)
+    							 .attr("markerWidth", 8)
+    							 .attr("markerHeight", 8)
+    							 .attr("orient", "auto")
+  								 .append("svg:path")
+    							 .attr("d", "M0,-5L10,0L0,5");
+    
+    		var path = this.svg.append("g").selectAll("path")
+    				   		   .data(edges)
+    				   		   .enter()
+    				   		   .append("svg:path")
+    				   		   .attr("class", "link")
+    				   		   .attr("marker-end", "url(#Triangle)")
+    				   		   .attr("fill", "none");
+        	
+        	this.displayTooltips();
+      
+    		this.svg.append("g")
+    			    .call(d3.behavior.zoom().on("zoom", rescale));
+
    			node = node.data(this.switches.models)
    					   .enter().append("g")
    					   .attr("class", "node")
    					   .attr("id", function(d) { if (d.attributes.dpid === undefined) return d.attributes['mac'][0]; else return d.attributes.dpid; })
       				   .call(drag);
-      		//console.log("after nodes");
+ 
       		node.append("circle")
       				   .attr("r", 12)
       				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return "grey"; else return "blue"; });
-
+			
 			var self = this;
 			
 			// At the end of the layout simulation, move nodes laying
@@ -236,7 +254,6 @@ define([
     				return a - b;
 				}
 
-				//console.log("force ended");
 				var outOfBoundsx = [];
 				var outOfBoundsy = [];
 				
@@ -294,15 +311,19 @@ define([
 				self.force.on("end", null);
 			}
 			
-			// Runs the force layout simulation one step
+			// Runs the force layout simulation one step		
 			function tick() {
-  				link.attr("x1", function(d) { return d.source.x; })
-      				.attr("y1", function(d) { return d.source.y; })
-      				.attr("x2", function(d) { return d.target.x; })
-      				.attr("y2", function(d) { return d.target.y; });
-      			
-      		    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-			}	
+  			    path.attr("d", function(d) {
+    				var dx = d.target.x - d.source.x,
+        				dy = d.target.y - d.source.y,
+        				dr = Math.sqrt(dx * dx + dy * dy);
+    				return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+  				});
+
+  				node.attr("transform", function(d) {
+    				return "translate(" + d.x + "," + d.y + ")";
+  				});
+  			}
 			
 			// Allows for a sticky force directed graph
 			function dragstart(d) {
@@ -310,6 +331,87 @@ define([
   				d3.select(this).classed("fixed", true);
 			}									                    		      	                  		          	                  	  		
         		
+		},
+		
+		// SC specific, display tooltips containing port stats for each link
+		displayTooltips: function() {
+			this.obj = {};
+			var collector = new PortStatCollectorCollection({model: PortStatCollectorModel});
+			this.portStats;
+			
+			// SC specific..Get the mapping of longer port numbers to shorter ones
+			_.forEach(this.switches.models, function(item) {
+				_.forEach(item.attributes.ports, function(item2) {
+					var value = item2.portNumber;
+					var key = item2.ofphysicalPort.portNumber;
+					if (!(key in this.obj))
+						this.obj[key] = value;
+				}, this);
+			}, this);
+			var self = this;
+			
+			// Get port statistics and initialize tipsy tooltip functionality
+			collector.fetch().complete(function () {
+				this.portStats = collector;
+				var portNumber = "";
+				
+				_.forEach(collector.models, function(item) {
+					for (var i = 0; i < item.attributes.portId.length && $.isNumeric(item.attributes.portId[i]); i++){
+						portNumber += item.attributes.portId[i];
+					}
+					item.set("portNumber", self.obj[portNumber]);
+					portNumber = "";
+				}, this);
+				
+				// Display tooltips for each link showing port/link statistics	
+				$('path').tipsy({ 
+       	 			gravity: 'n', 
+        			html: true, 
+        			title: function() {
+          					var d = this.__data__;
+          					var self = this;
+          					this.sourceStats;
+          					this.targetStats;
+          					
+          					_.forEach(collector.models, function(item) {
+          						if(item.attributes.switchId == d.source.id && item.attributes.portNumber == d.sourcePort){
+          							self.sourceStats = item;
+          						}
+          						if(item.attributes.switchId == d.target.id && item.attributes.portNumber == d.targetPort){
+          							self.targetStats = item;
+          						}
+          					}, this);
+
+          					if (this.targetStats != undefined){
+          						return '<u>Source</u>' + 
+          						   '</br>Switch ID: ' + d.source.id + 
+          					       '</br>Port ID: ' + this.sourceStats.attributes.portId + 
+          					       '</br>Port Speed: ' + this.sourceStats.attributes.portSpeed +
+          					       '</br>Packet Rate: ' + this.sourceStats.attributes.packetRate +
+          					       '</br>Bit Rate: ' + this.sourceStats.attributes.bitRate +
+          					       '</br>Flow Count: ' + this.sourceStats.attributes.flowCount +
+          					       '</br></br><u>Destination</u>' +
+          					       '</br>Destination ID: ' + d.target.id +
+          					       '</br>Port ID: ' + this.targetStats.attributes.portId + 
+          					       '</br>Port Speed: ' + this.targetStats.attributes.portSpeed +
+          					       '</br>Packet Rate: ' + this.targetStats.attributes.packetRate +
+          					       '</br>Bit Rate: ' + this.targetStats.attributes.bitRate +
+          					       '</br>Flow Count: ' + this.targetStats.attributes.flowCount;
+          					}
+          					else{
+          						return '<u>Source</u>' + 
+          						   '</br>Switch ID: ' + d.source.id + 
+          					       '</br>Port ID: ' + this.sourceStats.attributes.portId + 
+          					       '</br>Port Speed: ' + this.sourceStats.attributes.portSpeed +
+          					       '</br>Packet Rate: ' + this.sourceStats.attributes.packetRate +
+          					       '</br>Bit Rate: ' + this.sourceStats.attributes.bitRate +
+          					       '</br>Flow Count: ' + this.sourceStats.attributes.flowCount +
+          					       '</br></br><u>Destination</u>' +
+          					       '</br>Destination Host: ' + d.target.id;
+          					}
+        			   	   }
+      			});
+        	}, this);
 		},
 		
 		// On clicking the show label button, display 
@@ -397,9 +499,7 @@ define([
 			var height = window.innerHeight;
 			var width = window.innerWidth-45;
 			var nodeID = $(e.currentTarget).val();
-			//console.log(nodeID);
 			var nodeData = this.switches.get(nodeID);
-			//console.log(nodeData);
 			this.x = nodeData.px;
 			this.y = nodeData.py;
 			var self = this;
@@ -408,13 +508,24 @@ define([
 			allNodes.style("stroke", "#fff")
 				    .style("stroke-width", 1.5);
 				    
-			this.node = this.svg.selectAll("g").filter(function(d, i) { return i===nodeData.index; });
+			this.node = this.svg.selectAll("g").filter(function(d, i) { if(d != undefined) return d.id==nodeData.id; });
+			
 			this.node.style("stroke", "black")
-				.style("stroke-width", 2.5);
+				     .style("stroke-width", 2.5);
+			
 			var nodesToHide = [];
-			var linksToHide = this.svg.selectAll(".link").filter(function(d, i) { if (d.source.px === self.x) nodesToHide.push(d.target.px); if (d.target.px === self.x) nodesToHide.push(d.source.px); return d.source.px === self.x || d.target.px === self.x || d.source.py === self.y || d.target.py === self.y; });
+			
+			var linksToHide = this.svg.selectAll(".link").filter(function(d, i) { 
+																	if (d.source.px === self.x) 
+																		nodesToHide.push(d.target.px); 
+																	if (d.target.px === self.x) 
+																		nodesToHide.push(d.source.px); 
+																	return d.source.px === self.x || d.target.px === self.x || d.source.py === self.y || d.target.py === self.y; 
+																 });
 			
 			nodesToHide.push(self.x);
+			
+			//hide nodes not directly connected to selected node
 			var hiddenNode = this.svg.selectAll(".node")
 							     .style("opacity", function(d,i) {
 							     						 var found = false;
@@ -425,7 +536,8 @@ define([
         												 if (!found)
         												 	return 0;
 							     				    });
-							     				    
+			
+			//hide links not directly connected to selected node				     				    
 			var hiddenLink = this.svg.selectAll(".link")
 							         .style("opacity", function(d,i) {
 							     							if (d.source.px === self.x || d.target.px === self.x)
@@ -433,7 +545,13 @@ define([
         												 	else
         												 		return 0;
 							     				    });
-
+			
+			//re-size the marker
+			d3.select("#Triangle").attr("markerWidth", 7)
+			 					  .attr("markerHeight", 7)
+			 					  .attr("refX", 28)
+			 					  .attr("refY", -3.6);
+			
 			var trans = [];
 			trans.push(((width/2)-(self.x*1.5)) - 18);
 			trans.push(((height/2)-(self.y*1.5)) - ((height/2) * .55));
@@ -463,6 +581,11 @@ define([
 			
             this.node.style("stroke", "#fff")
 				.style("stroke-width", 1.5);
+				
+			d3.select("#Triangle").attr("markerWidth", 8)
+			 					  .attr("markerHeight", 8)
+			 					  .attr("refX", 27)
+			 					  .attr("refY", -2.1);
 				
 			var trans = [];
 			trans.push(0);

@@ -15,12 +15,11 @@ define([
 	"view/statusview",
 	"view/uptimeview",
 	"view/flowEditor",
-	"view/firewallEditor",
 	"view/hostview",
 	"view/topologyView",
 	"text!template/login.html",
 	"text!template/controller.html",
-], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, FirewallEditor, HostView, TopologyView, loginTpl, controllerTpl){
+], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, HostView, TopologyView, loginTpl, controllerTpl){
 	/* Structure used to navigate through views */
 	var Router = Marionette.AppRouter.extend({
 		template: _.template(controllerTpl),
@@ -38,6 +37,7 @@ define([
 			"qos": "qosRoute",
 			"vfilter": "vfilterRoute",
 			"loadbalancer": "loadbalancerRoute",
+			"*path":  "home",
 		},
 		
 		 home: function() {
@@ -175,18 +175,11 @@ define([
         
         firewallRoute: function() {
         	$('#content').empty();
-			$('#content').prepend('<img class="innerPageLoader" src="img/ajax-loader.gif" />');
-
-			// Clears out any previous intervals
+        	
+        	// Clears out any previous intervals
 			clearInterval(this.interval);
-
-			if (this.switchCollection === undefined){
-				var switchDetail = new SwitchDetail({model: new Switch});
-				switchDetail.delegateEvents(switchDetail.events);
-				switchDetail.listenTo(switchDetail.switchStats, "sync", function () {new FirewallEditor(switchDetail.collection, true);});
-			}
-			else
-				new FirewallEditor(this.switchCollection, true);
+			
+			$('#content').append("Firewall Coming Soon!");
         },
         
         topologyRoute: function () {
@@ -219,16 +212,30 @@ define([
 			else if(this.switchCollection.models.length > 0 && this.hostCollection.models.length > 0 && this.topology === undefined){
 				this.topology = new TopologyView(self.switchCollection, self.hostCollection);
 				this.topology.render();
+				//only call fetch when the view is visible
+				this.interval = setInterval(function(){
+						this.topology.displayTooltips();
+				}, 2000);
 			}
 			 
-			else if (this.topology != undefined)
+			else if (this.topology != undefined){
 				this.topology.render();
+				//only call fetch when the view is visible
+				this.interval = setInterval(function(){
+						this.topology.displayTooltips();
+				}, 2000);
+			}
 			
 			else{
 				//create graph nodes based on switch and host data
 				this.hostview.listenTo(this.hostview.collection, "sync", function () {
 					this.topology = new TopologyView(self.switchCollection, self.hostCollection);
 					this.topology.render();
+					var self2 = this;
+					//only call fetch when the view is visible
+					this.interval = setInterval(function(){
+						self2.topology.displayTooltips();
+					}, 2000);
 				});
 			}
 			
@@ -246,6 +253,9 @@ define([
 					//create graph nodes based on switch and host data
 					self.topology = new TopologyView(self.switchCollection, self.hostCollection);											
 					self.topology.render();
+					this.interval = setInterval(function(){
+						self.topology.displayTooltips();
+					}, 2000);
 			}
         },
         

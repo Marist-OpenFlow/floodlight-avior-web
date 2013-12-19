@@ -76,11 +76,13 @@ define([
 			else {
   				document.getElementById("content").innerHTML = "Sorry, your browser does not support HTML5...";
   			}
+
+
 		},
 		
 		validate: function() {
 			var self = this;
-			if ( $("#Lusername").val() === "admin" && $("#Lpassword").val() === "admin" ){
+			if ( $("#Lusername").val() === "" && $("#Lpassword").val() === "" ){
 				document.getElementById("leftpanel3").style.display='block';
 				document.getElementById("logout").style.display='block';
 				var router = new Router(); 
