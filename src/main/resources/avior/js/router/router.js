@@ -10,6 +10,7 @@ define([
 	"floodlight/status",
 	"floodlight/uptime",
 	"floodlight/hostCollectionFl",
+	"floodlight/testFL",
 	"view/memoryview",
 	"view/modulesview",
 	"view/statusview",
@@ -18,9 +19,10 @@ define([
 	"view/firewallEditor",
 	"view/hostview",
 	"view/topologyView",
+	"view/testView",
 	"text!template/login.html",
 	"text!template/controller.html",
-], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, FirewallEditor, HostView, TopologyView, loginTpl, controllerTpl){
+], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, Test, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, FirewallEditor, HostView, TopologyView, TestView, loginTpl, controllerTpl){
 	/* Structure used to navigate through views */
 	var Router = Marionette.AppRouter.extend({
 		template: _.template(controllerTpl),
@@ -53,6 +55,7 @@ define([
 			this.uptimeview = new UptimeView({model: new Uptime});
 			this.memoryview = new MemoryView({model: new Memory});
 			this.modulesview = new ModulesView({model: new Modules});
+
 		
 			// Delegate events for controller views
 			this.statusview.delegateEvents(this.statusview.events);
@@ -65,6 +68,7 @@ define([
 			$('#statusview').append(this.statusview.render().el);
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
+	
 			
 			var self = this;
 			
@@ -91,18 +95,22 @@ define([
 			this.uptimeview = new UptimeView({model: new Uptime});
 			this.memoryview = new MemoryView({model: new Memory});
 			this.modulesview = new ModulesView({model: new Modules});
+	
+
 		
 			// Delegate events for controller views
 			this.statusview.delegateEvents(this.statusview.events);
 			this.uptimeview.delegateEvents(this.uptimeview.events);
 			this.memoryview.delegateEvents(this.memoryview.events);
 			this.modulesview.delegateEvents(this.modulesview.events);
+			
 				
 			// Link controller aspects to id tags
 			$('#uptimeview').append(this.uptimeview.render().el);
 			$('#statusview').append(this.statusview.render().el);
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
+	
 			
 			var self = this;
 			
@@ -112,6 +120,7 @@ define([
 					self.statusview.model.fetch();
 					self.memoryview.model.fetch();
 				}, 2000);
+		
         },
         
         hostRoute: function() {
@@ -261,6 +270,8 @@ define([
 			$('#content').empty();
 			// Clears out any previous intervals
 			clearInterval(this.interval);
+			
+			//this.testView = new TestView({model: new Test});
 			
 			$('#content').append("QoS Coming Soon!");
         },

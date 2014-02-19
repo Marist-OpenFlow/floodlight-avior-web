@@ -5,12 +5,14 @@ define([
 	"floodlight/firewallModFl",
 	"text!template/firewallEditor.html",
 	"text!template/actionSelect.html",
-], function($, _, Backbone, FirewallMod, firewallEditor, actionSelect){
+	"text!template/controller.html",
+], function($, _, Backbone, FirewallMod, firewallEditor, actionSelect, controllerTpl){
 	var FirewallEdView = Backbone.View.extend({
 		el: $('#content'),
 		
 		template1: _.template(firewallEditor),
 		template2: _.template(actionSelect),
+		template3: _.template(controllerTpl),
 
 		initialize: function(collec, display){
 			this.toggleCount = 0;
@@ -31,8 +33,11 @@ define([
 			"click #getRules": "pushRule",
 			"click #removeRule": "deleteRule",
 			"click #removeAllRules": "deleteRules",
+			//"change #flip-2": "decideRules",
 			"click #enableRules": "enableRules",
+			"click #firewallButtonOff": "enableRules",
 			"click #disableRules": "disableRules",
+			"click #firewallButtonOn": "disableRules",
 			"click #refreshRules": "refreshRules",
 			"click #clearRule": "clearRule",
 			"change input": "validate",
@@ -198,6 +203,11 @@ define([
     	  		console.log(JSON.stringify(deleteRules.get("1")));
     	 	});
 		},
+		
+		//decideRules: function(){
+			//if($('#flip-2').value === "on"){"disableRules";}
+			//else{"enableRules";}	
+		//}
 		
 		// move to toggle on/off buttons in the upper right hand corner
 		enableRules: function () {
