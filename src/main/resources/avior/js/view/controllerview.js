@@ -7,8 +7,7 @@ define([
 ], function($, _, Backbone, FirewallMod, controllerTpl){
 	var ControllerView = Backbone.View.extend({
 		el: $('#content'),
-		tagName:  "option",
-		
+
 		template1: _.template(controllerTpl),
 
 		events: {
@@ -16,13 +15,24 @@ define([
 			// then check the value property of #flip-2 element
 			// and if "on" then call enableRules, otherwise call disableRules
 			// $('#flip-2').value
-			"change select": "decideRules",
+			"change #flip-2": "decideRules"
 		},
-		//decides which firewall function to call
-		decideRules: function(){
-			if($('#flip-2').value === "on"){"disableRules";}
-			else{"enableRules";}	
-		}
+		
+		initialize: function(collec, display){
+			this.toggleCount = 0;
+			console.log(window.innerHeight);
+			console.log(window.outerHeight);
+			this.nameList = new Object;
+			this.textFields = new Array;
+			this.j = 0;
+			this.collection = collec;
+			//console.log(this.collection);
+			if (display)
+				this.render();
+			//this.listStaticFlows();
+			
+		},
+		
 		// move to toggle on/off buttons in the upper right hand corner
 		enableRules: function () {
 			var op = "enable";
@@ -35,6 +45,13 @@ define([
 			var op = "disable";
 			var disableRules = new FirewallMod(op);
 			disableRules.fetch();
+		},
+		
+		//decides which firewall function to call
+		decideRules: function(){
+			alert('C');
+			if($('#flip-2').value === "on"){"disableRules();"}
+			else{"enableRules();"}	
 		},
 		
 		render: function() {

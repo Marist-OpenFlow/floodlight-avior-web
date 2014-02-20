@@ -33,16 +33,16 @@ define([
 			"click #getRules": "pushRule",
 			"click #removeRule": "deleteRule",
 			"click #removeAllRules": "deleteRules",
-			//"change #flip-2": "decideRules",
 			"click #enableRules": "enableRules",
-			"click #firewallButtonOff": "enableRules",
+			//"click #firewallButtonOff": "enableRules",
 			"click #disableRules": "disableRules",
-			"click #firewallButtonOn": "disableRules",
+			//"click #firewallButtonOn": "disableRules",
 			"click #refreshRules": "refreshRules",
 			"click #clearRule": "clearRule",
 			"change input": "validate",
 			"change select": "validate",
 			"change #dpid": "showActions",
+			"change #flip-2": "decideRules",
 		},
 		
 		render: function() {
@@ -204,11 +204,6 @@ define([
     	 	});
 		},
 		
-		//decideRules: function(){
-			//if($('#flip-2').value === "on"){"disableRules";}
-			//else{"enableRules";}	
-		//}
-		
 		// move to toggle on/off buttons in the upper right hand corner
 		enableRules: function () {
 			var op = "enable";
@@ -221,6 +216,17 @@ define([
 			var op = "disable";
 			var disableRules = new FirewallMod(op);
 			disableRules.fetch();
+		},
+		
+		decideRules: function () {
+			if(document.getElementById('flip-2').value === "off"){
+			alert('Firewall has been disabled.');
+			this.disableRules();
+			}
+			else{
+			alert('Firewall is now enabled.');
+			this.enableRules();
+			}
 		},
 		
 		// re-fetches the rules as the exist on the server
