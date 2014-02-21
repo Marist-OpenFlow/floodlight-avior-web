@@ -85,7 +85,7 @@ define([
 				document.getElementById("logout").style.display='block';
 				var router = new Router(); 
 				Backbone.history.start();
-				window.location.href = "/avior/index.html#home";
+				window.location.href = "/avior/index.html#controllers";
 				localStorage.loggedIn = true;
 			}
 			else {

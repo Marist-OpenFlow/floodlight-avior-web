@@ -3,21 +3,17 @@ define([
 	"underscore",
 	"backbone",
 	"floodlight/firewallModFl",
+	"text!template/firewallEditor.html",
+	"text!template/actionSelect.html",
 	"text!template/controller.html",
-], function($, _, Backbone, FirewallMod, controllerTpl){
+], function($, _, Backbone, FirewallMod, firewallEditor, actionSelect, controllerTpl){
 	var ControllerView = Backbone.View.extend({
 		el: $('#content'),
 
-		template1: _.template(controllerTpl),
+		template1: _.template(firewallEditor),
+		template2: _.template(actionSelect),
+		template3: _.template(controllerTpl),
 
-		events: {
-			// listen for change event (not click) on the #flip-2 element
-			// then check the value property of #flip-2 element
-			// and if "on" then call enableRules, otherwise call disableRules
-			// $('#flip-2').value
-			"change #flip-2": "decideRules"
-		},
-		
 		initialize: function(collec, display){
 			this.toggleCount = 0;
 			console.log(window.innerHeight);
@@ -31,6 +27,92 @@ define([
 				this.render();
 			//this.listStaticFlows();
 			
+		},
+
+		events: {
+			// listen for change event (not click) on the #firewallToggle element
+			// then check the value property of #firewallToggle element
+			// and if "on" then call enableRules, otherwise call disableRules
+			// $('#firewallToggle').value
+			"click #enableRules": "enableRules",
+			"click #disableRules": "disableRules",
+			"change #firewallToggle": "decideRules",
+		},
+		
+
+		render: function() {
+			//$('#container2').remove();
+			$('#content').empty();
+			this.$el.html(this.template1({coll: this.collection.toJSON()})).trigger('create');
+		},
+
+		validate: function(e){
+			
+			switch (e.currentTarget.id)
+			{
+				case "ruleName":
+					this.name = $(e.currentTarget).val();
+					//this.textFields[this.j] = e.currentTarget.id;
+					//this.j += 1;
+					break;
+				case "port": 
+					this.ingressport = $(e.currentTarget).val();
+					//this.textFields[this.j] = (e.currentTarget.id);
+					//this.j += 1;
+					break;
+				case "action": 
+					this.action = $(e.currentTarget).val();
+					//this.textFields[this.j] = (e.currentTarget.id);
+					//this.j += 1;
+					break;
+				case "priority": 
+					this.priority = $(e.currentTarget).val();
+					//this.textFields[this.j] = (e.currentTarget.id);
+					//this.j += 1;
+					break;
+				case "src-mac": 
+					this.srcmac = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
+					break;
+				case "dst-mac": 
+					this.dstmac = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
+					break;
+				case "ether-type": 
+					this.ethertype = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
+					break;
+				case "dst-ip": 
+					this.dstip = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
+					break;
+				case "src-ip": 
+					this.srcip = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
+					break;
+				case "protocol": 
+					this.protocol = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
+					break;
+				case "dst-port": 
+					this.dstport = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
+					break;
+				case "src-port": 
+					this.srcport = $(e.currentTarget).val();
+					this.textFields[this.j] = (e.currentTarget.id);
+					this.j += 1;
+					break;
+				default:
+					break;
+			}
 		},
 		
 		// move to toggle on/off buttons in the upper right hand corner
@@ -48,18 +130,16 @@ define([
 		},
 		
 		//decides which firewall function to call
-		decideRules: function(){
-			alert('C');
-			if($('#flip-2').value === "on"){"disableRules();"}
-			else{"enableRules();"}	
+		decideRules: function() {
+			if(document.getElementById('firewallToggle').value === "off"){
+			alert('Firewall has been disabled.');
+			this.disableRules();
+			}
+			else{
+			alert('Firewall is now enabled.');
+			this.enableRules();
+			}	
 		},
-		
-		render: function() {
-			//$('#container2').remove();
-			$('#content').empty();
-			this.$el.html(this.template1({coll: this.collection.toJSON()})).trigger('create');
-		},
-
 	});
 	return ControllerView;
 });

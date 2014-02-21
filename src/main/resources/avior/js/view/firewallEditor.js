@@ -34,15 +34,13 @@ define([
 			"click #removeRule": "deleteRule",
 			"click #removeAllRules": "deleteRules",
 			"click #enableRules": "enableRules",
-			//"click #firewallButtonOff": "enableRules",
 			"click #disableRules": "disableRules",
-			//"click #firewallButtonOn": "disableRules",
 			"click #refreshRules": "refreshRules",
 			"click #clearRule": "clearRule",
 			"change input": "validate",
 			"change select": "validate",
-			"change #dpid": "showActions",
-			"change #flip-2": "decideRules",
+			"change #dpid": "showActions",	
+			"change #firewallToggle": "decideRules",
 		},
 		
 		render: function() {
@@ -219,7 +217,7 @@ define([
 		},
 		
 		decideRules: function () {
-			if(document.getElementById('flip-2').value === "off"){
+			if(document.getElementById('firewallToggle').value === "off"){
 			alert('Firewall has been disabled.');
 			this.disableRules();
 			}
