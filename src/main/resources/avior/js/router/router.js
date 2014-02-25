@@ -68,6 +68,9 @@ define([
 			$('#statusview').append(this.statusview.render().el);
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
+			
+			var firewallEditor = new FirewallEditor({model: new Switch});	
+			new firewallEditor.initialize(this.switchCollection, false);	
 	
 			
 			var self = this;
