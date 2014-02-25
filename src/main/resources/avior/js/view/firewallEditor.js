@@ -219,10 +219,34 @@ define([
 		decideRules: function () {
 			if(document.getElementById('firewallToggle').value === "off"){
 			alert('Firewall has been disabled.');
+			
+			 $('.bool-slider .inset .firewall-button').click(function() {
+        	if (!$(this).parent().parent().hasClass('disabled')) {
+            if ($(this).parent().parent().hasClass('true')) {
+                $(this).parent().parent().addClass('false').removeClass('true');
+            } else {
+                $(this).parent().parent().addClass('true').removeClass('false');
+           						 }
+        					}
+    				});
+			
 			this.disableRules();
+			
 			}
 			else{
 			alert('Firewall is now enabled.');
+			
+			 $('.bool-slider .inset .firewall-button').click(function() {
+        	if (!$(this).parent().parent().hasClass('disabled')) {
+            if ($(this).parent().parent().hasClass('true')) {
+                $(this).parent().parent().addClass('false').removeClass('true');
+            } else {
+                $(this).parent().parent().addClass('true').removeClass('false');
+           						 }
+        					}
+    				});
+			
+			
 			this.enableRules();
 			}
 		},
