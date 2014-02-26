@@ -28,8 +28,8 @@ define([
 			this.toggleCount = 0;
 			this.switches = s;
 			this.hosts = h;
-			hostcolor = "blue";
-      		switchcolor = "grey";
+			hostcolor = "grey";
+      		switchcolor = "blue";
 			_.forEach(s.models, function(item) {
 				//item.set("id", item.dpid);
 			}, this);

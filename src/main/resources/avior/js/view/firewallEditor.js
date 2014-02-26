@@ -26,8 +26,7 @@ define([
 			if (display)
 				this.render();
 			//this.listStaticFlows();
-			
-		},
+			},
 		
 		events: {
 			"click #getRules": "pushRule",
@@ -219,12 +218,40 @@ define([
 		decideRules: function () {
 			if(document.getElementById('firewallToggle').value === "off"){
 			alert('Firewall has been disabled.');
+			//optionID = 'disableRulesButton';
 			this.disableRules();
 			}
-			
 			else{
 			alert('Firewall is now enabled.');
+			//optionID = 'enableRulesButton';
 			this.enableRules();
+			}
+		},
+		
+		//uses backbonejs.org to query firewall, get that value, and decide what the button should look like based on that
+		buttonTrack: function () {
+			//NOTE: this function is under construction, if you want to test it, make sure it's in events ^ up top
+			//REST call: try http://localhost:8080/wm/firewall/module/status/json to see this called in browser
+			var op = "status";
+			var firewallStatus = new FirewallMod(op);
+			firewallStatus.fetch();
+			
+			//(look up .get on backbonejs.org, i think this should work (except it doesn't right now))
+			var stat = firewallStatus.get("result");
+    	  	//fStatus = JSON.stringify(stat);
+  			
+  			//seeing what the value is
+  			alert(stat);
+  			
+  			//the button's visual style changes based on that
+			if(fStatus === "firewall disabled"){
+			document.getElementById('enableRulesButton').selected="selected";
+			this.decideRules();
+			}
+			else
+			{
+			document.getElementById('disableRulesButton').selected="selected";
+			this.decideRules();
 			}
 		},
 		
