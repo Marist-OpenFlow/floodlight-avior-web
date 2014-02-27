@@ -3,6 +3,7 @@ define([
 	"underscore",
 	"backbone",
 	"marionette",
+	"floodlight/firewallModFl",
 	"floodlight/switch",
 	"view/switchDetail",
 	"floodlight/memory",
@@ -22,7 +23,7 @@ define([
 	"view/testView",
 	"text!template/login.html",
 	"text!template/controller.html",
-], function($, _, Backbone, Marionette, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, Test, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, FirewallEditor, HostView, TopologyView, TestView, loginTpl, controllerTpl){
+], function($, _, Backbone, Marionette, FirewallMod, Switch, SwitchDetail, Memory, Modules, Status, Uptime, Host, Test, MemoryView, ModulesView, StatusView, UptimeView, FlowEditor, FirewallEditor, HostView, TopologyView, TestView, loginTpl, controllerTpl){
 	/* Structure used to navigate through views */
 	var Router = Marionette.AppRouter.extend({
 		template: _.template(controllerTpl),
@@ -69,8 +70,6 @@ define([
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
 			
-			var firewallEditor = new FirewallEditor({model: new Switch});	
-			new firewallEditor.initialize(this.switchCollection, false);	
 			
 			var self = this;
 			
@@ -91,7 +90,7 @@ define([
 			
 			$('#content').empty();
 			$('#content').append(this.template).trigger('create');
-			
+		
 		 	// Create views for controller aspects
 			this.statusview = new StatusView({model: new Status});
 			this.uptimeview = new UptimeView({model: new Uptime});
@@ -114,9 +113,33 @@ define([
 			$('#modulesview').append(this.modulesview.render().el);
 	
 	
-			var firewallEditor = new FirewallEditor({model: new Switch});	
-			new firewallEditor.initialize(this.switchCollection, false);	
-	
+			new FirewallEditor(this.switchCollection, false);
+				
+			//queries firewall and sets button based on that
+			//the result of str is "firewall enabled" or "firewall disabled" with quotes intact	
+			//also doesn't recognize id's
+			
+			fm = new FirewallMod("status");
+			fm.fetch().complete(function () {
+			firewallStatus = fm.get("result");
+			str = JSON.stringify(firewallStatus);
+			alert(str);
+			if(str === ""+"firewall enabled"+""){
+				if(document.getElementById('disableRulesButton').selected === "selected"){
+			document.getElementById('disableRulesButton')[0].removeAttribute("selected"); 
+				}
+			document.getElementById('enableRulesButton')[0].setAttribute("selected", "selected");
+			}
+			else{
+				if(document.getElementById('enableRulesButton').selected === "selected"){
+			document.getElementById('enableRulesButton')[0].removeAttribute("selected");
+				}
+			document.getElementById('disableRulesButton')[0].setAttribute("selected", "selected");
+			}
+			},this);
+			
+			//end button code	
+			
 			var self = this;
 			
 			//only call fetch when the view is visible
@@ -125,7 +148,7 @@ define([
 					self.statusview.model.fetch();
 					self.memoryview.model.fetch();
 				}, 2000);	
-        },
+        }, 
         
         hostRoute: function() {
 			$('#content').empty();
