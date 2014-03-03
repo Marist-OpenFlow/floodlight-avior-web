@@ -124,17 +124,22 @@ define([
 			firewallStatus = fm.get("result");
 			str = JSON.stringify(firewallStatus);
 			alert(str);
-			if(str === ""+"firewall enabled"+""){
-				if(document.getElementById('disableRulesButton').selected === "selected"){
-			document.getElementById('disableRulesButton')[0].removeAttribute("selected"); 
-				}
-			document.getElementById('enableRulesButton')[0].setAttribute("selected", "selected");
+			document.getElementById('disableRulesButton').innerHTML="Is this actually working?";
+			var x = document.getElementById('enableRulesButton');
+			var y = document.getElementById('disableRulesButton');
+			if(str == "\"firewall disabled\""){
+				//if(document.getElementById('disableRulesButton').selected /*=== "selected"*/){
+			y.removeAttribute("selected");
+			x.createAttribute("selected"); 
+			x.setAttribute("selected", "selected");
+			//}
 			}
 			else{
-				if(document.getElementById('enableRulesButton').selected === "selected"){
-			document.getElementById('enableRulesButton')[0].removeAttribute("selected");
-				}
-			document.getElementById('disableRulesButton')[0].setAttribute("selected", "selected");
+				//if(document.getElementById('enableRulesButton').selected /*=== "selected"*/){			
+			x.removeAttribute("selected");
+			y.createAttribute("selected");
+			y.setAttribute("selected", "selected");
+			//}
 			}
 			},this);
 			
