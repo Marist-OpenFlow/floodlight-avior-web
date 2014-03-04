@@ -26,7 +26,7 @@ define([
 			if (display)
 				this.render();
 			//this.listStaticFlows();
-			
+			document.getElementById("radio-choice-c").innerHTML() = "Da Bears";
 		},
 
 		events: {

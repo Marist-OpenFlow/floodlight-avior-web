@@ -43,12 +43,32 @@ define([
 			"loadbalancer": "loadbalancerRoute",
 		},
 		
+		/*initialize: function(collec, display, state) {
+			this.toggleCount = 0;
+			console.log(window.innerHeight);
+			console.log(window.outerHeight);
+			this.nameList = new Object;
+			this.textFields = new Array;
+			this.j = 0;
+			this.collection = collec;
+			// body...
+			if (display)
+				this.render();
+		}
+
+		render: function() {
+			$('#content').empty();
+			this.$el.html(this.template({coll: this.collection.toJSON()})).trigger('create');
+			// body...
+		}*/
+
+		//Where does home actally get uses within the site? It's seems as if home is a literal copy of controllerRoute. I dont think home is currently being used.
 		 home: function() {
 		 	$('#content').empty();
 			
 			// Clears out any previous intervals
 			clearInterval(this.interval);
-			
+			//This rerenders the page each time if we can set this to only render once then we might have solved the problem of the button resetting
 			$('#content').append(this.template).trigger('create');
 			
 		 	// Create views for controller aspects
@@ -90,6 +110,11 @@ define([
 			clearInterval(this.interval);
 			
 			$('#content').empty();
+			//This rerenders the page each time if we can set this to only render once then we might have solved the problem of the button resetting
+			/*Is it possible that we could do the same as there is in firewallEditor.js and 
+			have an Initialize & Render function combo and then set the page to be called in
+			controllerRoute but not rerendered*/
+			//this.initalize(this.controllerRoute, false, firewallStatus);
 			$('#content').append(this.template).trigger('create');
 		
 		 	// Create views for controller aspects
