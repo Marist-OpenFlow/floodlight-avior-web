@@ -69,7 +69,8 @@ define([
 			// Clears out any previous intervals
 			clearInterval(this.interval);
 			//This rerenders the page each time if we can set this to only render once then we might have solved the problem of the button resetting
-			$('#content').append(this.template).trigger('create');
+			//This doesn't seem to do anything at all, so I commented it out for the moment.-M.I.
+			//$('#content').append(this.template).trigger('create');
 			
 		 	// Create views for controller aspects
 			this.statusview = new StatusView({model: new Status});
@@ -102,6 +103,7 @@ define([
         },
         
         controllerRoute: function() {
+        	
 			$('#content').empty();
 			$('#content').prepend('<img class="innerPageLoader" src="img/ajax-loader.gif" />');
 			
@@ -116,6 +118,7 @@ define([
 			controllerRoute but not rerendered*/
 			//this.initalize(this.controllerRoute, false, firewallStatus);
 			$('#content').append(this.template).trigger('create');
+			
 		
 		 	// Create views for controller aspects
 			this.statusview = new StatusView({model: new Status});
@@ -138,29 +141,12 @@ define([
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
 				
-			//queries firewall and sets button based on that
-			//the result of str is "firewall enabled" or "firewall disabled" with quotes intact	
-			
-			fm = new FirewallMod("status");
-			fm.fetch().complete(function () {
-			firewallStatus = fm.get("result");
-			str = JSON.stringify(firewallStatus);
-			alert(str);
-				if(firewallStatus === "firewall enabled"){
-				$( "#radio-choice-c" ).prop( "checked", true );
-				$( "#radio-choice-d" ).prop( "checked", false );
-				}
-				else{
-				$( "#radio-choice-d" ).prop( "checked", false );
-				$( "#radio-choice-c" ).prop( "checked", true );
-				}
-			new FirewallEditor(this.switchCollection, false, firewallStatus);
-			},this);
-			
-			//where should this go? firewalleditor maybe?
-			//also, the currently checked option should be disabled so that clicking on it again does nothing
+	
+			//moved toggle button stuff back to firewallEditor.js.
+			//the third parameter here indicates whether or not the buttonUpdating function in firewallEditor should be called. check initialize
+			new FirewallEditor(this.switchCollection, false, true);
 		
-			//end button code	
+		
 			
 			var self = this;
 			
@@ -244,7 +230,7 @@ define([
 				switchDetail.listenTo(switchDetail.switchStats, "sync", function () {new FirewallEditor(switchDetail.collection, true);});
 			}
 			else
-				new FirewallEditor(this.switchCollection, true);
+				new FirewallEditor(this.switchCollection, true, false);
         },
         
         topologyRoute: function () {

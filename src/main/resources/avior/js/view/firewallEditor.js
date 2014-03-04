@@ -14,7 +14,7 @@ define([
 		template2: _.template(actionSelect),
 		template3: _.template(controllerTpl),
 	
-		initialize: function(collec, display, state){
+		initialize: function(collec, display, buttonUpdate){
 			this.toggleCount = 0;
 			console.log(window.innerHeight);
 			console.log(window.outerHeight);
@@ -22,11 +22,12 @@ define([
 			this.textFields = new Array;
 			this.j = 0;
 			this.collection = collec;
-			this.state = state;
 			//console.log(this.collection);
 			if (display)
 				this.render();
 			//this.listStaticFlows();
+			if (buttonUpdate)
+				this.buttonUpdating();
 			},
 		
 		events: {
@@ -221,10 +222,14 @@ define([
 		decideRules: function () {
 			if($('#radio-choice-d').prop("checked")){
 			alert('Firewall has been disabled.');
+			$("#radio-choice-d").prop("disabled", true);
+			$("#radio-choice-c").prop("disabled", false);
 			this.disableRules();
 			}
 			else{
 			alert('Firewall is now enabled.');
+			$("#radio-choice-c").prop("disabled", true);
+			$("#radio-choice-d").prop("disabled", false);
 			this.enableRules();
 			}
 		},
@@ -239,6 +244,28 @@ define([
 		// clears all text box fields, removes actionBody 
 		// and returns all drop down menus to initial positioning
 		clearRule: function () {
+			
+		},
+		
+			//queries firewall and sets button based on that
+			//the result of str is "firewall enabled" or "firewall disabled" with quotes intact	
+			//renders controller template at the end
+		buttonUpdating: function () {
+			fm = new FirewallMod("status");
+			fm.fetch().complete(function () {
+			firewallStatus = fm.get("result");
+			str = JSON.stringify(firewallStatus);
+			//alert(str);
+				if(firewallStatus === "firewall enabled"){
+				$( "#radio-choice-c" ).prop( "checked", true );
+				$( "#radio-choice-d" ).prop( "checked", false );
+				}
+				else{
+				$( "#radio-choice-d" ).prop( "checked", false );
+				$( "#radio-choice-c" ).prop( "checked", true );
+				}
+			$('#content').append(this.template3).trigger('create');		
+			},this);
 			
 		},
 		
