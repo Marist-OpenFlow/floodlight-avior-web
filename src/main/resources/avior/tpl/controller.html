@@ -1,10 +1,10 @@
 <head>
 	<style>
 		
-		 .firewall-button .ui-slider-switch { 
-								width: 135px;
+		 .firewall-button { 
+								width: 300px;
   								bottom:90%;
- 								left:92%;
+ 								left:88%;
  								position:relative;
 								}
 	</style>
@@ -12,7 +12,8 @@
 
 
 <div class="firewall-button">
-	<form id="firewallButton">
+	
+	<!--form id="firewallButton">
     	<select name="firewallToggle" id="firewallToggle" data-role="slider">
     	
         	<option value="off" id="disableRulesButton">Firewall Off</option>
@@ -21,7 +22,19 @@
 
     	</select>
     	
+	</form-->
+	
+	<form id="firewallToggle">
+	<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+    <legend></legend>
+        <input name="radio-choice-b" id="radio-choice-c" value="list" type="radio">
+        <label for="radio-choice-c">Firewall On</label>
+        <input name="radio-choice-b" id="radio-choice-d" value="grid" type="radio">
+        <label for="radio-choice-d">Firewall Off</label>
+	</fieldset>
 	</form>
+	
+	
 </div>
 
 

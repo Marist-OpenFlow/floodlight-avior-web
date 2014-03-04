@@ -14,7 +14,7 @@ define([
 		template2: _.template(actionSelect),
 		template3: _.template(controllerTpl),
 	
-		initialize: function(collec, display){
+		initialize: function(collec, display, state){
 			this.toggleCount = 0;
 			console.log(window.innerHeight);
 			console.log(window.outerHeight);
@@ -22,6 +22,7 @@ define([
 			this.textFields = new Array;
 			this.j = 0;
 			this.collection = collec;
+			this.state = state;
 			//console.log(this.collection);
 			if (display)
 				this.render();
@@ -216,8 +217,9 @@ define([
 			disableRules.fetch();
 		},
 		
+		//this.state 
 		decideRules: function () {
-			if(document.getElementById('firewallToggle').value === "off"){
+			if($('#radio-choice-d').prop("checked")){
 			alert('Firewall has been disabled.');
 			this.disableRules();
 			}

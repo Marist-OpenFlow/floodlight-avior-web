@@ -85,6 +85,7 @@ define([
 			$('#content').empty();
 			$('#content').prepend('<img class="innerPageLoader" src="img/ajax-loader.gif" />');
 			
+			
 			// Clears out any previous intervals
 			clearInterval(this.interval);
 			
@@ -111,38 +112,29 @@ define([
 			$('#statusview').append(this.statusview.render().el);
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
-	
-	
-			new FirewallEditor(this.switchCollection, false);
 				
 			//queries firewall and sets button based on that
 			//the result of str is "firewall enabled" or "firewall disabled" with quotes intact	
-			//also doesn't recognize id's
 			
 			fm = new FirewallMod("status");
 			fm.fetch().complete(function () {
 			firewallStatus = fm.get("result");
 			str = JSON.stringify(firewallStatus);
 			alert(str);
-			document.getElementById('disableRulesButton').innerHTML="Is this actually working?";
-			var x = document.getElementById('enableRulesButton');
-			var y = document.getElementById('disableRulesButton');
-			if(str == "\"firewall disabled\""){
-				//if(document.getElementById('disableRulesButton').selected /*=== "selected"*/){
-			y.removeAttribute("selected");
-			x.createAttribute("selected"); 
-			x.setAttribute("selected", "selected");
-			//}
-			}
-			else{
-				//if(document.getElementById('enableRulesButton').selected /*=== "selected"*/){			
-			x.removeAttribute("selected");
-			y.createAttribute("selected");
-			y.setAttribute("selected", "selected");
-			//}
-			}
+				if(firewallStatus === "firewall enabled"){
+				$( "#radio-choice-c" ).prop( "checked", true );
+				$( "#radio-choice-d" ).prop( "checked", false );
+				}
+				else{
+				$( "#radio-choice-d" ).prop( "checked", false );
+				$( "#radio-choice-c" ).prop( "checked", true );
+				}
+			new FirewallEditor(this.switchCollection, false, firewallStatus);
 			},this);
 			
+			//where should this go? firewalleditor maybe?
+			//also, the currently checked option should be disabled so that clicking on it again does nothing
+		
 			//end button code	
 			
 			var self = this;
