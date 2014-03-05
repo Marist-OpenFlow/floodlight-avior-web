@@ -16,6 +16,12 @@
 	<!--Foundation 5 CSS -->
 	 <link rel="stylesheet" href="css/normalize.css"/>
  	 <link rel="stylesheet" href="css/foundation.css"/>	
+ 	 	
+  <script src="js/vendor/jquery.js"></script>
+  <script src="js/foundation.min.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
 
 	<!-- CSS & JS for Top Menu Effects -->	
 	<link rel="stylesheet" href="css/junaid.css/jqm-docs.css" />	
@@ -163,22 +169,70 @@ text {
 <!-- Start of index page -->
 	<div data-role="page" class="responsive"> 
 
-	
-<!-- Header -->
+<!-- Header 
 	<header>
 
 	<div class="aviorHeader" data-role="header" data-theme="a" style="max-height: 40px;">
 	<h1><img class="headerIMG" src="img/avior_logo_alt_trans.png"  height="40" width="120" style="vertical-align: top;"> </h1>
-	<!--<h1>Avior</h1>-->
+	<h1>Avior</h1>
 	<a id="leftpanel3" href="#leftpanel3" data-icon="bars" data-iconpos="notext" data-direction="reverse" style="display: none;">Main Menu</a>
-	<a id="logout" href="index.html" data-icon="gear" style="display: none;">Log Out</a>
 	</div>
 	</header>
-<!-- /Header -->
+ 
+ Header -->
 
+<div class="off-canvas-wrap">
+  <div class="inner-wrap">
   
-	<div id="content" class="responsive" data-role="content"></div>
+   <nav class="tab-bar">
+      <section class="left-small">
+        <a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+      </section>
 
+      <section class="right-small">
+        <a class="right-off-canvas-toggle menu-icon" ><span></span></a>
+      </section>
+      
+        <section class="middle tab-bar-section">
+        <a id="logout" href="index.html" data-icon="gear" style="display: none;">Log Out</a><span></span></a>
+      </section>
+    </nav>
+
+    <aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        <li><label>Overview:</label></li>
+        <li><a href="#controllers">Controllers</a></li>
+        <li><a href="#hosts">Hosts</a></li>
+        <li><a href="#switches">Switches</a></li>
+        <li><a href="#topology">Topology</a></li>
+      </ul>
+    </aside>
+
+    <aside class="right-off-canvas-menu">
+      <ul class="off-canvas-list">
+        <li><label>Tools:</label></li>
+        <li><a href="#staticflowmanager">Static Flow Manager</a></li>
+        <li><a href="#firewall">Firewall</a></li>
+        <li><a href="http://advalanche.cs.marist.edu">ADVAlanche</a></li>
+        <li><a href="#qos">QoS</a></li>
+        <li><a href="#vfilter">Virtual Network Filter</a></li>
+        <li><a href="#loadbalancer">Load Balancer</a></li>
+        
+      </ul>
+    </aside>
+
+    <section class="main-section">
+      <!-- content goes here -->
+ 
+	<div id="content" class="responsive" data-role="content"></div>
+	
+	   </section>
+
+ 	 <a class="exit-off-canvas"></a>
+</div>
+</div>
+  
+	
 <!-- Footer -->
 	<div data-role="footer" class="footer-docs ui-footer ui-bar-c" data-position="fixed" data-theme="c" role="contentinfo" >
 	<p>2013 Avior Version 2.0 </p>
@@ -218,6 +272,7 @@ text {
 <!-- /leftpanel3-->
 
 
+
 	<!--<div data-role="panel" id="rightpanel3" data-position="right" data-position-fixed="false" data-display="push" data-dismissible="true" data-theme="a">
 
 	<h3>Right Panel Menu</h3>
@@ -246,6 +301,8 @@ text {
  
 
 	</div>
+	</div>
+
 <!-- /index page -->
 
 
