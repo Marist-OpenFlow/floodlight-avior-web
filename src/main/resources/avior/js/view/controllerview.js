@@ -2,17 +2,19 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"marionette",
 	"floodlight/firewallModFl",
 	"text!template/firewallEditor.html",
 	"text!template/actionSelect.html",
 	"text!template/controller.html",
-], function($, _, Backbone, FirewallMod, firewallEditor, actionSelect, controllerTpl){
+], function($, _, Backbone, Marionette, FirewallMod, firewallEditor, actionSelect, controllerTpl){
 	var ControllerView = Backbone.View.extend({
 		el: $('#content'),
 
 		template1: _.template(firewallEditor),
 		template2: _.template(actionSelect),
 		template3: _.template(controllerTpl),
+
 
 		initialize: function(collec, display){
 			this.toggleCount = 0;

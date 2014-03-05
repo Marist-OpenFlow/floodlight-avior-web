@@ -146,6 +146,7 @@ define([
 			//the third parameter here indicates whether or not the buttonUpdating function in firewallEditor should be called. check initialize
 			new FirewallEditor(this.switchCollection, false, true);
 		
+			document.title = 'Avior - Controllers';
 		
 			
 			var self = this;
@@ -173,6 +174,8 @@ define([
 			
 			this.hostCollection = this.hostview.collection;
 			
+			document.title = 'Avior - Hosts';
+			
 			// Link host to id tag
 			$('#content').empty();
 			$('#content').append(this.hostview.render().el).trigger('create');
@@ -193,6 +196,8 @@ define([
 			switchDetail.listenTo(switchDetail.switchStats, "sync", syncComplete);
 			switchDetail.listenTo(switchDetail.description, "sync", syncComplete);
 			
+			document.title = 'Avior - Switches';
+			
 			function syncComplete() {
   				syncCount += 1;
   				
@@ -207,6 +212,8 @@ define([
 
 			// Clears out any previous intervals
 			clearInterval(this.interval);
+			
+			document.title = 'Avior - Static Flow Manager';
 
 			if (this.switchCollection === undefined){
 				var switchDetail = new SwitchDetail({model: new Switch});
@@ -223,6 +230,8 @@ define([
 
 			// Clears out any previous intervals
 			clearInterval(this.interval);
+			
+			document.title = 'Avior - Firewall';
 
 			if (this.switchCollection === undefined){
 				var switchDetail = new SwitchDetail({model: new Switch});
@@ -241,6 +250,8 @@ define([
         	
         	// Clears out any previous intervals
 			clearInterval(this.interval);
+			
+			document.title = 'Avior - Network Topology';
 			
 			var self = this;
 			if (this.hostCollection === undefined){
@@ -306,6 +317,8 @@ define([
 			// Clears out any previous intervals
 			clearInterval(this.interval);
 			
+			document.title = 'Avior - QoS';
+			
 			//this.testView = new TestView({model: new Test});
 			
 			$('#content').append("QoS Coming Soon!");
@@ -316,6 +329,8 @@ define([
 			// Clears out any previous intervals
 			clearInterval(this.interval);
 			
+			document.title = 'Avior - Virtual Network Filter';
+			
 			$('#content').append("Virtual Network Filter Coming Soon!");
         },
         
@@ -323,6 +338,8 @@ define([
 			$('#content').empty();
 			// Clears out any previous intervals
 			clearInterval(this.interval);
+			
+			document.title = 'Avior - Load Balancer';
 			
 			$('#content').append("Load Balancer Coming Soon!");
         },

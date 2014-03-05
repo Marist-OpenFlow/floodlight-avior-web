@@ -2,11 +2,12 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"marionette",
 	"floodlight/firewallModFl",
 	"text!template/firewallEditor.html",
 	"text!template/actionSelect.html",
 	"text!template/controller.html",
-], function($, _, Backbone, FirewallMod, firewallEditor, actionSelect, controllerTpl){
+], function($, _, Backbone, Marionette, FirewallMod, firewallEditor, actionSelect, controllerTpl){
 	var FirewallEdView = Backbone.View.extend({
 		el: $('#content'),
 		
@@ -256,13 +257,15 @@ define([
 			firewallStatus = fm.get("result");
 			str = JSON.stringify(firewallStatus);
 			//alert(str);
-				if(firewallStatus === "firewall enabled"){
+				if(firewallStatus === "\"firewall enabled\""){
 				$( "#radio-choice-c" ).prop( "checked", true );
 				$( "#radio-choice-d" ).prop( "checked", false );
+				
 				}
 				else{
-				$( "#radio-choice-d" ).prop( "checked", false );
-				$( "#radio-choice-c" ).prop( "checked", true );
+				$( "#radio-choice-d" ).prop( "checked", true );
+				$( "#radio-choice-c" ).prop( "checked", false );
+			
 				}
 			$('#content').append(this.template3).trigger('create');		
 			},this);

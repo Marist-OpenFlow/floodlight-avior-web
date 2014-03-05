@@ -2,8 +2,9 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"marionette",
 	"text!template/port.html"
-], function($, _, Backbone, portTpl){
+], function($, _, Backbone, Marionette, portTpl){
 	var PortView = Backbone.View.extend({
 		//tagName: "tbody",
 		
