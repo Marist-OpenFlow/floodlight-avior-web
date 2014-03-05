@@ -77,7 +77,7 @@ define([
 			this.uptimeview = new UptimeView({model: new Uptime});
 			this.memoryview = new MemoryView({model: new Memory});
 			this.modulesview = new ModulesView({model: new Modules});
-
+			
 		
 			// Delegate events for controller views
 			this.statusview.delegateEvents(this.statusview.events);
@@ -125,7 +125,7 @@ define([
 			this.uptimeview = new UptimeView({model: new Uptime});
 			this.memoryview = new MemoryView({model: new Memory});
 			this.modulesview = new ModulesView({model: new Modules});
-	
+			this.hostview = new HostView({collection: new Host});
 
 		
 			// Delegate events for controller views
@@ -133,14 +133,14 @@ define([
 			this.uptimeview.delegateEvents(this.uptimeview.events);
 			this.memoryview.delegateEvents(this.memoryview.events);
 			this.modulesview.delegateEvents(this.modulesview.events);
-			
+			this.hostview.delegateEvents(this.hostview.events);
 				
 			// Link controller aspects to id tags
 			$('#uptimeview').append(this.uptimeview.render().el);
 			$('#statusview').append(this.statusview.render().el);
 			$('#memoryview').append(this.memoryview.render().el);
 			$('#modulesview').append(this.modulesview.render().el);
-				
+			$('#hostview').append(this.hostview.render().el);
 	
 			//moved toggle button stuff back to firewallEditor.js.
 			//the third parameter here indicates whether or not the buttonUpdating function in firewallEditor should be called. check initialize
@@ -156,6 +156,7 @@ define([
 					self.uptimeview.model.fetch();
 					self.statusview.model.fetch();
 					self.memoryview.model.fetch();
+					self.hostview.model.fetch();
 				}, 2000);	
         }, 
         
