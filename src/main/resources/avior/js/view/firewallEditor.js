@@ -256,8 +256,8 @@ define([
 			fm.fetch().complete(function () {
 			firewallStatus = fm.get("result");
 			str = JSON.stringify(firewallStatus);
-			//alert(str);
-				if(firewallStatus === "\"firewall enabled\""){
+			//alert(firewallStatus);
+				if(firewallStatus === "firewall enabled"){
 				$( "#radio-choice-c" ).prop( "checked", true );
 				$( "#radio-choice-d" ).prop( "checked", false );
 				
