@@ -147,7 +147,7 @@ define([
 			new FirewallEditor(this.switchCollection, false, true);
 		
 			document.title = 'Avior - Controllers';
-		
+			//refactor titleChange to a function that takes in the new title as parameter
 			
 			var self = this;
 			
