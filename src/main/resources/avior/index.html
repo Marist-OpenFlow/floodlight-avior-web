@@ -17,11 +17,12 @@
 	 <link rel="stylesheet" href="css/normalize.css"/>
  	 <link rel="stylesheet" href="css/foundation.css"/>	
  	 	
-  <script src="js/vendor/jquery.js"></script>
-  <script src="js/foundation.min.js"></script>
-  <script>
-    $(document).foundation();
-  </script>
+  	<script src="js/vendor/jquery.js"></script>
+  	<script src="js/foundation.min.js"></script>
+  	<script>
+    	$(document).foundation();
+  	</script>
+  	<!--Foundation 5 CSS -->
 
 	<!-- CSS & JS for Top Menu Effects -->	
 	<link rel="stylesheet" href="css/junaid.css/jqm-docs.css" />	
@@ -156,6 +157,16 @@ text {
 
 #mainmenu{
 	color:#FFFFFF;
+	text-shadow: none;
+}
+
+#logout{
+	color:#FFFFFF;
+	text-shadow: none;
+}
+
+aside{
+	text-shadow: none;
 }
   
 	</style>
@@ -183,7 +194,7 @@ text {
 
 <div class="off-canvas-wrap">
   <div class="inner-wrap">
-  
+  <div style="display: none;" id="menuBar">
    <nav class="tab-bar">
       <section class="left-small">
         <a class="left-off-canvas-toggle menu-icon" ><span></span></a>
@@ -217,10 +228,9 @@ text {
         <li><a href="#qos">QoS</a></li>
         <li><a href="#vfilter">Virtual Network Filter</a></li>
         <li><a href="#loadbalancer">Load Balancer</a></li>
-        
       </ul>
     </aside>
-
+</div>
     <section class="main-section">
       <!-- content goes here -->
  
@@ -228,9 +238,7 @@ text {
 	
 	   </section>
 
- 	 <a class="exit-off-canvas"></a>
-</div>
-</div>
+ 
   
 	
 <!-- Footer -->
@@ -240,6 +248,10 @@ text {
 	<p>Logo Designed by Andrew Evans </p>
 	</div>
 <!-- /Footer -->	
+
+	 <a class="exit-off-canvas"></a>
+</div>
+</div>
 
 <!-- Panels  -->
 
