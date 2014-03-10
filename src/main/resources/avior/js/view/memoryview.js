@@ -2,8 +2,9 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"marionette",
 	"text!template/memorytpl.html"
-], function($, _, Backbone, memTpl){
+], function($, _, Backbone, Marionette, memTpl){
 	var MemoryView = Backbone.View.extend({
 	    tagName: "div",
 	    

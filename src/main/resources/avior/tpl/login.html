@@ -1,16 +1,20 @@
 </div>
-	<div align="center">
+	<div align="center" class="panel">
 		<br><h1>Login Page</h1>
 		<h2></h2>
+		<form data-abide>
 			<div>
-				
-				<input name="Lusername" id="Lusername" placeholder="Username:" value="" type="text" autocorrect="off" autocapitalize="off">
-				            
+				<div class="name-field">
+				<input name="Lusername" id="Lusername" placeholder="Username:" value="" type="text" autocorrect="off" autocapitalize="off" required>
+				 <small class="error">Username is a required field to log in.</small>           
+       			</div>
        		</div>
        		<div>
        			
-          		<input name="Lpassword" id="Lpassword" placeholder="Password:" value="" type="password">         
+          		<input name="Lpassword" id="Lpassword" placeholder="Password:" value="" type="password" onKeydown="if(event.keyCode==13) userLogin.click()" required>         
+        		 <small class="error">Password is a required field to log in.</small>
         	</div>
+        </form>	
         	<div>
         		<div>
         			<div>

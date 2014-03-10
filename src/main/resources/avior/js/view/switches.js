@@ -2,11 +2,12 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"marionette",
 	"view/switch",
 	"collection/switchCollection",
 	"text!template/switches.html",
 	"text!template/switchHeading.html",
-], function($, _, Backbone, SwitchView, SwitchCollection, swtchsTpl, header){
+], function($, _, Backbone, Marionette, SwitchView, SwitchCollection, swtchsTpl, header){
 	var SwitchesView = Backbone.View.extend({
 		el: $('body'),
 			

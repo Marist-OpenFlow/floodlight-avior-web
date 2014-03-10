@@ -9,12 +9,13 @@ define([
 ], function($, _, Backbone, Marionette, TopologyCollection, Topology, topologyTpl){
 	var TopologyView = Backbone.Marionette.ItemView.extend({
 		el: $('#content'),
-		
+ 
 		template: _.template(topologyTpl),
 		
 		events: {
 			"click #showLabels": "toggleLabels",
 			"click #doneButton": "scaleOut",
+			"click #colorChange": "colorChange",
 			"change #nodeList": "nodeSelect",
 		},
 		
@@ -27,6 +28,8 @@ define([
 			this.toggleCount = 0;
 			this.switches = s;
 			this.hosts = h;
+			hostcolor = "grey";
+      		switchcolor = "blue";
 			_.forEach(s.models, function(item) {
 				//item.set("id", item.dpid);
 			}, this);
@@ -198,7 +201,9 @@ define([
       			.size(graphCenter) 
       			.on("end", end)
       			.start();
-      			
+   
+
+   
 			//console.log("after force");
   			link = link.data(edges)
     				   .enter().append("line")
@@ -212,7 +217,8 @@ define([
       		//console.log("after nodes");
       		node.append("circle")
       				   .attr("r", 12)
-      				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return "grey"; else return "blue"; });
+      				   .style("fill", function(d) { if (d.attributes.dpid === undefined) return ""+hostcolor+""; else return ""+switchcolor+""; });
+
 
 			var self = this;
 			
@@ -377,7 +383,7 @@ define([
      	 		  .attr("cy", function(d, i){ return (i *  30) + 15;})
       			  .attr("r", 8)
       			  .style("fill", function(d) { 
-         							if (d === 0) return "grey"; else return "blue";
+         							if (d === 0) return ""+hostcolor+""; else return ""+switchcolor+"";
       							  });	
       
    			legend.selectAll('text')
@@ -477,6 +483,16 @@ define([
     			      .start();
             		
             $(function() { $("#doneDiv").hide(); });
+		},
+		
+		colorChange: function () {	
+			hostcolor = document.getElementById('hostColor').value;
+      		switchcolor = document.getElementById('switchColor').value;
+      		if(hostcolor === switchcolor){ 
+      		alert('Making switches and hosts the same color can make the topology harder to view.');
+      		}
+			this.render();
+			showLegend();
 		},
 				
 	});
