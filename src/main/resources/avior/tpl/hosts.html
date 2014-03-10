@@ -1,5 +1,5 @@
 <p><h3>Hosts on the network (<%= _.size(hosts) %>)</h3> <button id="refreshhosts" data-role="button" data-theme="b" data-inline="true" data-mini="true" data-icon="refresh">Refresh</button></p>
-<div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+<div data-role="collapsible-set" data-theme="c" data-content-theme="d" class="panel">
 	<!-- Loop over hosts, display each one as own accordion -->
 	<% _.each(hosts, function(host) { %><div data-role="collapsible">
 		<h3><% if (host.get("ipv4").length > 0) {
