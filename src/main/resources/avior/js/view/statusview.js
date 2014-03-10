@@ -2,8 +2,9 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"marionette",
 	"text!template/statustpl.html"
-], function($, _, Backbone, statTpl){
+], function($, _, Backbone, Marionette, statTpl){
 	var StatusView = Backbone.View.extend({
 	    tagName: "div",
 	    

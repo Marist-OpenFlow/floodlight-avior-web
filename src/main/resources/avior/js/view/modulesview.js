@@ -2,8 +2,9 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"marionette",
 	"text!template/modulestpl.html"
-], function($, _, Backbone, modTpl){
+], function($, _, Backbone, Marionette, modTpl){
 	var ModulesView = Backbone.View.extend({
 	    tagName: "div",
 	    

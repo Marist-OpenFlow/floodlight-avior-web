@@ -2,10 +2,11 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"marionette",
 	"model/flowMod",
 	"text!template/flowEditor.html",
 	"text!template/portSelect.html",
-], function($, _, Backbone, FlowMod, flowEditor, portSelect){
+], function($, _, Backbone, Marionette, FlowMod, flowEditor, portSelect){
 	var FlowEdView = Backbone.View.extend({
 		el: $('#content'),
 		
